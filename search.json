@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About VCF",
+    "section": "",
+    "text": "YouTube\n  \n  \n    \n     Github\n  \n  \n    \n     Twitter\n  \n\n  \n  \n\n\nVCF is a blog and YouTube channel dedicated to coding in Python for empirical research in finance. My goal is to provide a platform for sharing knowledge and resources about coding in finance. The content is aimed at students, academics, and finance professionals who want to learn more about coding and empirical finance research.\nI use this platform to complement my teaching material and make it available to a wider audience. I also use it to share my experience with coding in finance and to document my journey as I learn new things."
+  },
+  {
+    "objectID": "about.html#about-vincent-codes-finance",
+    "href": "about.html#about-vincent-codes-finance",
+    "title": "About VCF",
+    "section": "",
+    "text": "VCF is a blog and YouTube channel dedicated to coding in Python for empirical research in finance. My goal is to provide a platform for sharing knowledge and resources about coding in finance. The content is aimed at students, academics, and finance professionals who want to learn more about coding and empirical finance research.\nI use this platform to complement my teaching material and make it available to a wider audience. I also use it to share my experience with coding in finance and to document my journey as I learn new things."
+  },
+  {
+    "objectID": "about.html#contact",
+    "href": "about.html#contact",
+    "title": "About VCF",
+    "section": "Contact",
+    "text": "Contact\nFor any comments and inquiries about this blog or the YouTube Channel, please contact me at:\nEMAIL: vincent@codes.finance"
+  },
+  {
+    "objectID": "about.html#about-vincent",
+    "href": "about.html#about-vincent",
+    "title": "About VCF",
+    "section": "About Vincent",
+    "text": "About Vincent\n\n\nHello, my name is Vincent Grégoire. I’m an Associate Professor of Finance at HEC Montréal where I have been teaching Empirical Finance at the Master’s for a couple of years. My research interests include information economics, market microstructure, big data and machine learning applications in finance, fintech, and cybersecurity in finance. I’m also a Python enthusiast and curious about anything related to coding, data science, and machine learning.\n\n\n\n\n\n\n\n\nMy academic journey led me from undergraduate and master’s degrees in Computer Engineering to a Master’s in Financial Engineering at Université Laval and a Ph.D. in Finance from the University of British Columbia.\nSee my academic page for more details."
+  },
+  {
+    "objectID": "about.html#license-and-reuse",
+    "href": "about.html#license-and-reuse",
+    "title": "About VCF",
+    "section": "🔓 License and reuse",
+    "text": "🔓 License and reuse\nAll content on this website is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. You are free to share and adapt the material for non-commercial purposes as long as you give appropriate credit and distribute your contributions under the same license.\nIf you want to reuse any of the content on this website for teaching purposes, please feel free to do so. I would appreciate it if you could include a link to this website in your course material and let me know by sending me an email at vincent@codes.finance. I will be happy to provide you with the source files for any of the content on this website upon request.\nIf for any reason you would like to reuse any of the content on this website for a purpose that is not covered by the above license, please contact me at vincent@codes.finance.\nThe code examples on this website are available on GitHub under the MIT License. You are free to use the code for any purpose, including commercial purposes, as long as you give appropriate credit and include a copy of the license in your distribution."
+  },
+  {
+    "objectID": "about.html#how-is-this-blog-built",
+    "href": "about.html#how-is-this-blog-built",
+    "title": "About VCF",
+    "section": "🛠️ How is this blog built?",
+    "text": "🛠️ How is this blog built?\nThis website is blog using Quarto, an open-source document system that allows you to write content in Markdown or Jupyter Notebooks and publish it in a variety of formats, including static HTML files. Quarto is on my list of topics to cover in the future, so stay tuned for more content on that topic.\nThe blog is currently hosted using GitHub Pages."
+  },
+  {
+    "objectID": "about.html#monetization",
+    "href": "about.html#monetization",
+    "title": "About VCF",
+    "section": "🤑 Monetization",
+    "text": "🤑 Monetization\nAs we move forward, I promise to maintain transparency, especially concerning any potential monetization avenues. At the moment, I do not monetize this website and the YouTube channel. That might change in the future, but I will always be transparent about it."
+  },
+  {
+    "objectID": "about.html#use-of-ai",
+    "href": "about.html#use-of-ai",
+    "title": "About VCF",
+    "section": "🤖 Use of AI",
+    "text": "🤖 Use of AI\nWhile I make extensive use of AI-powered tools for editing and proofreading, I am committed to ensuring that all content is original and accurate. I will always cite my sources and give credit where credit is due."
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "New Year, new blog",
+    "section": "",
+    "text": "Happy New Year and welcome to the first post of Vincent Codes Finance! As we step into a fresh year, I’m thrilled to launch this new blog and YouTube channel dedicated to Python and coding in empirical finance research. I’m excited to share my knowledge and experience with you."
+  },
+  {
+    "objectID": "posts/welcome/index.html#about-me",
+    "href": "posts/welcome/index.html#about-me",
+    "title": "New Year, new blog",
+    "section": "About me",
+    "text": "About me\nI’m an Associate Professor of Finance at HEC Montréal where I have been teaching Empirical Finance at the Master’s level since 2020. My research interests include information economics, market microstructure, big data and machine learning applications in finance, fintech, and cybersecurity in finance. I’m also a Python enthusiast and curious about anything related to coding, data science, and machine learning. See my academic page for more details."
+  },
+  {
+    "objectID": "posts/welcome/index.html#why-this-blog",
+    "href": "posts/welcome/index.html#why-this-blog",
+    "title": "New Year, new blog",
+    "section": "Why this blog?",
+    "text": "Why this blog?\nVincent Codes Finance is more than just a blog and YouTube channel; it’s my contribution to enhancing empirical finance research through proficient coding practices. Here, I’ll share my insights, experiences, and love for Python, aiming to elevate the quality and efficiency of research. Whether you’re a student, a fellow researcher, or an enthusiast, there’s something here for you.\nMy motivation for creating Vincent Codes Finance is driven by a blend of professional ambition and personal passion:\n\nEnhancing Communication and Presentation Skills: This is one of my New Year’s resolutions. By regularly writing and producing content, I aim to refine my ability to present complex ideas clearly and engagingly.\nCreating a Valuable Resource: I’ve witnessed firsthand the challenges students and co-authors face when dealing with empirical finance research, especially in coding and data analysis. Vincent Codes Finance is my channel to provide a structured, accessible resource to elevate the quality of their work and mine.\nSharing a Passion for Coding and Tools: Coding is not just about algorithms and syntax; it’s a way of thinking and problem-solving. I’m excited to share how powerful coding can be in the realm of finance research and to explore and introduce various computer tools that can transform our research methodologies.\nContributing to the Field: With years of experience under my belt, I believe I have unique insights and skills that can benefit others. By sharing my knowledge, I aim to contribute to the broader community of finance researchers and practitioners.\nPromoting High-Quality, Replicable Research: The landscape of empirical finance is rapidly changing with the increasing importance of data and computational tools. I am committed to promoting practices that ensure research is not only innovative but also replicable and robust, contributing to the credibility and reliability of financial research."
+  },
+  {
+    "objectID": "posts/welcome/index.html#about-vcf",
+    "href": "posts/welcome/index.html#about-vcf",
+    "title": "New Year, new blog",
+    "section": "About VCF",
+    "text": "About VCF\nWe’ll start with the basics, setting a strong foundation for everyone. The initial posts and videos will cover installing Python, setting up your development environment, understanding Python fundamentals, and introducing data analysis using pandas. These topics are essential for anyone who wants to get started with Python and coding in empirical finance research and will be released throughout January to align with my current teaching.\nCome February, we’ll dive into more advanced topics such as handling dates and timestamp efficiently, diverse file formats for research data, using git and GitHub for collaboration, and techniques to speed up your computations.\nYour input is invaluable! I encourage you to send in your topic suggestions, questions, or any insights you might have. For all blog and channel-related inquiries, please reach out to me at vincent@codes.finance.\nFollow Along! Don’t miss out on any updates! Subscribe to the newsletter, the blog’s RSS feed, YouTube channel, and follow me on X. Let’s raise the bar for empirical finance research together.\nI look forward to sharing this journey with you and seeing where it takes us.\nCheers to a year of coding, discovery, and breakthroughs in empirical finance research!\n- Vincent"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Vincent Codes Finance",
+    "section": "",
+    "text": "New Year, new blog\n\n\n\n\n\n\n\nNews\n\n\n\n\n\n\n\n\n\n\n\nJan 1, 2024\n\n\n\n\n\n\nNo matching items\n\nReuseCC BY-NC-SA 4.0"
+  }
+]
