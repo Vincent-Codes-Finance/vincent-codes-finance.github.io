@@ -2,14 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2024-01-01T21:52:19.972Z</lastmod>
+    <lastmod>2024-01-03T19:21:28.344Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/welcome/index.html</loc>
-    <lastmod>2024-01-01T21:52:18.447Z</lastmod>
+    <lastmod>2024-01-03T19:20:55.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
+    <lastmod>2024-01-03T19:20:55.055Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/index.html</loc>
-    <lastmod>2024-01-01T21:52:19.679Z</lastmod>
+    <lastmod>2024-01-03T19:21:28.038Z</lastmod>
   </url>
 </urlset>
