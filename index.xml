@@ -10,7 +10,19 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about coding for empirical research in finance</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Wed, 03 Jan 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 07 Jan 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Python basic tutorial</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</link>
+  <description><![CDATA[ I posted <a href="../../intro-to-python/python-basics/">a tutorial</a> on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good starting point for those who want to learn Python. It does not cover the whole syntax, only the elements that I find essential to get started with data analysis and empirical research using Python. After the tutorial, you should have enough knowledge to start learning the modules that are relevant to data analysis such as <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, etc. ]]></description>
+  <category>Python</category>
+  <category>Tutorial</category>
+  <category>Beginner</category>
+  <guid>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</guid>
+  <pubDate>Sun, 07 Jan 2024 05:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png" medium="image" type="image/png" height="77" width="144"/>
+</item>
 <item>
   <title>Installing Python 3.12</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
