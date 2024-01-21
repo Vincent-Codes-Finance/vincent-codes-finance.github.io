@@ -1,0 +1,3110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2024-01-21">
+
+<title>Vincent Codes Finance - Estimating standard errors in panel data with Python and linearmodels</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XG6JSNQZJK"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XG6JSNQZJK', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Vincent Codes Finance - Estimating standard errors in panel data with Python and linearmodels">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png">
+<meta property="og:site-name" content="Vincent Codes Finance">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="594">
+<meta property="og:image:width" content="813">
+<meta name="twitter:title" content="Vincent Codes Finance - Estimating standard errors in panel data with Python and linearmodels">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png">
+<meta name="twitter:image-height" content="594">
+<meta name="twitter:image-width" content="813">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vincent Codes Finance</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Python tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html" rel="" target="">
+ <span class="dropdown-text">Install Python 3.12</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html" rel="" target="">
+ <span class="dropdown-text">Python basics</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About VCF</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w" rel="" target=""><i class="bi bi-youtube" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CodesFinance" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Estimating standard errors in panel data with Python and linearmodels</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Econometrics</div>
+                <div class="quarto-category">Linearmodels</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 21, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
+
+<script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
+<script type="text/javascript">
+    function runOnFormSubmit_sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a(th){
+        /*Before submit, if you want to trigger your event, "include your code here"*/
+    };
+</script>
+
+<style>
+.quick_form_8_css * {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word
+}
+@media only screen and (max-width: 600px) {.quick_form_8_css[name="SIGNUP_BODY"] { width: 100% !important; min-width: 100% !important; margin: 0px auto !important; padding: 0px !important } .SIGNUP_FLD { width: 90% !important; margin: 10px 5% !important; padding: 0px !important } .SIGNUP_FLD input { margin: 0 !important; border-radius: 25px !important } }
+</style>
+
+<!--Zoho Campaigns Web-Optin Form's Header Code Ends Here--><!--Zoho Campaigns Web-Optin Form Starts Here-->
+
+<div id="sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a" data-type="signupform" style="opacity: 1;">
+    <div id="customForm">
+        <div class="quick_form_8_css" style=" z-index: 2; border-width: 1px; border-style: solid; border-color: #b4befe; overflow: hidden; width: 208px" name="SIGNUP_BODY">
+            <div>
+                <div style="font-size: 14px; font-weight: bold; text-align: left; padding: 10px 20px 5px; display: block; height: 20px; width: 293px;" id="SIGNUP_HEADING">Subscribe to newsletter</div>
+                <div style="position:relative;">
+                    <div id="Zc_SignupSuccess" style="display:none;position:absolute;margin-left:4%;width:90%;background-color: white; padding: 3px; border: 3px solid rgb(194, 225, 154);  margin-top: 10px;margin-bottom:10px;word-break:break-all">
+                        
+<table data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0" class="table">
+<tbody>
+<tr class="odd">
+<td width="10%"><img src="https://zmp-glf.maillist-manage.com/images/challangeiconenable.jpg" class="successicon img-fluid" data-align="absmiddle"></td>
+<td><span id="signupSuccessMsg" style="color: rgb(73, 140, 132); font-size: 14px;word-break:break-word">&nbsp;&nbsp;Thank you for Signing Up</span></td>
+</tr>
+</tbody>
+</table>
+
+                    </div>
+                </div>
+                <form method="POST" id="zcampaignOptinForm" style="margin: 0px; width: 100%" action="https://zmp-glf.maillist-manage.com/weboptin.zc" target="_zcSignup">
+                    <div style="background-color: rgb(255, 235, 232); padding: 10px; color: rgb(210, 0, 0); font-size: 11px; margin: 20px 10px 0px; border: 1px solid rgb(255, 217, 211); opacity: 1; display: none" id="errorMsgDiv">Invalid email.</div>
+                    <div style="position: relative; margin: 10px; height: 30px; display: inline-block; width: 185px" class="SIGNUP_FLD">
+                        <input type="text" style="border: 1px solid rgb(221, 221, 221); border-radius: 0px; width: 100%; height: 100%; z-index: 4; outline: none; padding: 5px 10px; color: rgb(136, 136, 136); text-align: left; background-color: rgb(255, 255, 255); box-sizing: border-box; font-size: 11px" placeholder="Email" changeitem="SIGNUP_FORM_FIELD" name="CONTACT_EMAIL" id="EMBED_FORM_EMAIL_LABEL">
+                    </div>
+                    <div style="position: relative; margin: 10px; width: 100px; height: 30px; text-align: left; display: inline-block" class="SIGNUP_FLD">
+                        <input type="button" style="text-align: center; border-radius: 5px; width: 100%; height: 100%; z-index: 5; border: 0px; color: rgb(255, 255, 255); cursor: pointer; outline: none; font-size: 14px; background-color: #fab387; margin: 0px 0px 0px -5px" name="SIGNUP_SUBMIT_BUTTON" id="zcWebOptin" value="Subscribe">
+                    </div>
+                    <input type="hidden" id="fieldBorder" value="">
+                    <input type="hidden" id="submitType" name="submitType" value="optinCustomView">
+                    <input type="hidden" id="emailReportId" name="emailReportId" value="">
+                    <input type="hidden" id="formType" name="formType" value="QuickForm">
+                    <input type="hidden" name="zx" id="cmpZuid" value="132186a6c">
+                    <input type="hidden" name="zcvers" value="3.0">
+                    <input type="hidden" name="oldListIds" id="allCheckedListIds" value="">
+                    <input type="hidden" id="mode" name="mode" value="OptinCreateView">
+                    <input type="hidden" id="zcld" name="zcld" value="1109faaf6213b38dc">
+                    <input type="hidden" id="zctd" name="zctd" value="1109faaf6213b37a9">
+                    <input type="hidden" id="document_domain" value="">
+                    <input type="hidden" id="zc_Url" value="zmp-glf.maillist-manage.com">
+                    <input type="hidden" id="new_optin_response_in" value="0">
+                    <input type="hidden" id="duplicate_optin_response_in" value="0">
+                    <input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW">
+                    <input type="hidden" id="zc_formIx" name="zc_formIx" value="3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a">
+                    <input type="hidden" id="viewFrom" value="URL_ACTION">
+                    <span style="display: none" id="dt_CONTACT_EMAIL">1,true,6,Contact Email,2</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <img src="https://zmp-glf.maillist-manage.com/images/spacer.gif" id="refImage" onload="referenceSetter(this)" style="display:none;">
+</div>
+<input type="hidden" id="signupFormType" value="QuickForm_Horizontal">
+<div id="zcOptinOverLay" oncontextmenu="return false" style="display:none;text-align: center; background-color: rgb(0, 0, 0); opacity: 0.5; z-index: 100; position: fixed; width: 100%; top: 0px; left: 0px; height: 988px;"></div>
+<div id="zcOptinSuccessPopup" style="display:none;z-index: 9999;width: 800px; height: 40%;top: 84px;position: fixed; left: 26%;background-color: #FFFFFF;border-color: #E6E6E6; border-style: solid; border-width: 1px;  box-shadow: 0 1px 10px #424242;padding: 35px;">
+    <span style="position: absolute;top: -16px;right:-14px;z-index:99999;cursor: pointer;" id="closeSuccess">
+        <img src="https://zmp-glf.maillist-manage.com/images/videoclose.png">
+    </span>
+    <div id="zcOptinSuccessPanel"></div>
+</div>
+
+<!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#panel-data" id="toc-panel-data" class="nav-link active" data-scroll-target="#panel-data">Panel data</a></li>
+  <li><a href="#linearmodels" id="toc-linearmodels" class="nav-link" data-scroll-target="#linearmodels">linearmodels</a>
+  <ul class="collapse">
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  </ul></li>
+  <li><a href="#ols-coefficients-and-standard-errors" id="toc-ols-coefficients-and-standard-errors" class="nav-link" data-scroll-target="#ols-coefficients-and-standard-errors">OLS coefficients and standard errors</a></li>
+  <li><a href="#white-standard-errors" id="toc-white-standard-errors" class="nav-link" data-scroll-target="#white-standard-errors">White standard errors</a></li>
+  <li><a href="#clustered-standard-errors" id="toc-clustered-standard-errors" class="nav-link" data-scroll-target="#clustered-standard-errors">Clustered standard errors</a></li>
+  <li><a href="#panel-regression-with-fixed-effects" id="toc-panel-regression-with-fixed-effects" class="nav-link" data-scroll-target="#panel-regression-with-fixed-effects">Panel regression with fixed effects</a></li>
+  <li><a href="#driscoll-kraay-standard-errors" id="toc-driscoll-kraay-standard-errors" class="nav-link" data-scroll-target="#driscoll-kraay-standard-errors">Driscoll-Kraay standard errors</a></li>
+  <li><a href="#fama-macbeth-coefficients-and-standard-errors" id="toc-fama-macbeth-coefficients-and-standard-errors" class="nav-link" data-scroll-target="#fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth coefficients and standard errors</a></li>
+  <li><a href="#newey-west-standard-errors" id="toc-newey-west-standard-errors" class="nav-link" data-scroll-target="#newey-west-standard-errors">Newey-West standard errors</a></li>
+  <li><a href="#cheat-sheet" id="toc-cheat-sheet" class="nav-link" data-scroll-target="#cheat-sheet">Cheat sheet</a></li>
+  <li><a href="#learn-more" id="toc-learn-more" class="nav-link" data-scroll-target="#learn-more">Learn more</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In this post, I show how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library.</p>
+<p>More specifically, I show how to estimate the following class of models:</p>
+<ul>
+<li><a href="#ols-coefficients-and-standard-errors">OLS models</a>:
+<ul>
+<li><a href="#ols-coefficients-and-standard-errors">With OLS (non-robust) standard errors</a></li>
+<li><a href="#white-standard-errors">With White (heteroskedasticity-robust) standard errors</a></li>
+<li><a href="#clustered-standard-errors">With clustered standard errors</a></li>
+<li><a href="#driscoll-kraay-standard-errors">With Driscoll-Kraay standard errors</a></li>
+</ul></li>
+<li><a href="#panel-regression-with-fixed-effects">Fixed effects models with clustered standard errors</a></li>
+<li><a href="#fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth models</a>:
+<ul>
+<li><a href="#fama-macbeth-coefficients-and-standard-errors">With non-robust standard errors</a></li>
+<li><a href="#newey-west-standard-errors">With Newey-West standard errors</a></li>
+</ul></li>
+</ul>
+<p>If you just want the code examples with no explanations, just to the <a href="#cheat-sheet">cheat sheet</a> at the end of the post.</p>
+<section id="panel-data" class="level2">
+<h2 class="anchored" data-anchor-id="panel-data">Panel data</h2>
+<p>One of the most common tasks in finance research is to estimate standard errors in panel data. Linear panel data models have the following form:</p>
+<p><span class="math display">\[
+y_{it} =  \alpha_i + \alpha_t + x_{it}'\beta  + \epsilon_{it},
+\]</span></p>
+<p>where <span class="math inline">\(y_{it}\)</span> is the dependent variable for entity <span class="math inline">\(i\in [1,I]\)</span> at time <span class="math inline">\(t\in [1,T]\)</span>, <span class="math inline">\(\alpha_i\)</span> is an entity fixed effect, <span class="math inline">\(\alpha_t\)</span> is a time fixed effect, <span class="math inline">\(x_{it}\)</span> is a vector of independent variables, <span class="math inline">\(\beta\)</span> is a vector of coefficients, and <span class="math inline">\(\epsilon_{it}\)</span> is the error term. For the sake of simplicity, in the rest of this post, I assume that the entity is a firm and the time is a year. The error term can be correlated across firms and years and can be heteroskedastic.</p>
+<p>Some of the discussion in this post uses the matrix form of the model for simplicity:</p>
+<p><span class="math display">\[
+\mathbf{y} = \mathbf{X}\beta + \mathbf{\epsilon},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{y}\)</span> is a <span class="math inline">\(N \times 1\)</span> vector of dependent variables, <span class="math inline">\(\mathbf{X}\)</span> is a <span class="math inline">\(N \times K\)</span> matrix of independent variables, <span class="math inline">\(\beta\)</span> is a <span class="math inline">\(K \times 1\)</span> vector of coefficients, and <span class="math inline">\(\mathbf{\epsilon}\)</span> is a <span class="math inline">\(N \times 1\)</span> vector of error terms. The number of observations is <span class="math inline">\(N\)</span> and the number of independent variables is <span class="math inline">\(K\)</span>. For a balanced panel in which each firm is observed for the same number of years, <span class="math inline">\(N=I \times T\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+More on matrix form representation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If the model includes fixed effects, we assume that the vector <span class="math inline">\(\mathbf{y}\)</span> and the matrix <span class="math inline">\(\mathbf{X}\)</span> are demeaned by the relevant fixed effect.</p>
+<p>It is then common to stack the observations for each entity. For example, if we have <span class="math inline">\(I\)</span> firms and <span class="math inline">\(T\)</span> years, the vector <span class="math inline">\(\mathbf{y}\)</span> of elements <span class="math inline">\(y_{i,t}\)</span> is defined as:</p>
+<p><span class="math display">\[
+\mathbf{y} = \left[\begin{array}{c}y_{1,1}\\ y_{1,2}\\ \vdots  \\ y_{1, T} \\ y_{2,1}\\ y_{2,2}\\ \vdots  \\ y_{2, T}\\ y_{I,1}\\ \vdots  \\ y_{I, T} \end{array} \right],
+\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{X}\)</span> formed with vectors <span class="math inline">\(x_{i,t}\)</span> is defined as:</p>
+<p><span class="math display">\[
+\mathbf{X} = \left[\begin{array}{ccccc}
+x_{1, 1}^{(1)} &amp; x_{1, 1}^{(2)} &amp; \cdots &amp; x_{1, 1}^{(K-1)} &amp; x_{1,1}^{(K)} \\
+x_{1, 2}^{(1)} &amp; x_{1, 2}^{(2)} &amp; \cdots &amp; x_{1, 2}^{(K-1)} &amp; x_{1,2}^{(K)} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+x_{1, T}^{(1)} &amp; x_{1, T}^{(2)} &amp; \cdots &amp; x_{1, T}^{(K-1)} &amp; x_{1,T}^{(K)} \\
+x_{2, 1}^{(1)} &amp; x_{2, 1}^{(2)} &amp; \cdots &amp; x_{2, 1}^{(K-1)} &amp; x_{2,1}^{(K)} \\
+x_{2, 2}^{(1)} &amp; x_{2, 2}^{(2)} &amp; \cdots &amp; x_{2, 2}^{(K-1)} &amp; x_{2,2}^{(K)} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+x_{2, T}^{(1)} &amp; x_{2, T}^{(2)} &amp; \cdots &amp; x_{2, T}^{(K-1)} &amp; x_{2,T}^{(K)} \\
+x_{I, 1}^{(1)} &amp; x_{I, 1}^{(2)} &amp; \cdots &amp; x_{I, 1}^{(K-1)} &amp; x_{I,1}^{(K)} \\
+x_{I, 2}^{(1)} &amp; x_{I, 2}^{(2)} &amp; \cdots &amp; x_{I, 2}^{(K-1)} &amp; x_{I,2}^{(K)} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_{I,T}^{(K)}
+\end{array} \right],
+\]</span></p>
+<p>where <span class="math inline">\(x_{i,t}^{(j)}\)</span> is the <span class="math inline">\(j\)</span>-th element of the vector <span class="math inline">\(x_{i,t}\)</span>.</p>
+<p>Finally, the <span class="math inline">\(\beta\)</span> vector is defined as usual:</p>
+<p><span class="math display">\[
+\beta = \left[\begin{array}{c}\beta_1 \\ \beta_2 \\ \vdots \\ \beta_{K-1} \\ \beta_{K} \end{array} \right].
+\]</span></p>
+</div>
+</div>
+</div>
+<p>The goal is then to estimate the coefficients <span class="math inline">\(\beta\)</span> and their associated standard errors. The standard errors are important because they allow us to perform statistical inference. For example, we can test whether the coefficients are statistically different from zero.</p>
+<p>In his seminal paper, <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span> compares the performance of different standard errors estimators in panel data. In addition, he provides <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/se_programming.htm">programming advice</a> on how to estimate standard errors in panel data with Stata and other languages, but not for Python.</p>
+<p>In this post, I explain how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. I do so by replicating the sample results from Petersen’s <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm">test data page</a> in Python, and cover a few more standard errors estimators that are useful in finance research.</p>
+<p>I use the test data set provided by Mitchell Petersen and available <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.txt">here</a>. The data set contains 500 firms and 10 years.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_table(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"http://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.txt"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>[<span class="st">"firmid"</span>, <span class="st">"year"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    delim_whitespace<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">firmid</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">x</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>-1.113973</td>
+<td>2.251535</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>2</td>
+<td>-0.080854</td>
+<td>1.242346</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>3</td>
+<td>-0.237607</td>
+<td>-1.426376</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>4</td>
+<td>-0.152486</td>
+<td>-1.109394</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>5</td>
+<td>-0.001426</td>
+<td>0.914686</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4995</td>
+<td>500</td>
+<td>6</td>
+<td>-0.077057</td>
+<td>3.720502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4996</td>
+<td>500</td>
+<td>7</td>
+<td>0.218847</td>
+<td>0.559121</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4997</td>
+<td>500</td>
+<td>8</td>
+<td>-0.155530</td>
+<td>-3.766785</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4998</td>
+<td>500</td>
+<td>9</td>
+<td>-0.040172</td>
+<td>0.903354</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4999</td>
+<td>500</td>
+<td>10</td>
+<td>-0.001172</td>
+<td>-0.529761</td>
+</tr>
+</tbody>
+</table>
+
+<p>5000 rows × 4 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="linearmodels" class="level2">
+<h2 class="anchored" data-anchor-id="linearmodels">linearmodels</h2>
+<p>The <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library is a Python package written by <a href="https://www.kevinsheppard.com/">Kevin Sheppard</a> at the University of Oxford that extends the <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a> library with functions commonly used in financial econometrics. Of note, the <a href="https://bashtage.github.io/linearmodels/">documentation</a> is quite good and the library is actively maintained.</p>
+<section id="installation" class="level3">
+<h3 class="anchored" data-anchor-id="installation">Installation</h3>
+<p>You can install the library with your package manager of choice:</p>
+<p><strong>poetry</strong>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add linearmodels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>pip</strong>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install linearmodels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>conda</strong> (linearmodels is not available in the default conda channel, but it is available in the <code>conda-forge</code> channel):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge linearmodels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="usage" class="level3">
+<h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<p>The library is easy to use, and intuitive for anyone familiar with <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a>. In this post, I will use two model types: <code>PanelOLS</code> and <code>FamaMacBeth</code>. As their names imply, the <code>PanelOLS</code> class is used to estimate panel data models, and the <code>FamaMacBeth</code> class is used to estimate Fama-MacBeth regressions. The library also provides implementations for random effects and first differences models, and for between estimation and pooled OLS estimators. In addition to panel data models, the library also provides implementations for instrumental variables models (including 2SLS, 3SLS, GMM, and SUR) and for estimating linear factor models.</p>
+<p>A key particularity of linearmodels is that it uses the indexing capabilities of pandas to identify the panel data structure. In particular, the <strong>DataFrame that contains your panel data must have a MultiIndex with the entity dimension in the first level and the time dimension in the second level</strong>:</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index([<span class="st">"firmid"</span>, <span class="st">"year"</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">x</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">firmid</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">1</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>-1.113973</td>
+<td>2.251535</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-0.080854</td>
+<td>1.242346</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>-0.237607</td>
+<td>-1.426376</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.152486</td>
+<td>-1.109394</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>-0.001426</td>
+<td>0.914686</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">500</td>
+<td data-quarto-table-cell-role="th">6</td>
+<td>-0.077057</td>
+<td>3.720502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>0.218847</td>
+<td>0.559121</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>-0.155530</td>
+<td>-3.766785</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>-0.040172</td>
+<td>0.903354</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>-0.001172</td>
+<td>-0.529761</td>
+</tr>
+</tbody>
+</table>
+
+<p>5000 rows × 2 columns</p>
+</div>
+</div>
+</div>
+<p>You define models by passing the dependent variable and the exogenous variables to the model class. Alternatively, following statsmodels, linearmodels leverages the patsy formula language to provide a more intuitive way to define models. For example, the following two lines of code are equivalent:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS(data[<span class="st">"y"</span>], data[[<span class="st">"x1"</span>, <span class="st">"x2"</span>]])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(formula<span class="op">=</span><span class="st">"y ~ x1 + x2"</span>, data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You then estimate models by calling the <code>fit()</code> method. The <code>fit()</code> method returns a <code>linearmodels</code> regression results object, which contains the estimated coefficients, standard errors, and other statistics. The <code>linearmodels</code> results object is similar to the statsmodels results object, but it contains additional methods and attributes that are useful for panel data models.</p>
+</section>
+</section>
+<section id="ols-coefficients-and-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="ols-coefficients-and-standard-errors">OLS coefficients and standard errors</h2>
+<p>The first model I estimate is a vanilla OLS model.</p>
+<p>The OLS estimator is the most common estimator in finance research. It is also the most efficient estimator when the errors are homoskedastic and uncorrelated across entities and time.</p>
+<p>The OLS estimator is defined as:</p>
+<p><span class="math display">\[
+\hat{\beta}_{OLS} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{X}\)</span> is the matrix of exogenous variables and <span class="math inline">\(\mathbf{y}\)</span> is the vector of dependent variables. The covariance matrix <span class="math inline">\(\Sigma\)</span> of the estimator is defined as:</p>
+<p><span class="math display">\[
+\Sigma_{OLS}  =\sigma_{\mathbf{\epsilon}}^{2}\cdot\left(\mathbf{X}^{\prime}\mathbf{X}\right)^{-1},
+\]</span></p>
+<p>where <span class="math inline">\(\sigma_{\mathbf{\epsilon}}^{2}\)</span> is usually estimated with the residuals <span class="math inline">\(\mathbf{\hat{e}}=( \mathbf{y}-\mathbf{X}\hat{\beta}_{OLS})\)</span> from the OLS regression:</p>
+<p><span class="math display">\[
+\hat{\sigma}_{\mathbf{\epsilon}}^{2} =\frac{1}{N-K}\mathbf{\hat{e}}'\mathbf{\hat{e}}.
+\]</span></p>
+<p>The <code>PanelOLS</code> class can be used to estimate OLS models. The following code estimates the OLS coefficients and standard errors:</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> PanelOLS</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Unadjusted</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0284</td>
+<td>1.0466</td>
+<td>0.2954</td>
+<td>-0.0259</td>
+<td>0.0853</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0286</td>
+<td>36.204</td>
+<td>0.0000</td>
+<td>0.9788</td>
+<td>1.0909</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+<p>Note that because the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, we need to add it manually to the model by adding <code>1</code> to the formula.</p>
+</section>
+<section id="white-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="white-standard-errors">White standard errors</h2>
+<p>The OLS estimator standard errors are consistent when the errors are homoskedastic and uncorrelated across entities and time. In this case, the OLS estimator is unbiased and consistent. However, this is not usually the case with financial data, where the errors are often heteroskedastic and correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect.</p>
+<p>A common solution to this problem is to use heteroskedasticity-robust standard errors. The most common heteroskedasticity-robust standard errors estimator is the White estimator, which is defined as</p>
+<p><span class="math display">\[
+\hat{\Sigma}_{White} = (X' X)^{-1}\cdot\left[X' \cdot\text{diag}(\mathbf{\hat{e}}^{2})  \cdot X\right] \cdot\left(X' X\right)^{-1},
+\]</span></p>
+<p>where <span class="math inline">\(\text{diag}(\mathbf{\hat{e}}^{2})\)</span> is a diagonal matrix with the squared residuals <span class="math inline">\(\mathbf{\hat{e}}^{2}\)</span> on the diagonal, i.e., with the square of the j-th residual <span class="math inline">\(\hat{e}_{j}^{2}\)</span> at position <span class="math inline">\((j,j)\)</span> and <span class="math inline">\(0\)</span> elsewhere.</p>
+<p>The <code>PanelOLS</code> class can be used to estimate OLS models with White standard errors. The following code estimates the OLS coefficients and White standard errors:</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"robust"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Robust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>1328.2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0284</td>
+<td>1.0465</td>
+<td>0.2954</td>
+<td>-0.0259</td>
+<td>0.0853</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0284</td>
+<td>36.444</td>
+<td>0.0000</td>
+<td>0.9792</td>
+<td>1.0905</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+<p>The estimated coefficients are the same as with the OLS standard errors, but the standard errors are different. In turn, all statistical measures that depend on the standard errors, such as t-statistics and p-values, are different.</p>
+</section>
+<section id="clustered-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="clustered-standard-errors">Clustered standard errors</h2>
+<p>Beyond the basics, a common concern with panel is that the errors are correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect. Clustering standard errors is a widely-used adjustment for this problem.</p>
+<p>The intuition behind clustering is that often the errors are correlated within groups, but not across groups. For example, in a panel data set with firms, the errors could correlated within the observations of a firm, but not across firms. In this case, we can cluster the standard errors by firm to obtain consistent standard errors. Implicitly we assume that the errors have the following structure:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<table class="table-striped table-sm table-hover small table">
+<caption></caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 1</strong></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 2</strong></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 3</strong></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Firm 1</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{13}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{13}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}^2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Firm 2</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{23}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{23}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}^2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Firm 3</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{31}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{31}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>If you assume that the errors are correlated within the observations of a firm, and across firms within each time period, you can use standard errors clustered by firm and year. In this case, the errors have the following structure:</p>
+<table class="table-striped table-sm table-hover small table">
+<caption></caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 1</strong></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 2</strong></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Firm 3</strong></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Firm 1</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{13}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{21}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{11}\epsilon_{31}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{13}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{22}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{12}\epsilon_{32}\)</span></td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}^2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{23}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{13}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Firm 2</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{11}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{23}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{21}\epsilon_{31}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{12}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{23}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{22}\epsilon_{32}\)</span></td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{13}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}^2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{23}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Firm 3</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{11}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{21}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{31}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{12}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{22}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{31}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{32}\epsilon_{33}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{13}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{23}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{31}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}\epsilon_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon_{33}^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>You can easily estimate clustered standard errors with the <code>PanelOLS</code> class by passing <code>cov_type="clustered"</code> and the <code>entity_effects</code> and <code>time_effects</code> arguments to <code>fit()</code> method. The following code estimates the OLS coefficients and standard errors clustered by firm, year, and firm and year:</p>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>418.32</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0670</td>
+<td>0.4429</td>
+<td>0.6579</td>
+<td>-0.1017</td>
+<td>0.1611</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0506</td>
+<td>20.453</td>
+<td>0.0000</td>
+<td>0.9356</td>
+<td>1.1340</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>960.59</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0234</td>
+<td>1.2691</td>
+<td>0.2045</td>
+<td>-0.0162</td>
+<td>0.0755</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0334</td>
+<td>30.993</td>
+<td>0.0000</td>
+<td>0.9694</td>
+<td>1.1003</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>373.33</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0651</td>
+<td>0.4562</td>
+<td>0.6483</td>
+<td>-0.0979</td>
+<td>0.1572</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0536</td>
+<td>19.322</td>
+<td>0.0000</td>
+<td>0.9298</td>
+<td>1.1398</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Difference with Stata and statsmodels
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By default, Stata and statsmodels estimators adjust the degrees of freedom when estimating clustered standard errors with small clusters. linearmodels does not do that by default, that is what the <code>group_debias=True</code> parameter is for.</p>
+</div>
+</div>
+</section>
+<section id="panel-regression-with-fixed-effects" class="level2">
+<h2 class="anchored" data-anchor-id="panel-regression-with-fixed-effects">Panel regression with fixed effects</h2>
+<p>It is common in finance research to control for entity fixed effects to capture unobserved heterogeneity across entities and for time fixed effects to capture unobserved heterogeneity across time. For example, in a panel of firms, we can control for firm fixed effects to capture unobserved firm-specific characteristics that are constant over time. These fixed effects correspond to the <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\alpha_t\)</span> in our panel regression:</p>
+<p><span class="math display">\[
+y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
+\]</span></p>
+<p>The <code>PanelOLS</code> class can be used to estimate panel regression with fixed effects by adding <code>EntityEffects</code> or <code>TimeEffects</code> to the formula. In theory this is equivalent to adding a dummy variable for each entity or time period (i.e.&nbsp;adding <code>C(firmid)</code> or <code>C(year)</code>), but in practice it is much more efficient because linear models will use a efficient transformation to apply the effetc of the dummy variables without including them in the regression estimation. linearmodels will thus not provide coefficients for the fixed effects. Also, the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, so linearmodels will not provide an intercept either.</p>
+<p>The following code estimates the OLS coefficients and standard errors with firm fixed effects, year fixed effects, and firm and year fixed effects, and clustered standard errors along the same dimensions:</p>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mod_ffe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects"</span>, df)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_ffe.fit(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.1916</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2187</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1916</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-8532.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1066.3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4499)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>1035.4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4499)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">x</td>
+<td>0.9699</td>
+<td>0.0301</td>
+<td>32.177</td>
+<td>0.0000</td>
+<td>0.9108</td>
+<td>1.0290</td>
+</tr>
+</tbody>
+</table>
+<br><br>F-test for Poolability: 11.372<br>P-value: 0.0000<br>Distribution: F(499,4499)<br><br>Included effects: Entity
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod_yfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + TimeEffects"</span>, df)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_yfe.fit(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2077</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1307.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4989)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>961.52</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4989)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0351</td>
+<td>0.0334</td>
+<td>31.008</td>
+<td>0.0000</td>
+<td>0.9696</td>
+<td>1.1005</td>
+</tr>
+</tbody>
+</table>
+<br><br>F-test for Poolability: 0.6799<br>P-value: 0.7279<br>Distribution: F(9,4989)<br><br>Included effects: Time
+</div>
+</div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mod_fyfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects + TimeEffects"</span>, df)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fyfe.fit(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.1913</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2187</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1916</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, Jan 19 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>08:23:25</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-8525.9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Clustered</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1062.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4490)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>972.96</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4490)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">x</td>
+<td>0.9700</td>
+<td>0.0311</td>
+<td>31.192</td>
+<td>0.0000</td>
+<td>0.9091</td>
+<td>1.0310</td>
+</tr>
+</tbody>
+</table>
+<br><br>F-test for Poolability: 11.203<br>P-value: 0.0000<br>Distribution: F(508,4490)<br><br>Included effects: Entity, Time
+</div>
+</div>
+</section>
+<section id="driscoll-kraay-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="driscoll-kraay-standard-errors">Driscoll-Kraay standard errors</h2>
+<p>The Driscoll-Kraay standard errors estimator is a heteroskedasticity-robust standard errors estimator that is robust to serial correlation in the errors. This is particularly important in datasets where the assumption that observations are independent across cross-sections may not hold. See <span class="citation" data-cites="driscoll1998consistent">Driscoll and Kraay (<a href="#ref-driscoll1998consistent" role="doc-biblioref">1998</a>)</span> for more details.</p>
+<p>To use the Driscoll-Kraay standard errors estimator, you need to pass the following arguments to the <code>fit()</code> method:</p>
+<ul>
+<li><code>cov_type="kernel"</code>: To use the Driscoll-Kraay HAC estimator.</li>
+<li><code>kernel="bartlett"</code>: The kernel to use. <a href="https://stats.stackexchange.com/questions/329513/bartlett-kernel-newey-west-covariance-matrix">Bartlett</a> is the kernel used by the Newey-West estimator. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
+<li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
+</ul>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>PanelOLS Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>PanelOLS</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sat, Jan 20 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>07:01:02</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Driscoll-Kraay</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>1708.6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0297</td>
+<td>0.0218</td>
+<td>1.3622</td>
+<td>0.1732</td>
+<td>-0.0130</td>
+<td>0.0724</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0348</td>
+<td>0.0250</td>
+<td>41.335</td>
+<td>0.0000</td>
+<td>0.9858</td>
+<td>1.0839</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+</div>
+</section>
+<section id="fama-macbeth-coefficients-and-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth coefficients and standard errors</h2>
+<p>The Fama-MacBeth regression, introduced in <span class="citation" data-cites="fama1973risk">Fama and MacBeth (<a href="#ref-fama1973risk" role="doc-biblioref">1973</a>)</span>, is a robust method for estimating financial models in the context of panel data in empirical finance research that is effective in dealing with cross-sectional correlation and heteroskedasticity. This technique involves two key steps: For our model, we would first estimate the following cross-sectional regression for each time period <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[
+y_{it} =  \alpha_t + x_{it}\beta + \epsilon_{it},
+\]</span></p>
+<p>and then average the coefficients <span class="math inline">\(\beta\)</span> over all time periods to provide final estimates:</p>
+<p><span class="math display">\[
+\bar{\beta} = \frac{1}{T} \sum_{t=1}^{T} \beta_t.
+\]</span></p>
+<p>The covariance matrix can then be computed as:</p>
+<p><span class="math display">\[
+\Sigma = \frac{1}{T-1} \sum_{t=1}^{T} (\beta_t - \bar{\beta})(\beta_t - \bar{\beta})'.
+\]</span></p>
+<p>linearmodels provides a <code>FamaMacBeth</code> class that can be used to estimate Fama-MacBeth regressions. The following code estimates the Fama-MacBeth coefficients and standard errors:</p>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> FamaMacBeth</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mod_fm <span class="op">=</span> FamaMacBeth.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fm.fit()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>FamaMacBeth Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>FamaMacBeth</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sat, Jan 20 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>06:09:49</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Fama-MacBeth Standard Cov</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>964.72</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0313</td>
+<td>0.0234</td>
+<td>1.3392</td>
+<td>0.1806</td>
+<td>-0.0145</td>
+<td>0.0771</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0356</td>
+<td>0.0333</td>
+<td>31.060</td>
+<td>0.0000</td>
+<td>0.9702</td>
+<td>1.1010</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="newey-west-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="newey-west-standard-errors">Newey-West standard errors</h2>
+<p>It is common in practice to use <a href="https://en.wikipedia.org/wiki/Newey%E2%80%93West_estimator">Newey-West</a> standard errors <span class="citation" data-cites="newey1987simple">(introduced in <a href="#ref-newey1987simple" role="doc-biblioref">Newey and West 1987</a>)</span> instead of the standard errors above in Fama-MacBeth regressions to account for heteroskedasticity and autocorrelation in the residuals.</p>
+<p>To use Newey-West standard errors, you can pass the following arguments to the <code>fit()</code> method:</p>
+<ul>
+<li><code>cov_type="kernel"</code>: To use HAC standard errors. See the <a href="https://bashtage.github.io/linearmodels/system/examples/examples.html#Kernel-(HAC)">documentation on Kernel (HAC)</a> for more details.</li>
+<li><code>kernel="bartlett"</code>: The Newey-West estimator uses the Bartlett kernel. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
+<li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
+</ul>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fm_res <span class="op">=</span> fm_mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fm_res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>FamaMacBeth Estimation Summary</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.2078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Estimator:</td>
+<td>FamaMacBeth</td>
+<td data-quarto-table-cell-role="th">R-squared (Between):</td>
+<td>0.2208</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>5000</td>
+<td data-quarto-table-cell-role="th">R-squared (Within):</td>
+<td>0.1907</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sat, Jan 20 2024</td>
+<td data-quarto-table-cell-role="th">R-squared (Overall):</td>
+<td>0.2078</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>06:34:46</td>
+<td data-quarto-table-cell-role="th">Log-likelihood</td>
+<td>-1.057e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cov. Estimator:</td>
+<td>Fama-MacBeth Kernel Cov</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1310.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Entities:</td>
+<td>500</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>10.0000</td>
+<td data-quarto-table-cell-role="th">F-statistic (robust):</td>
+<td>1440.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time periods:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th">Distribution:</td>
+<td>F(1,4998)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Avg Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Min Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Max Obs:</td>
+<td>500.00</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Parameter Estimates</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Parameter</td>
+<td data-quarto-table-cell-role="th">Std. Err.</td>
+<td data-quarto-table-cell-role="th">T-stat</td>
+<td data-quarto-table-cell-role="th">P-value</td>
+<td data-quarto-table-cell-role="th">Lower CI</td>
+<td data-quarto-table-cell-role="th">Upper CI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.0313</td>
+<td>0.0224</td>
+<td>1.3934</td>
+<td>0.1636</td>
+<td>-0.0127</td>
+<td>0.0753</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>1.0356</td>
+<td>0.0273</td>
+<td>37.958</td>
+<td>0.0000</td>
+<td>0.9821</td>
+<td>1.0891</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cheat-sheet" class="level2">
+<h2 class="anchored" data-anchor-id="cheat-sheet">Cheat sheet</h2>
+<p>The following table summarizes the standard errors estimators available in linearmodels and their corresponding methods:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> PanelOLS</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with constant</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>mod_cst <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ 1 + x1 + x2"</span>, data)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-robust errors (regular OLS)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># White standard errors (heteroskedasticity-robust)</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit(cov_type<span class="op">=</span><span class="st">"robust"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustered standard errors</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># By entity (firm)</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit(</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># By time (year)</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit(</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># By entity and time</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit(</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed effects models</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with entity (firm) fixed effects</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>mod_fe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x1 + x2 + EntityEffects"</span>, data)</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with time (year) fixed effects</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>mod_fe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x1 + x2 + TimeEffects"</span>, data)</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with entity and time fixed effects</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>mod_fe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x1 + x2 + EntityEffects+ TimeEffects"</span>, data)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="co"># To cluster standard errors by entity and time, the usage is the same as above,</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="co"># but applied to the FE model.</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="co"># By entity (firm)</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fe.fit(</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="co"># By time (year)</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fe.fit(</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="co"># By entity and time</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fe.fit(</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Driscoll-Kraay standard errors</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_cst.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Fama-MacBeth regressions</span></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> FamaMacBeth</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>mod_fm <span class="op">=</span> FamaMacBeth.from_formula(<span class="st">"y ~ 1 + x1 + x2"</span>, data)</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-adjusted standard errors</span></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fm.fit()</span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Newey-West standard errors with 3 lags</span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fm.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="learn-more" class="level2">
+<h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
+<p>To learn more about the linearmodels library, I recommend reading the <a href="https://bashtage.github.io/linearmodels/">documentation</a>, especially the section on <a href="https://bashtage.github.io/linearmodels/panel/index.html">panel data model estimation</a>.</p>
+<p>Using a powerful tool like linearmodels can help you save time and avoid errors when estimating panel data models. However, it is important to understand the underlying econometric theory. If you are interested in learning more about panel data models and their associated standard error, I recommend reading the <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span> paper or <a href="https://www.youtube.com/watch?v=CZnfHfYVkBo&amp;t=25s">watching the talk</a> he gave at the 2008 FMA Annual meetings.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-driscoll1998consistent" class="csl-entry" role="listitem">
+Driscoll, John C, and Aart C Kraay. 1998. <span>“Consistent Covariance Matrix Estimation with Spatially Dependent Panel Data.”</span> <em>Review of Economics and Statistics</em> 80 (4): 549–60. <a href="https://www.mitpressjournals.org/doi/abs/10.1162/003465398557825">https://www.mitpressjournals.org/doi/abs/10.1162/003465398557825</a>.
+</div>
+<div id="ref-fama1973risk" class="csl-entry" role="listitem">
+Fama, Eugene F, and James D MacBeth. 1973. <span>“Risk, Return, and Equilibrium: Empirical Tests.”</span> <em>Journal of Political Economy</em> 81 (3): 607–36. <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/260061">https://www.journals.uchicago.edu/doi/abs/10.1086/260061</a>.
+</div>
+<div id="ref-newey1987simple" class="csl-entry" role="listitem">
+Newey, Whitney K, and Kenneth D West. 1987. <span>“A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix.”</span> <em>Econometrica</em> 55 (3): 703–8. <a href="https://www.jstor.org/stable/1913610">https://www.jstor.org/stable/1913610</a>.
+</div>
+<div id="ref-petersen2008estimating" class="csl-entry" role="listitem">
+Petersen, Mitchell A. 2008. <span>“Estimating Standard Errors in Finance Panel Data Sets: Comparing Approaches.”</span> <em>The Review of Financial Studies</em> 22 (1): 435–80. <a href="https://academic.oup.com/rfs/article-abstract/22/1/435/1585940">https://academic.oup.com/rfs/article-abstract/22/1/435/1585940</a>.
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Credit: the two tables are taken from <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Vincent Grégoire</div>   
+    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

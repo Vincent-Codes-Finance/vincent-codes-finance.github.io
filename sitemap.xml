@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2024-01-07T13:35:15.443Z</lastmod>
+    <lastmod>2024-01-21T16:58:29.455Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/intro-to-python/python-basics/index.html</loc>
-    <lastmod>2024-01-07T13:35:14.777Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
-    <lastmod>2024-01-07T13:35:06.677Z</lastmod>
+    <lastmod>2024-01-21T16:58:28.758Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/welcome/index.html</loc>
-    <lastmod>2024-01-07T13:35:06.974Z</lastmod>
+    <lastmod>2024-01-21T16:58:19.088Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
+    <lastmod>2024-01-21T16:58:18.766Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</loc>
+    <lastmod>2024-01-21T16:58:20.805Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</loc>
-    <lastmod>2024-01-07T13:35:08.460Z</lastmod>
+    <lastmod>2024-01-21T16:58:22.284Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/index.html</loc>
-    <lastmod>2024-01-07T13:35:15.135Z</lastmod>
+    <lastmod>2024-01-21T16:58:29.155Z</lastmod>
   </url>
 </urlset>

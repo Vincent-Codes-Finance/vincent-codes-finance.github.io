@@ -327,7 +327,23 @@ cookieconsent.run({
 
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
 </div></div>
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-you-need-for-a-complete-python-environment" id="toc-what-you-need-for-a-complete-python-environment" class="nav-link active" data-scroll-target="#what-you-need-for-a-complete-python-environment">What you need for a complete Python environment</a></li>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#github.com-optional" id="toc-github.com-optional" class="nav-link" data-scroll-target="#github.com-optional">GitHub.com (optional)</a></li>
+  <li><a href="#creating-a-sandbox-environment" id="toc-creating-a-sandbox-environment" class="nav-link" data-scroll-target="#creating-a-sandbox-environment">Creating a sandbox environment</a></li>
+  <li><a href="#configuring-visual-studio-code" id="toc-configuring-visual-studio-code" class="nav-link" data-scroll-target="#configuring-visual-studio-code">Configuring Visual Studio Code</a></li>
+  <li><a href="#github-codespaces" id="toc-github-codespaces" class="nav-link" data-scroll-target="#github-codespaces">Python in the cloud using Github Codespaces</a>
+  <ul class="collapse">
+  <li><a href="#other-cloud-alternatives" id="toc-other-cloud-alternatives" class="nav-link" data-scroll-target="#other-cloud-alternatives">Other cloud alternatives</a></li>
+  </ul></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -443,15 +459,36 @@ Poetry vs Anaconda
 </section>
 <section id="python" class="level3">
 <h3 class="anchored" data-anchor-id="python">Python</h3>
-<p>To install Python with brew, run the following command in the Terminal app:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install python@3.12 python@3.11 python@3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you have Anaconda installed
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have Anaconda installed, you should uninstall it before installing Python with brew. Follow the instructions <a href="https://docs.anaconda.com/anaconda/install/uninstall/">here</a> to uninstall Anaconda.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> install Python with brew, run the following command in the Terminal app:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="fu">bash</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install python@3.12 python@3.11 python@3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will install the latest version of Python (3.12), as well as the previous two versions. This is useful because some libraries are not compatible with the latest version of Python, so you might need to use an older version for some projects.</p>
 <p>To make sure that the latest version of Python is used by default, run the following command in the Terminal app:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="$HOMEBREW_PREFIX/opt/python@3.12/libexec/bin:$PATH"'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should now have Python 3.12 installed. To check, run the following command in the Terminal app:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It should also work with the <code>python</code> command:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the two versions are different, it means that <code>python</code> still links to the system Python. To fix this, run the following command in the Terminal app:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'alias python="python3"'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -460,7 +497,7 @@ Homebrew and the base environment
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>By default, Homebrew will lock the base Python environment, which means that you cannot install additional libraries in the base environment. This means that you cannot easily install pandas or other libraries in the base environment.</p>
 <p>I consider this a good thing because it prevents you from accidentally breaking your Python installation and it forces you to use virtual environments, which is a good practice. However, if you want to change this behavior, there are a few <a href="https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3">workarounds</a>.</p>
@@ -472,14 +509,14 @@ Homebrew and the base environment
 <section id="poetry-1" class="level3">
 <h3 class="anchored" data-anchor-id="poetry-1">Poetry</h3>
 <p>To install Poetry with brew, run the following command in the Terminal app:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install poetry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install poetry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default, Poetry installs Python for each project in the <code>~/Library/Caches/pypoetry/virtualenvs/</code> directory. I prefer to have it in the project directory. That way if, I delete the directory, then the environment is deleted as well, which prevents accumulating virtual environments for discarded projects. To enable this, run the following command:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-studio-code" class="level3">
 <h3 class="anchored" data-anchor-id="visual-studio-code">Visual Studio Code</h3>
 <p>To install Visual Studio Code with brew, run the following command in the Terminal app:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> visual-studio-code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> visual-studio-code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -499,10 +536,10 @@ Homebrew and the base environment
 <section id="git-and-github" class="level3">
 <h3 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h3>
 <p>Git is already installed on your Mac as a command-line tool because you have installed the Xcode tools. Still, I recommend installing the latest version using brew:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To follow along with the upcoming tutorials, or to collaborate efficiently with others, you will also need to use GitHub. For this, you will want to use the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code> for short) or the <a href="https://desktop.github.com/">GitHub Desktop</a> app. Both can be installed using brew:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install gh</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> github</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install gh</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> github</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
@@ -530,11 +567,11 @@ You should consider Homebrew
 <p>Installation instructions can be found <a href="https://python-poetry.org/docs/#installation">here</a>.</p>
 <p><strong>Note:</strong> If you get an SSH-related issue, go back up to the Python installation instruction and run <code>Install Certificates.command</code>.</p>
 <p>By default, Poetry installs Python for each project in the <code>~/Library/Caches/pypoetry/virtualenvs/</code> directory. I prefer to have it in the project directory, that way if, I delete the directory, then the environment is deleted as well, which prevents accumulating virtual environments for discarded projects. To enable this, run the following command in the Terminal app. You can find it in the <code>Applications/Utilities</code> folder, or by using Spotlight (press <code>⌘</code> + <code>Space</code> and type <code>Terminal</code>).</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you get an error message that <code>poetry</code> is not found, you need to add it to your path. To do so, open the Terminal app and run the following command:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/Users/{user}/.local/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/Users/{user}/.local/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>where <code>{user}</code> is your username. You can find it by running the following command in the Terminal app:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-studio-code-1" class="level3">
 <h3 class="anchored" data-anchor-id="visual-studio-code-1">Visual Studio Code</h3>
@@ -555,7 +592,7 @@ You should consider Homebrew
 <h3 class="anchored" data-anchor-id="poetry-3">Poetry</h3>
 <p>Installation instructions can be found <a href="https://python-poetry.org/docs/#installation">here</a>.</p>
 <p>By default, Poetry installs Python for each project in the <code>~/.cache/pypoetry/virtualenvs/</code> directory. I prefer to have it in the project directory, that way if, I delete the directory, then the environment is deleted as well, which prevents accumulating virtual environments for discarded projects. To enable this, run the following command in the terminal:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-studio-code-2" class="level3">
 <h3 class="anchored" data-anchor-id="visual-studio-code-2">Visual Studio Code</h3>
@@ -569,14 +606,14 @@ You should consider Homebrew
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <section id="python-3" class="level3">
 <h3 class="anchored" data-anchor-id="python-3">Python</h3>
-<p>Windows does not have a built-in Python interpreter, so you will need to install it. I recommend installing a fresh version from the official distribution at <a href="https://www.python.org/downloads/">python.org</a>.</p>
+<p>Windows does not have a built-in Python interpreter, so you will need to install it. I recommend installing a fresh version from the <a href="https://apps.microsoft.com/detail/9NCVDN91XZQP?hl=en-US&amp;gl=US">Microsoft Store</a>. You can also install it from the official distribution at <a href="https://www.python.org/downloads/">python.org</a>, but the Microsoft Store version is easier to install and is more consistent in setting up the environment variables correctly.</p>
 </section>
 <section id="poetry-4" class="level3">
 <h3 class="anchored" data-anchor-id="poetry-4">Poetry</h3>
 <p>Installation instructions can be found <a href="https://python-poetry.org/docs/#installation">here</a>.</p>
 <p><strong>Note:</strong> Unless you are using the Windows Subsystem for Linux (WSL), you should follow the instructions for Windows PowerShell.</p>
 <p>By default, Poetry installs Python for each project in a global directory. I prefer to have it in the project directory, that way if, I delete the directory, then the environment is deleted as well, which prevents accumulating virtual environments for discarded projects. To enable this, run the following command in Powershell:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.in-project true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-studio-code-3" class="level3">
 <h3 class="anchored" data-anchor-id="visual-studio-code-3">Visual Studio Code</h3>
@@ -615,16 +652,31 @@ You should consider Homebrew
 <li><a href="https://docs.pytest.org/en/6.2.x/">pytest</a>: Testing framework</li>
 </ul>
 <p>To create this sandbox environment, I will use Poetry. First, I need to create a new directory for the environment. I will call it <code>sandbox</code>. Then, I need to create a new project in this directory:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/Documents/sandbox</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Documents/sandbox</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/Documents/sandbox</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Documents/sandbox</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Follow the instructions to create the project. You can leave the default values for most questions, but do not add any dependencies (it’s simpler to add them after).</p>
 <p>This creates a <code>pyproject.toml</code> file in the <code>sandbox</code> directory. This file contains the list of dependencies for the project (which will be empty for now).</p>
 <p>Once the project is created, you can add the dependencies:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add pandas numpy scipy matplotlib seaborn statsmodels scikit-learn linearmodels pyarrow jupyter pytest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add pandas numpy scipy matplotlib seaborn statsmodels scikit-learn linearmodels pyarrow jupyter pytest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This step updates the <code>pyproject.toml</code> file and creates a <code>poetry.lock</code> file, which contains the exact version of each dependency. This file is used to make sure that all collaborators use the same version of each library. Note that because our dependencies are built on top of other libraries, Poetry will also install the dependencies of our dependencies.</p>
 <p>To activate the environment in the terminal, run the following command:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> shell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> shell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If at some point you get the following error message, you can safely ignore it:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> current project could not be installed: No file/folder found for package sandbox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is because Poetry is trying to install the <code>sandbox</code> package, which does not exist. This does not affect the creation of the environment and the installation of the dependencies. I will cover the intricacies of Poetry in a future post.</p>
+</div>
+</div>
 </section>
 <section id="configuring-visual-studio-code" class="level2">
 <h2 class="anchored" data-anchor-id="configuring-visual-studio-code">Configuring Visual Studio Code</h2>

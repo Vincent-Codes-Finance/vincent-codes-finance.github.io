@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/panel-ols-standard-errors/index.html",
       "/posts/python-basics-tutorial/index.html",
       "/posts/install-python-312/index.html",
       "/posts/welcome/index.html"
