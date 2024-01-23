@@ -277,7 +277,7 @@
     "href": "posts/panel-ols-standard-errors/index.html",
     "title": "Estimating standard errors in panel data with Python and linearmodels",
     "section": "",
-    "text": "In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.\nMore specifically, I show how to estimate the following class of models:\nIf you just want the code examples with no explanations, just to the cheat sheet at the end of the post."
+    "text": "In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.\nMore specifically, I show how to estimate the following class of models:\nIf you just want the code examples with no explanations, jump to the cheat sheet at the end of the post."
   },
   {
     "objectID": "posts/panel-ols-standard-errors/index.html#panel-data",
