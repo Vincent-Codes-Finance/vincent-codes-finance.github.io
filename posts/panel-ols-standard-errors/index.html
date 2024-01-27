@@ -353,7 +353,8 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#panel-data" id="toc-panel-data" class="nav-link active" data-scroll-target="#panel-data">Panel data</a></li>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#panel-data" id="toc-panel-data" class="nav-link" data-scroll-target="#panel-data">Panel data</a></li>
   <li><a href="#linearmodels" id="toc-linearmodels" class="nav-link" data-scroll-target="#linearmodels">linearmodels</a>
   <ul class="collapse">
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
@@ -396,6 +397,11 @@ cookieconsent.run({
 </ul></li>
 </ul>
 <p>If you just want the code examples with no explanations, jump to the <a href="#cheat-sheet">cheat sheet</a> at the end of the post.</p>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/TYTvLgi4mVc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
 <section id="panel-data" class="level2">
 <h2 class="anchored" data-anchor-id="panel-data">Panel data</h2>
 <p>One of the most common tasks in finance research is to estimate standard errors in panel data. Linear panel data models have the following form:</p>
@@ -451,16 +457,16 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </div>
 </div>
 <p>The goal is then to estimate the coefficients <span class="math inline">\(\beta\)</span> and their associated standard errors. The standard errors are important because they allow us to perform statistical inference. For example, we can test whether the coefficients are statistically different from zero.</p>
-<p>In his seminal paper, <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span> compares the performance of different standard errors estimators in panel data. In addition, he provides <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/se_programming.htm">programming advice</a> on how to estimate standard errors in panel data with Stata and other languages, but not for Python.</p>
+<p>In his seminal paper, <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2009</a>)</span> compares the performance of different standard errors estimators in panel data. In addition, he provides <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/se_programming.htm">programming advice</a> on how to estimate standard errors in panel data with Stata and other languages, but not for Python.</p>
 <p>In this post, I explain how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. I do so by replicating the sample results from Petersen’s <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm">test data page</a> in Python, and cover a few more standard errors estimators that are useful in finance research.</p>
 <p>I use the test data set provided by Mitchell Petersen and available <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.txt">here</a>. The data set contains 500 firms and 10 years.</p>
-<div class="cell" data-execution_count="33">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_table(</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"http://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.txt"</span>,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>[<span class="st">"firmid"</span>, <span class="st">"year"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>],</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    delim_whitespace<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    sep<span class="op">=</span><span class="vs">r"\s+"</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
@@ -580,7 +586,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <p>The library is easy to use, and intuitive for anyone familiar with <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a>. In this post, I will use two model types: <code>PanelOLS</code> and <code>FamaMacBeth</code>. As their names imply, the <code>PanelOLS</code> class is used to estimate panel data models, and the <code>FamaMacBeth</code> class is used to estimate Fama-MacBeth regressions. The library also provides implementations for random effects and first differences models, and for between estimation and pooled OLS estimators. In addition to panel data models, the library also provides implementations for instrumental variables models (including 2SLS, 3SLS, GMM, and SUR) and for estimating linear factor models.</p>
 <p>A key particularity of linearmodels is that it uses the indexing capabilities of pandas to identify the panel data structure. In particular, the <strong>DataFrame that contains your panel data must have a MultiIndex with the entity dimension in the first level and the time dimension in the second level</strong>:</p>
-<div class="cell" data-execution_count="34">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index([<span class="st">"firmid"</span>, <span class="st">"year"</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
@@ -690,8 +696,21 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <p><span class="math display">\[
 \hat{\sigma}_{\mathbf{\epsilon}}^{2} =\frac{1}{N-K}\mathbf{\hat{e}}'\mathbf{\hat{e}}.
 \]</span></p>
+<p>The estimate of the covariance matrix is then:</p>
+<p><span class="math display">\[
+\hat{\Sigma}_{OLS}  =\frac{1}{N-K}\mathbf{\hat{e}}'\mathbf{\hat{e}}\cdot\left(\mathbf{X}^{\prime}\mathbf{X}\right)^{-1},
+\]</span></p>
+<p><span class="math display">\[
+\hat{\Sigma}_{OLS}  =\left[\begin{array}{ccccc}
+\hat{\sigma}_{\beta_1}^2 &amp; \hat{\sigma}_{\beta_1,\beta_2} &amp; \cdots &amp; \hat{\sigma}_{\beta_1,\beta_{K-1}} &amp; \hat{\sigma}_{\beta_1,\beta_K} \\
+\hat{\sigma}_{\beta_2,\beta_1} &amp; \hat{\sigma}_{\beta_2}^2 &amp; \cdots &amp; \hat{\sigma}_{\beta_2,\beta_{K-1}} &amp; \hat{\sigma}_{\beta_2,\beta_K} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+\hat{\sigma}_{\beta_{K-1},\beta_1} &amp; \hat{\sigma}_{\beta_{K-1},\beta_2} &amp; \cdots &amp; \hat{\sigma}_{\beta_{K-1}}^2 &amp; \hat{\sigma}_{\beta_{K-1},\beta_K} \\
+\hat{\sigma}_{\beta_K,\beta_1} &amp; \hat{\sigma}_{\beta_K,\beta_2} &amp; \cdots &amp; \hat{\sigma}_{\beta_K,\beta_{K-1}} &amp; \hat{\sigma}_{\beta_K}^2
+\end{array} \right].
+\]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate OLS models. The following code estimates the OLS coefficients and standard errors:</p>
-<div class="cell" data-execution_count="35">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> PanelOLS</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
@@ -850,9 +869,21 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <p><span class="math display">\[
 \hat{\Sigma}_{White} = (X' X)^{-1}\cdot\left[X' \cdot\text{diag}(\mathbf{\hat{e}}^{2})  \cdot X\right] \cdot\left(X' X\right)^{-1},
 \]</span></p>
-<p>where <span class="math inline">\(\text{diag}(\mathbf{\hat{e}}^{2})\)</span> is a diagonal matrix with the squared residuals <span class="math inline">\(\mathbf{\hat{e}}^{2}\)</span> on the diagonal, i.e., with the square of the j-th residual <span class="math inline">\(\hat{e}_{j}^{2}\)</span> at position <span class="math inline">\((j,j)\)</span> and <span class="math inline">\(0\)</span> elsewhere.</p>
+<p>where <span class="math inline">\(\text{diag}(\mathbf{\hat{e}}^{2})\)</span> is a diagonal matrix with the squared residuals <span class="math inline">\(\mathbf{\hat{e}}^{2}\)</span> on the diagonal, i.e., with the square of the j-th residual <span class="math inline">\(\hat{e}_{j}^{2}\)</span> at position <span class="math inline">\((j,j)\)</span> and <span class="math inline">\(0\)</span> elsewhere:</p>
+<p><span class="math display">\[
+\text{diag}(\mathbf{\hat{e}}^{2})= \left[\begin{array}{cccccccc}
+e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
+0 &amp; e_{1, 2}^{2} &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0&amp; \cdots &amp;e_{2, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp;  \cdots &amp; 0 &amp; e_{2, 2}^{2} &amp; \cdots &amp; 0 &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
+0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; e_{I,T-1}^{2} &amp; 0 \\
+0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; e_{I,T}^{2}
+\end{array} \right].
+\]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate OLS models with White standard errors. The following code estimates the OLS coefficients and White standard errors:</p>
-<div class="cell" data-execution_count="36">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"robust"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
@@ -1284,7 +1315,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </tbody>
 </table>
 <p>You can easily estimate clustered standard errors with the <code>PanelOLS</code> class by passing <code>cov_type="clustered"</code> and the <code>entity_effects</code> and <code>time_effects</code> arguments to <code>fit()</code> method. The following code estimates the OLS coefficients and standard errors clustered by firm, year, and firm and year:</p>
-<div class="cell" data-execution_count="37">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
@@ -1433,7 +1464,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <br><br>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
@@ -1582,7 +1613,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <br><br>
 </div>
 </div>
-<div class="cell" data-execution_count="39">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
@@ -1741,7 +1772,8 @@ Difference with Stata and statsmodels
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>By default, Stata and statsmodels estimators adjust the degrees of freedom when estimating clustered standard errors with small clusters. linearmodels does not do that by default, that is what the <code>group_debias=True</code> parameter is for.</p>
+<p>By default, Stata and statsmodels estimators adjust the degrees of freedom when estimating clustered standard errors with small clusters. linearmodels does not do that by default, that is what the <code>group_debias</code> parameter is for. In this case it will make a difference because our time dimension is small.</p>
+<p>Note that there is a corresponding <code>debiased</code> parameter for the OLS and White estimator, but it is set to <code>True</code> by default so we do not need to set it explicitly.</p>
 </div>
 </div>
 </section>
@@ -1753,7 +1785,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 \]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate panel regression with fixed effects by adding <code>EntityEffects</code> or <code>TimeEffects</code> to the formula. In theory this is equivalent to adding a dummy variable for each entity or time period (i.e.&nbsp;adding <code>C(firmid)</code> or <code>C(year)</code>), but in practice it is much more efficient because linear models will use a efficient transformation to apply the effetc of the dummy variables without including them in the regression estimation. linearmodels will thus not provide coefficients for the fixed effects. Also, the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, so linearmodels will not provide an intercept either.</p>
 <p>The following code estimates the OLS coefficients and standard errors with firm fixed effects, year fixed effects, and firm and year fixed effects, and clustered standard errors along the same dimensions:</p>
-<div class="cell" data-execution_count="40">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mod_ffe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects"</span>, df)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_ffe.fit(</span>
@@ -1894,7 +1926,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 11.372<br>P-value: 0.0000<br>Distribution: F(499,4499)<br><br>Included effects: Entity
 </div>
 </div>
-<div class="cell" data-execution_count="41">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod_yfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + TimeEffects"</span>, df)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_yfe.fit(</span>
@@ -2035,7 +2067,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 0.6799<br>P-value: 0.7279<br>Distribution: F(9,4989)<br><br>Included effects: Time
 </div>
 </div>
-<div class="cell" data-execution_count="42">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mod_fyfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects + TimeEffects"</span>, df)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fyfe.fit(</span>
@@ -2186,7 +2218,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <li><code>kernel="bartlett"</code>: The kernel to use. <a href="https://stats.stackexchange.com/questions/329513/bartlett-kernel-newey-west-covariance-matrix">Bartlett</a> is the kernel used by the Newey-West estimator. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
 <li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
 </ul>
-<div class="cell" data-execution_count="45">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
@@ -2335,20 +2367,20 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 </section>
 <section id="fama-macbeth-coefficients-and-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth coefficients and standard errors</h2>
-<p>The Fama-MacBeth regression, introduced in <span class="citation" data-cites="fama1973risk">Fama and MacBeth (<a href="#ref-fama1973risk" role="doc-biblioref">1973</a>)</span>, is a robust method for estimating financial models in the context of panel data in empirical finance research that is effective in dealing with cross-sectional correlation and heteroskedasticity. This technique involves two key steps: For our model, we would first estimate the following cross-sectional regression for each time period <span class="math inline">\(t\)</span>:</p>
+<p>The Fama-MacBeth regression, introduced in <span class="citation" data-cites="fama1973risk">Fama and MacBeth (<a href="#ref-fama1973risk" role="doc-biblioref">1973</a>)</span>, is a robust method for estimating financial models in the context of panel data in empirical finance research that is effective in dealing with cross-sectional correlation and heteroskedasticity. This technique involves two key steps. For our model, we would first estimate the following cross-sectional regression for each time period <span class="math inline">\(t\)</span>:</p>
 <p><span class="math display">\[
-y_{it} =  \alpha_t + x_{it}\beta + \epsilon_{it},
+y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 \]</span></p>
-<p>and then average the coefficients <span class="math inline">\(\beta\)</span> over all time periods to provide final estimates:</p>
+<p>and then average the coefficients <span class="math inline">\(\beta_t\)</span> over all time periods to provide final estimates:</p>
 <p><span class="math display">\[
 \bar{\beta} = \frac{1}{T} \sum_{t=1}^{T} \beta_t.
 \]</span></p>
 <p>The covariance matrix can then be computed as:</p>
 <p><span class="math display">\[
-\Sigma = \frac{1}{T-1} \sum_{t=1}^{T} (\beta_t - \bar{\beta})(\beta_t - \bar{\beta})'.
+\hat{\Sigma}_{FM} = \frac{1}{T-1} \sum_{t=1}^{T} (\beta_t - \bar{\beta})(\beta_t - \bar{\beta})'.
 \]</span></p>
 <p>linearmodels provides a <code>FamaMacBeth</code> class that can be used to estimate Fama-MacBeth regressions. The following code estimates the Fama-MacBeth coefficients and standard errors:</p>
-<div class="cell" data-execution_count="43">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> FamaMacBeth</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mod_fm <span class="op">=</span> FamaMacBeth.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
@@ -2506,7 +2538,7 @@ y_{it} =  \alpha_t + x_{it}\beta + \epsilon_{it},
 <li><code>kernel="bartlett"</code>: The Newey-West estimator uses the Bartlett kernel. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
 <li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
 </ul>
-<div class="cell" data-execution_count="44">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fm_res <span class="op">=</span> fm_mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fm_res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="44">
@@ -2717,7 +2749,7 @@ y_{it} =  \alpha_t + x_{it}\beta + \epsilon_{it},
 <section id="learn-more" class="level2">
 <h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
 <p>To learn more about the linearmodels library, I recommend reading the <a href="https://bashtage.github.io/linearmodels/">documentation</a>, especially the section on <a href="https://bashtage.github.io/linearmodels/panel/index.html">panel data model estimation</a>.</p>
-<p>Using a powerful tool like linearmodels can help you save time and avoid errors when estimating panel data models. However, it is important to understand the underlying econometric theory. If you are interested in learning more about panel data models and their associated standard error, I recommend reading the <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span> paper or <a href="https://www.youtube.com/watch?v=CZnfHfYVkBo&amp;t=25s">watching the talk</a> he gave at the 2008 FMA Annual meetings.</p>
+<p>Using a powerful tool like linearmodels can help you save time and avoid errors when estimating panel data models. However, it is important to understand the underlying econometric theory. If you are interested in learning more about panel data models and their associated standard error, I recommend reading the <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2009</a>)</span> paper or <a href="https://www.youtube.com/watch?v=CZnfHfYVkBo&amp;t=25s">watching the talk</a> he gave at the 2008 FMA Annual meetings.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -2732,7 +2764,7 @@ Fama, Eugene F, and James D MacBeth. 1973. <span>“Risk, Return, and Equilibriu
 Newey, Whitney K, and Kenneth D West. 1987. <span>“A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix.”</span> <em>Econometrica</em> 55 (3): 703–8. <a href="https://www.jstor.org/stable/1913610">https://www.jstor.org/stable/1913610</a>.
 </div>
 <div id="ref-petersen2008estimating" class="csl-entry" role="listitem">
-Petersen, Mitchell A. 2008. <span>“Estimating Standard Errors in Finance Panel Data Sets: Comparing Approaches.”</span> <em>The Review of Financial Studies</em> 22 (1): 435–80. <a href="https://academic.oup.com/rfs/article-abstract/22/1/435/1585940">https://academic.oup.com/rfs/article-abstract/22/1/435/1585940</a>.
+Petersen, Mitchell A. 2009. <span>“Estimating Standard Errors in Finance Panel Data Sets: Comparing Approaches.”</span> <em>The Review of Financial Studies</em> 22 (1): 435–80. <a href="https://academic.oup.com/rfs/article-abstract/22/1/435/1585940">https://academic.oup.com/rfs/article-abstract/22/1/435/1585940</a>.
 </div>
 </div>
 
@@ -2743,7 +2775,7 @@ Petersen, Mitchell A. 2008. <span>“Estimating Standard Errors in Finance Panel
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Credit: the two tables are taken from <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2008</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Credit: the two tables are taken from <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2009</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
