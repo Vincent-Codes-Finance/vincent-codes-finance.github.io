@@ -397,6 +397,7 @@ cookieconsent.run({
 </ul></li>
 </ul>
 <p>If you just want the code examples with no explanations, jump to the <a href="#cheat-sheet">cheat sheet</a> at the end of the post.</p>
+<p>For time series models, see my post on <a href="../../posts/timeseries-standard-errors/index.html">estimating standard errors in time series data with Python and statsmodels</a>.</p>
 <section id="video-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
 <p>This post is also available as a video tutorial on YouTube.</p>
@@ -406,10 +407,10 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="panel-data">Panel data</h2>
 <p>One of the most common tasks in finance research is to estimate standard errors in panel data. Linear panel data models have the following form:</p>
 <p><span class="math display">\[
-y_{it} =  \alpha_i + \alpha_t + x_{it}'\beta  + \epsilon_{it},
+y_{it} =  \alpha_i + \alpha_t + x_{it}\beta  + \epsilon_{it},
 \]</span></p>
-<p>where <span class="math inline">\(y_{it}\)</span> is the dependent variable for entity <span class="math inline">\(i\in [1,I]\)</span> at time <span class="math inline">\(t\in [1,T]\)</span>, <span class="math inline">\(\alpha_i\)</span> is an entity fixed effect, <span class="math inline">\(\alpha_t\)</span> is a time fixed effect, <span class="math inline">\(x_{it}\)</span> is a vector of independent variables, <span class="math inline">\(\beta\)</span> is a vector of coefficients, and <span class="math inline">\(\epsilon_{it}\)</span> is the error term. For the sake of simplicity, in the rest of this post, I assume that the entity is a firm and the time is a year. The error term can be correlated across firms and years and can be heteroskedastic.</p>
-<p>Some of the discussion in this post uses the matrix form of the model for simplicity:</p>
+<p>where <span class="math inline">\(y_{it}\)</span> is the dependent variable for entity <span class="math inline">\(i\in [1,I]\)</span> at time <span class="math inline">\(t\in [1,T]\)</span>, <span class="math inline">\(\alpha_i\)</span> is an entity fixed effect, <span class="math inline">\(\alpha_t\)</span> is a time fixed effect, <span class="math inline">\(x_{it}\)</span> is a vector of independent variables, <span class="math inline">\(\beta\)</span> is a vector of coefficients, and <span class="math inline">\(\epsilon_{it}\)</span> is the error term. For the sake of simplicity, in the rest of this post, I assume that the entity is a firm and the time is a year. The error term can be correlated across firms and years and can be heteroskedastic, meaning that the variance of the error term is not constant.</p>
+<p>When we get to the data, we write the model in matrix form:</p>
 <p><span class="math display">\[
 \mathbf{y} = \mathbf{X}\beta + \mathbf{\epsilon},
 \]</span></p>
@@ -867,11 +868,11 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <p>The OLS estimator standard errors are consistent when the errors are homoskedastic and uncorrelated across entities and time. In this case, the OLS estimator is unbiased and consistent. However, this is not usually the case with financial data, where the errors are often heteroskedastic and correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect.</p>
 <p>A common solution to this problem is to use heteroskedasticity-robust standard errors. The most common heteroskedasticity-robust standard errors estimator is the White estimator, which is defined as</p>
 <p><span class="math display">\[
-\hat{\Sigma}_{White} = (X' X)^{-1}\cdot\left[X' \cdot\text{diag}(\mathbf{\hat{e}}^{2})  \cdot X\right] \cdot\left(X' X\right)^{-1},
+\hat{\Sigma}_{White} = (\mathbf{X}' \mathbf{X})^{-1}\cdot\left[\mathbf{X}' \cdot \hat{\Omega}_0  \cdot \mathbf{X}\right] \cdot\left(\mathbf{X}' \mathbf{X}\right)^{-1},
 \]</span></p>
-<p>where <span class="math inline">\(\text{diag}(\mathbf{\hat{e}}^{2})\)</span> is a diagonal matrix with the squared residuals <span class="math inline">\(\mathbf{\hat{e}}^{2}\)</span> on the diagonal, i.e., with the square of the j-th residual <span class="math inline">\(\hat{e}_{j}^{2}\)</span> at position <span class="math inline">\((j,j)\)</span> and <span class="math inline">\(0\)</span> elsewhere:</p>
+<p>where <span class="math inline">\(\hat{\Omega}_0\)</span> is a diagonal matrix with the squared residuals <span class="math inline">\(\mathbf{\hat{e}}^{2}\)</span> on the diagonal, i.e., with the square of the j-th residual <span class="math inline">\(\hat{e}_{j}^{2}\)</span> at position <span class="math inline">\((j,j)\)</span> and <span class="math inline">\(0\)</span> elsewhere. The matrix <span class="math inline">\(\hat{\Omega}_0\)</span> is defined as:</p>
 <p><span class="math display">\[
-\text{diag}(\mathbf{\hat{e}}^{2})= \left[\begin{array}{cccccccc}
+\hat{\Omega_0}= \left[\begin{array}{cccccccc}
 e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 0 &amp; e_{1, 2}^{2} &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
@@ -1033,7 +1034,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </section>
 <section id="clustered-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="clustered-standard-errors">Clustered standard errors</h2>
-<p>Beyond the basics, a common concern with panel is that the errors are correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect. Clustering standard errors is a widely-used adjustment for this problem.</p>
+<p>Beyond homoskedasticity, a common concern with panel models is that the errors are correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect. Clustering standard errors is a widely used adjustment for this problem.</p>
 <p>The intuition behind clustering is that often the errors are correlated within groups, but not across groups. For example, in a panel data set with firms, the errors could correlated within the observations of a firm, but not across firms. In this case, we can cluster the standard errors by firm to obtain consistent standard errors. Implicitly we assume that the errors have the following structure:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <table class="table-striped table-sm table-hover small table">
 <caption></caption>
@@ -2531,7 +2532,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </section>
 <section id="newey-west-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="newey-west-standard-errors">Newey-West standard errors</h2>
-<p>It is common in practice to use <a href="https://en.wikipedia.org/wiki/Newey%E2%80%93West_estimator">Newey-West</a> standard errors <span class="citation" data-cites="newey1987simple">(introduced in <a href="#ref-newey1987simple" role="doc-biblioref">Newey and West 1987</a>)</span> instead of the standard errors above in Fama-MacBeth regressions to account for heteroskedasticity and autocorrelation in the residuals.</p>
+<p>It is common in practice to use <a href="https://en.wikipedia.org/wiki/Newey%E2%80%93West_estimator">Newey-West</a> standard errors <span class="citation" data-cites="newey1987simple">(introduced in <a href="#ref-newey1987simple" role="doc-biblioref">Newey and West 1987</a>)</span> instead of the standard errors above in Fama-MacBeth regressions to account for heteroskedasticity and autocorrelation in the residuals. For more details on the Newey-West estimator, see my <a href="../../posts/timeseries-standard-errors/index.html#newey-west-standard-errors">post on the topic</a>.</p>
 <p>To use Newey-West standard errors, you can pass the following arguments to the <code>fit()</code> method:</p>
 <ul>
 <li><code>cov_type="kernel"</code>: To use HAC standard errors. See the <a href="https://bashtage.github.io/linearmodels/system/examples/examples.html#Kernel-(HAC)">documentation on Kernel (HAC)</a> for more details.</li>

@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2024-01-27T02:12:41.990Z</lastmod>
+    <lastmod>2024-02-01T12:09:15.610Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/books/finance/index.html</loc>
-    <lastmod>2024-01-27T02:12:41.214Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</loc>
-    <lastmod>2024-01-27T02:12:31.702Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</loc>
-    <lastmod>2024-01-27T02:13:55.951Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
-    <lastmod>2024-01-27T02:12:27.929Z</lastmod>
+    <lastmod>2024-02-01T12:09:14.842Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/welcome/index.html</loc>
-    <lastmod>2024-01-27T02:12:28.249Z</lastmod>
+    <lastmod>2024-02-01T12:09:05.298Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
+    <lastmod>2024-02-01T12:09:03.834Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/timeseries-standard-errors/index.html</loc>
+    <lastmod>2024-02-01T12:09:04.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</loc>
+    <lastmod>2024-02-01T12:09:07.079Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</loc>
+    <lastmod>2024-02-01T12:09:08.600Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/intro-to-python/python-basics/index.html</loc>
-    <lastmod>2024-01-27T02:12:40.895Z</lastmod>
+    <lastmod>2024-02-01T12:09:14.538Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/index.html</loc>
-    <lastmod>2024-01-27T02:13:51.001Z</lastmod>
+    <lastmod>2024-02-01T12:09:15.287Z</lastmod>
   </url>
 </urlset>
