@@ -10,7 +10,20 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about coding for empirical research in finance</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Wed, 31 Jan 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 09 Feb 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using GitHub for academic research</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/github-for-research/index.html</link>
+  <description><![CDATA[ <a href="https://git-scm.com/">Git</a> and <a href="https://github.com/">GitHub</a> are powerful version control tools for managing your research projects and collaborating with others while keeping a detailed record of your work. In this tutorial, we will cover the basics of Git and GitHub, and how to use them to manage your research projects. ]]></description>
+  <category>Collaboration</category>
+  <category>Git</category>
+  <category>GitHub</category>
+  <category>Reproducibility</category>
+  <guid>https://vincent.codes.finance/posts/github-for-research/index.html</guid>
+  <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Estimating standard errors in time series data with Python and statsmodels</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

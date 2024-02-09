@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/github-for-research/index.html",
       "/posts/timeseries-standard-errors/index.html",
       "/posts/panel-ols-standard-errors/index.html",
       "/posts/python-basics-tutorial/index.html",
