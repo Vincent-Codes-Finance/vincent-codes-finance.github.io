@@ -353,7 +353,8 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#time-series-data" id="toc-time-series-data" class="nav-link active" data-scroll-target="#time-series-data">Time series data</a></li>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#time-series-data" id="toc-time-series-data" class="nav-link" data-scroll-target="#time-series-data">Time series data</a></li>
   <li><a href="#test-data" id="toc-test-data" class="nav-link" data-scroll-target="#test-data">Test data</a></li>
   <li><a href="#statsmodels" id="toc-statsmodels" class="nav-link" data-scroll-target="#statsmodels">statsmodels</a>
   <ul class="collapse">
@@ -384,6 +385,11 @@ cookieconsent.run({
 </ul>
 <p>If you just want the code examples with no explanations, jump to the <a href="#cheat-sheet">cheat sheet</a> at the end of the post.</p>
 <p>For panel data models, see my previous post on <a href="../../posts/panel-ols-standard-errors/index.html">estimating standard errors in panel data models with Python and linearmodels</a>.</p>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>Part of this post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Rq3lEPKvKKo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
 <section id="time-series-data" class="level2">
 <h2 class="anchored" data-anchor-id="time-series-data">Time series data</h2>
 <p>Time series data is ubiquitous in finance research, but it can present challenges when using it in OLS regressions because it can violate the assumptions of OLS. The main challenge is that the error term can be correlated across time periods and can be heteroskedastic, meaning that the variance of the error term is not constant. This can lead to biased standard errors and invalid hypothesis tests. Time series data models have the following form:</p>
