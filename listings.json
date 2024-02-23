@@ -2,12 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/vscode-latex/index.html",
       "/posts/github-for-research/index.html",
       "/posts/timeseries-standard-errors/index.html",
       "/posts/panel-ols-standard-errors/index.html",
       "/posts/python-basics-tutorial/index.html",
       "/posts/install-python-312/index.html",
-      "/posts/welcome/index.html"
+      "/posts/welcome/index.html",
+      "/posts/speedup-profiling/index.html"
     ]
   }
 ]

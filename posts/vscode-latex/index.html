@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2024-02-18">
+
+<title>Vincent Codes Finance - Writing LaTeX Documents in VS Code</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XG6JSNQZJK"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XG6JSNQZJK', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Vincent Codes Finance - Writing LaTeX Documents in VS Code">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png">
+<meta property="og:site-name" content="Vincent Codes Finance">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1792">
+<meta name="twitter:title" content="Vincent Codes Finance - Writing LaTeX Documents in VS Code">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1792">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vincent Codes Finance</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Python tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html" rel="" target="">
+ <span class="dropdown-text">Install Python 3.12</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html" rel="" target="">
+ <span class="dropdown-text">Python basics</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About VCF</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w" rel="" target=""><i class="bi bi-youtube" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CodesFinance" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Writing LaTeX Documents in VS Code</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">VS Code</div>
+                <div class="quarto-category">LaTeX</div>
+                <div class="quarto-category">Writing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 18, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
+
+<script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
+<script type="text/javascript">
+    function runOnFormSubmit_sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a(th){
+        /*Before submit, if you want to trigger your event, "include your code here"*/
+    };
+</script>
+
+<style>
+.quick_form_8_css * {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word
+}
+@media only screen and (max-width: 600px) {.quick_form_8_css[name="SIGNUP_BODY"] { width: 100% !important; min-width: 100% !important; margin: 0px auto !important; padding: 0px !important } .SIGNUP_FLD { width: 90% !important; margin: 10px 5% !important; padding: 0px !important } .SIGNUP_FLD input { margin: 0 !important; border-radius: 25px !important } }
+</style>
+
+<!--Zoho Campaigns Web-Optin Form's Header Code Ends Here--><!--Zoho Campaigns Web-Optin Form Starts Here-->
+
+<div id="sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a" data-type="signupform" style="opacity: 1;">
+    <div id="customForm">
+        <div class="quick_form_8_css" style=" z-index: 2; border-width: 1px; border-style: solid; border-color: #b4befe; overflow: hidden; width: 208px" name="SIGNUP_BODY">
+            <div>
+                <div style="font-size: 14px; font-weight: bold; text-align: left; padding: 10px 20px 5px; display: block; height: 20px; width: 293px;" id="SIGNUP_HEADING">Subscribe to newsletter</div>
+                <div style="position:relative;">
+                    <div id="Zc_SignupSuccess" style="display:none;position:absolute;margin-left:4%;width:90%;background-color: white; padding: 3px; border: 3px solid rgb(194, 225, 154);  margin-top: 10px;margin-bottom:10px;word-break:break-all">
+                        
+<table data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0" class="table">
+<tbody>
+<tr class="odd">
+<td width="10%"><img src="https://zmp-glf.maillist-manage.com/images/challangeiconenable.jpg" class="successicon img-fluid" data-align="absmiddle"></td>
+<td><span id="signupSuccessMsg" style="color: rgb(73, 140, 132); font-size: 14px;word-break:break-word">&nbsp;&nbsp;Thank you for Signing Up</span></td>
+</tr>
+</tbody>
+</table>
+
+                    </div>
+                </div>
+                <form method="POST" id="zcampaignOptinForm" style="margin: 0px; width: 100%" action="https://zmp-glf.maillist-manage.com/weboptin.zc" target="_zcSignup">
+                    <div style="background-color: rgb(255, 235, 232); padding: 10px; color: rgb(210, 0, 0); font-size: 11px; margin: 20px 10px 0px; border: 1px solid rgb(255, 217, 211); opacity: 1; display: none" id="errorMsgDiv">Invalid email.</div>
+                    <div style="position: relative; margin: 10px; height: 30px; display: inline-block; width: 185px" class="SIGNUP_FLD">
+                        <input type="text" style="border: 1px solid rgb(221, 221, 221); border-radius: 0px; width: 100%; height: 100%; z-index: 4; outline: none; padding: 5px 10px; color: rgb(136, 136, 136); text-align: left; background-color: rgb(255, 255, 255); box-sizing: border-box; font-size: 11px" placeholder="Email" changeitem="SIGNUP_FORM_FIELD" name="CONTACT_EMAIL" id="EMBED_FORM_EMAIL_LABEL">
+                    </div>
+                    <div style="position: relative; margin: 10px; width: 100px; height: 30px; text-align: left; display: inline-block" class="SIGNUP_FLD">
+                        <input type="button" style="text-align: center; border-radius: 5px; width: 100%; height: 100%; z-index: 5; border: 0px; color: rgb(255, 255, 255); cursor: pointer; outline: none; font-size: 14px; background-color: #fab387; margin: 0px 0px 0px -5px" name="SIGNUP_SUBMIT_BUTTON" id="zcWebOptin" value="Subscribe">
+                    </div>
+                    <input type="hidden" id="fieldBorder" value="">
+                    <input type="hidden" id="submitType" name="submitType" value="optinCustomView">
+                    <input type="hidden" id="emailReportId" name="emailReportId" value="">
+                    <input type="hidden" id="formType" name="formType" value="QuickForm">
+                    <input type="hidden" name="zx" id="cmpZuid" value="132186a6c">
+                    <input type="hidden" name="zcvers" value="3.0">
+                    <input type="hidden" name="oldListIds" id="allCheckedListIds" value="">
+                    <input type="hidden" id="mode" name="mode" value="OptinCreateView">
+                    <input type="hidden" id="zcld" name="zcld" value="1109faaf6213b38dc">
+                    <input type="hidden" id="zctd" name="zctd" value="1109faaf6213b37a9">
+                    <input type="hidden" id="document_domain" value="">
+                    <input type="hidden" id="zc_Url" value="zmp-glf.maillist-manage.com">
+                    <input type="hidden" id="new_optin_response_in" value="0">
+                    <input type="hidden" id="duplicate_optin_response_in" value="0">
+                    <input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW">
+                    <input type="hidden" id="zc_formIx" name="zc_formIx" value="3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a">
+                    <input type="hidden" id="viewFrom" value="URL_ACTION">
+                    <span style="display: none" id="dt_CONTACT_EMAIL">1,true,6,Contact Email,2</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <img src="https://zmp-glf.maillist-manage.com/images/spacer.gif" id="refImage" onload="referenceSetter(this)" style="display:none;">
+</div>
+<input type="hidden" id="signupFormType" value="QuickForm_Horizontal">
+<div id="zcOptinOverLay" oncontextmenu="return false" style="display:none;text-align: center; background-color: rgb(0, 0, 0); opacity: 0.5; z-index: 100; position: fixed; width: 100%; top: 0px; left: 0px; height: 988px;"></div>
+<div id="zcOptinSuccessPopup" style="display:none;z-index: 9999;width: 800px; height: 40%;top: 84px;position: fixed; left: 26%;background-color: #FFFFFF;border-color: #E6E6E6; border-style: solid; border-width: 1px;  box-shadow: 0 1px 10px #424242;padding: 35px;">
+    <span style="position: absolute;top: -16px;right:-14px;z-index:99999;cursor: pointer;" id="closeSuccess">
+        <img src="https://zmp-glf.maillist-manage.com/images/videoclose.png">
+    </span>
+    <div id="zcOptinSuccessPanel"></div>
+</div>
+
+<!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#what-is-latex-and-how-to-install-it" id="toc-what-is-latex-and-how-to-install-it" class="nav-link" data-scroll-target="#what-is-latex-and-how-to-install-it">What is <span class="math inline">\(\LaTeX\)</span> and how to install it</a></li>
+  <li><a href="#why-vs-code" id="toc-why-vs-code" class="nav-link" data-scroll-target="#why-vs-code">Why VS Code?</a></li>
+  <li><a href="#getting-started-with-latex-workshop-for-vs-code" id="toc-getting-started-with-latex-workshop-for-vs-code" class="nav-link" data-scroll-target="#getting-started-with-latex-workshop-for-vs-code">Getting Started with LaTeX Workshop for VS Code</a></li>
+  <li><a href="#compiling-latex-documents-in-vs-code" id="toc-compiling-latex-documents-in-vs-code" class="nav-link" data-scroll-target="#compiling-latex-documents-in-vs-code">Compiling LaTeX Documents in VS Code</a></li>
+  <li><a href="#multi-file-projects" id="toc-multi-file-projects" class="nav-link" data-scroll-target="#multi-file-projects">Multi-file projects</a></li>
+  <li><a href="#syncing-source-and-preview" id="toc-syncing-source-and-preview" class="nav-link" data-scroll-target="#syncing-source-and-preview">Syncing source and preview</a></li>
+  <li><a href="#formatting" id="toc-formatting" class="nav-link" data-scroll-target="#formatting">Formatting</a></li>
+  <li><a href="#working-with-bibliographies-in-latex-and-vs-code" id="toc-working-with-bibliographies-in-latex-and-vs-code" class="nav-link" data-scroll-target="#working-with-bibliographies-in-latex-and-vs-code">Working with Bibliographies in LaTeX and VS Code</a></li>
+  <li><a href="#customizing-the-writing-environment-in-vs-code-for-latex" id="toc-customizing-the-writing-environment-in-vs-code-for-latex" class="nav-link" data-scroll-target="#customizing-the-writing-environment-in-vs-code-for-latex">Customizing the Writing Environment in VS Code for LaTeX</a>
+  <ul class="collapse">
+  <li><a href="#tips-when-using-vs-code-for-latex-writing" id="toc-tips-when-using-vs-code-for-latex-writing" class="nav-link" data-scroll-target="#tips-when-using-vs-code-for-latex-writing">Tips when using VS Code for LaTeX Writing</a></li>
+  </ul></li>
+  <li><a href="#debugging-latex-documents-in-vs-code" id="toc-debugging-latex-documents-in-vs-code" class="nav-link" data-scroll-target="#debugging-latex-documents-in-vs-code">Debugging LaTeX Documents in VS Code</a></li>
+  <li><a href="#conclusion-and-further-resources" id="toc-conclusion-and-further-resources" class="nav-link" data-scroll-target="#conclusion-and-further-resources">Conclusion and Further Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code editor that has gained popularity among developers and researchers. This extensibility made it possible to create a rich ecosystem of extensions that enhance the functionality of VS Code for various tasks, including writing and managing LaTeX documents. The LaTeX Workshop extension is one such tool that transforms VS Code into a feature-rich LaTeX editor, providing seamless compilation, real-time preview, and intelligent autocomplete, among other capabilities.</p>
+<p>In this post, I will guide you through the process of setting up VS Code for LaTeX writing, including installing the necessary extensions, configuring the environment, and exploring additional tools to enhance your productivity. By the end of this guide, you will have a well-optimized LaTeX writing environment in VS Code, equipped with the tools and features to streamline your research and writing tasks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="latex-in-vscode.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/vIImoKpKWIo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="what-is-latex-and-how-to-install-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-latex-and-how-to-install-it">What is <span class="math inline">\(\LaTeX\)</span> and how to install it</h2>
+<p><a href="https://www.latex-project.org/">LaTeX</a> is more than just a typesetting system; it’s a powerful tool that has become indispensable for many people involved in academic writing. Its capability to handle complex mathematical formulas, precise formatting, and automatic generation of bibliographies and indexes makes it the go-to choice for producing scientific documents of high typographical quality. Unlike word processors that focus on the appearance of the document on the screen, LaTeX emphasizes structure and content, allowing writers to focus on their work without worrying about formatting details.</p>
+<p>In this post, I assume that you have a basic understanding of LaTeX and its syntax. If you’re new to LaTeX, I recommend exploring an <a href="https://en.wikibooks.org/wiki/LaTeX">introductory guide</a> to familiarize yourself with its fundamental concepts and syntax. You can also explore online LaTeX editors like <a href="https://www.overleaf.com/">Overleaf</a> to experiment with LaTeX without installing it on your local machine. Overleaf also provides a tutorial on <a href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes">learning LaTeX in 30 minutes</a>.</p>
+<p>I also assume that you have a LaTeX distribution installed on your system. Here are the most popular LaTeX distributions for different operating systems:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="platform">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><i class="fa-brands fa-apple" aria-label="apple"></i> macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><i class="fa-brands fa-windows" aria-label="windows"></i> Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false"><i class="fa-brands fa-linux" aria-label="linux"></i> Linux</a></li></ul>
+<div class="tab-content" data-group="platform">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>The most popular LaTeX distribution for macOS is <a href="https://www.tug.org/mactex/">MacTeX</a>, which includes all the major TeX-related programs and packages. You can download the MacTeX installer from the official website and follow the on-screen instructions to install it on your system.</p>
+<p>If you’re like me and prefer to use homebrew to install software on your Mac, you can install MacTeX using the following command:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> mactex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Homebrew also provides a cask named <code>mactex-no-gui</code> that installs MacTeX without the extra graphical user interface applications and a cask named <code>basictex</code> that installs a minimal TeX Live distribution.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>For Windows users, <a href="https://miktex.org/">MiKTeX</a> is a popular choice for installing LaTeX. MiKTeX is known for its user-friendly installation process and on-the-fly package installation feature. You can download the MiKTeX installer from the official website and follow the on-screen instructions to install it on your system.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>For Linux users, <a href="https://www.tug.org/texlive/">TeX Live</a> is a comprehensive TeX system that can be used on various Unix-based systems, including Linux. You can install TeX Live using your distribution’s package manager. For example, on Ubuntu, you can install TeX Live using the following command:</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="why-vs-code">Why VS Code?</h2>
+<p>There are plenty of LaTeX editors available,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> so why choose Visual Studio Code for writing LaTeX documents?</p>
+<p>VS Code is not just any code editor; it’s a feature-rich, extensible, and highly customizable environment that supports a wide array of programming languages and tools, making it an ideal choice for developers and researchers alike. At its core, LaTeX is a programming language for typesetting documents, so it makes sense to use a powerful code editor like VS Code to write and manage LaTeX documents. Here are the main reasons why I decided to use VS Code for LaTeX writing:</p>
+<ul>
+<li><strong>Unified Workspace</strong>: VS Code provides a single environment for both coding and writing, eliminating the need to switch between different applications for different aspects of your project.</li>
+<li><strong>Extension Ecosystem</strong>: The vast library of extensions available in VS Code can augment and tailor the editor to your specific needs, enhancing productivity and simplifying your writing workflow. This includes spell checkers, grammar checkers, and even AI-powered tools.</li>
+<li><strong>Built-in Source Control</strong>: With Git integration out of the box, managing versions of your LaTeX documents becomes seamless, facilitating collaboration and historical tracking of your work.</li>
+<li><strong>Customization</strong>: VS Code’s extensive customization options allow you to create a writing environment that suits your preferences, from visual themes to keyboard shortcuts and snippets. And if you require them, VS Code includes many accessibility features, such as screen reader support and high contrast themes, making it an inclusive environment for users with diverse needs.</li>
+</ul>
+</section>
+<section id="getting-started-with-latex-workshop-for-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-with-latex-workshop-for-vs-code">Getting Started with LaTeX Workshop for VS Code</h2>
+<p>The <a href="https://github.com/James-Yu/LaTeX-Workshop">LaTeX Workshop extension</a> transforms VS Code into a powerful LaTeX editor, offering a comprehensive set of features tailored specifically for LaTeX users:</p>
+<ul>
+<li><strong>Seamless Compilation</strong>: Automatically compile your LaTeX documents within VS Code, with customizable recipes to handle various compilation flows.</li>
+<li><strong>Real-time Preview</strong>: View your compiled PDF documents directly in VS Code, providing immediate feedback on how your document looks.</li>
+<li><strong>Intelligent Autocomplete</strong>: Get smart suggestions for LaTeX commands as you type, speeding up your writing process.</li>
+<li><strong>Error Logging and Navigation</strong>: Quickly identify and navigate to errors in your LaTeX source, simplifying the debugging process.</li>
+<li><strong>Customizable Build and Clean-Up</strong>: Configure build options and clean-up routines to match your project’s requirements, keeping your workspace organized.</li>
+</ul>
+<p>To begin using LaTeX Workshop in VS Code, I recommend creating a new profile in VS Code for your LaTeX projects, which will allow you to customize the editor settings specifically for LaTeX writing. Then you can install the <a href="https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop">LaTeX Workshop extension</a> and configure it to suit your workflow. In my case, I have not touched the default settings of LaTeX Workshop because I found them to be quite good for my needs. I also use the following extensions to enhance my LaTeX writing experience:</p>
+<ul>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=znck.grammarly">Grammarly</a></strong>: The Grammarly extension brings the advanced grammar, spelling, and style checking capabilities of Grammarly to VS Code. I found it to be quite useful for working with LaTeX documents. There is a premium plan to get more advanced features, but the free version is already quite good.</li>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot">GitHub Copilot</a></strong> ($): GitHub’s ChatGPT-powered code completion tool that can provide suggestions for LaTeX commands and environments. It also works well with text in LaTeX documents, offering suggestions based on the context.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Grammarly and Copilot settings
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you decide to use Grammarly and Copilot, I recommend configuring them to work with LaTeX documents. For Grammarly, you can enable it for LaTeX files by adding the following to your settings.json file:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"grammarly.files.include":</span> <span class="ot">[</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="st">"**/*.tex"</span><span class="ot">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="er">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">"github.copilot.enable":</span> <span class="fu">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"latex"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Some other extensions that you might find useful include:</p>
+<ul>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=ban.spellright">Spell Right</a></strong>: A lightweight, offline spell checker that supports multiple languages and can be used within LaTeX documents in VS Code. It uses the OS spellchecker on macOS and Windows.</li>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=Druideinformatique.antidote">Antidote</a></strong> ($): Antidote is a comprehensive writing assistance tool offering corrections for spelling, grammar, and typography, along with rich dictionaries and language guides for French and English. The Antidote extension integrates these features into VS Code, making it accessible for LaTeX projects. Note that Antidote is aware of the LaTeX syntax.</li>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=valentjn.vscode-ltex">LTeX</a></strong> ($): LaTeX-aware extension for access to <a href="https://languagetool.org/">LanguageTool</a> from within VS Code. LanguageTool is a style and grammar checker that can be used to improve your writing style and grammar.</li>
+</ul>
+<p>In the following sections, I will guide you on using LaTeX Workshop and the other extensions to use your LaTeX writing environment in VS Code, making the most of the tools and features to streamline your research and writing tasks.</p>
+</section>
+<section id="compiling-latex-documents-in-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="compiling-latex-documents-in-vs-code">Compiling LaTeX Documents in VS Code</h2>
+<p>By default, LaTeX Workshop will automatically compile your LaTeX documents when you save them. This means that you can focus on writing your document and let LaTeX Workshop take care of the compilation process in the background. The extension provides a real-time preview of your compiled PDF document, allowing you to see the changes you make to your LaTeX source code immediately. You can change this behavior and the recipe used to compile your document by modifying the settings of LaTeX Workshop.</p>
+<p>Additional options are available in the left sidebar of VS Code, under the <span class="math inline">\(\tex\)</span> icon. There you can find different build commands, additional options for viewing the PDF, and view the compilation logs. You can also navigate the document structure and access the quick symbol view.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="sidebar.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption class="figure-caption">Sidebar</figcaption>
+</figure>
+</div>
+</section>
+<section id="multi-file-projects" class="level2">
+<h2 class="anchored" data-anchor-id="multi-file-projects">Multi-file projects</h2>
+<p>LaTeX Workshop supports multi-file projects, which are common in LaTeX documents. This means that you can split your document into multiple files and include them in a main file using the <code>\input{}</code> or <code>\include{}</code> commands. LaTeX Workshop will automatically detect the structure of your project and compile the main file, including all the subfiles, when you save it. This feature is particularly useful for organizing large documents and collaborating with others, as it allows you to work on different parts of the document independently.</p>
+<p>By default, if the current document does contain a <code>\documentclass[...]{...}</code> or <code>\begin{document}</code> tag, LaTeX Workshop will identify the root file of your project by looking for a file with the <code>.tex</code> extension in the root directory of your workspace that contains such a tag. You can also specify explicitly the root file of your project by adding a comment at the beginning of your LaTeX source code: <code>% !TEX root = relative/or/absolute/path/to/root/file.tex</code>. See the <a href="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#multi-file-projects">LaTeX Workshop documentation</a> for more details.</p>
+</section>
+<section id="syncing-source-and-preview" class="level2">
+<h2 class="anchored" data-anchor-id="syncing-source-and-preview">Syncing source and preview</h2>
+<p>LaTeX Workshop provides a feature called “SyncTeX” that allows you to synchronize the source and preview of your LaTeX document. This means that when you click on a section of your PDF, the corresponding part of your LaTeX source code is highlighted, and vice versa. This feature is particularly useful for navigating large documents and reviewing changes.</p>
+<p>SyncTeX is enabled by default. It supports both forward and reverse search, meaning you can jump from your source to the PDF and back:</p>
+<ul>
+<li><strong>Forward Search</strong> (source to pdf): Place the cursor where you want in the source code then type <code>cmd</code>+<code>option</code>+<code>j</code> on Mac or <code>ctrl</code>+<code>alt</code>+<code>j</code> on Windows/Linux, and the PDF viewer will jump to the corresponding location.</li>
+<li><strong>Reverse Search</strong> (pdf to source): Click on a location in the PDF while holding <code>cmd</code> on Mac or <code>ctrl</code> on Windows/Linux, and the source code will jump to the corresponding location.</li>
+</ul>
+<p>SyncTeX also allows you to do a forward search on references. For that, just over on the reference and a <code>View on PDF</code> button will appear.</p>
+<p>If you only want to see a preview of an equation or bib entry, all you have to do is place the cursor over the equation or reference to trigger a preview.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="formula-preview.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Formula preview</figcaption>
+</figure>
+</div>
+</section>
+<section id="formatting" class="level2">
+<h2 class="anchored" data-anchor-id="formatting">Formatting</h2>
+<p>I always found LaTeX to be a bit of a pain to format, and since I’m too lazy to do it myself, my documents often look like a mess. My life changed when I discovered the concept of a code formatter, which automatically formats your code according to a set of rules. LaTeX Workshop supports formatting using the <code>latexindent</code> tool, which can automatically format your LaTeX source code according to your preferred style. To enable this feature, you need to install <code>latexindent</code> on your system. It is a Perl script that is also available as a <a href="https://github.com/cmhughes/latexindent.pl/releases">standalone executable</a> for macOS, Windows, and Linux. Once you install it, make sure it is accessible from your <code>PATH</code>.</p>
+<p>On macOS, you can install it using Homebrew with the following commands:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install perl</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install cpanm</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">cpanm</span> YAML::Tiny</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">cpanm</span> File::HomeDir</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I recommend configuring VS Code to automatically format your LaTeX documents whenever saving a file. To do this, open your settings, search for <code>Format On Save</code>, and enable it. This will ensure that your LaTeX documents are automatically formatted according to your preferred style whenever you save them.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+An essential when using source control
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Formatting your LaTeX documents is especially important when using version control. By having a consistent style, you can avoid unnecessary merge conflicts and make it easier to review changes in your documents.</p>
+</div>
+</div>
+</section>
+<section id="working-with-bibliographies-in-latex-and-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-bibliographies-in-latex-and-vs-code">Working with Bibliographies in LaTeX and VS Code</h2>
+<p>BibTeX is a widely used bibliography management tool for LaTeX documents. It allows you to create a bibliography database (<code>.bib</code> file) containing references and citations, which can be cited in your LaTeX documents using the <code>\cite{}</code> command. BibTeX is a powerful tool for managing references, but it requires careful management of the .bib file and can be cumbersome to maintain manually.</p>
+<p>BibTex is supported out of the box by LaTeX Workshop, and it can be used to compile your bibliography and generate a list of references in your document. It will automatically detect your bibliography from the root file of your project and use it to suggest references as you type <code>\cite{}</code> commands in your LaTeX source code.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="formatted-bibtex.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">A formatted Bibtex file</figcaption>
+</figure>
+</div>
+<p>LaTex Workshop also provides a formatter for BibTeX files, which not only formats your <code>.bib</code> file but can also sort the entries alphabetically. To enable automatic formatting of your <code>.bib</code> files, including automatic sorting of entries, add the following to your <code>settings.json</code> file:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"latex-workshop.bibtex-fields.sort.enabled":</span> <span class="er">true,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">"latex-workshop.bibtex-format.sort.enabled":</span> <span class="er">true,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">"</span><span class="ot">[</span><span class="er">bibtex</span><span class="ot">]</span><span class="er">":</span> <span class="fu">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"James-Yu.latex-workshop"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you use the Zotero reference manager, you can use the <a href="https://marketplace.visualstudio.com/items?itemName=bnavetta.zoterolatex">Zotero LaTex extension</a> to integrate Zotero with VS Code. This extension allows you to search and insert references from your Zotero library directly into your LaTeX documents, streamlining the citation process.</p>
+</section>
+<section id="customizing-the-writing-environment-in-vs-code-for-latex" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-the-writing-environment-in-vs-code-for-latex">Customizing the Writing Environment in VS Code for LaTeX</h2>
+<p>Crafting a comfortable and efficient writing environment is crucial for academic writers, especially when working on complex LaTeX documents. Visual Studio Code (VS Code) offers a plethora of customization options to tailor the editor to your specific needs, enhancing productivity and making the writing process more enjoyable. This section explores various ways to customize your VS Code environment for LaTeX writing, from visual tweaks to functional enhancements.</p>
+<section id="tips-when-using-vs-code-for-latex-writing" class="level3">
+<h3 class="anchored" data-anchor-id="tips-when-using-vs-code-for-latex-writing">Tips when using VS Code for LaTeX Writing</h3>
+<ol type="1">
+<li><p><strong>Use code snippets</strong>: LaTeX Workshop provides built-in snippets for common LaTeX commands and environments. For example, typing <code>BEQ</code> and pressing <code>Tab</code> will expand to <code>\begin{equation} ... \end{equation}</code>. See the <a href="https://github.com/James-Yu/LaTeX-Workshop/wiki/Snippets">full list of snippets</a> in the LaTeX Workshop documentation or create your own custom snippets to speed up your writing process.</p></li>
+<li><p><strong>Customize the build process</strong>: As discussed in previous sections, customizing the build process for your LaTeX projects can streamline your workflow. Use tasks in VS Code to define custom build commands, specifying your preferred LaTeX distribution and any additional steps required for your document, such as glossary or index processing.</p></li>
+<li><p><strong>Minimize Distractions</strong>: Utilize Zen Mode (<code>View: Toggle Zen Mode</code>) to focus on your writing by hiding the VS Code interface, leaving only the text editor visible.</p></li>
+</ol>
+</section>
+</section>
+<section id="debugging-latex-documents-in-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="debugging-latex-documents-in-vs-code">Debugging LaTeX Documents in VS Code</h2>
+<p>Writing in LaTeX can sometimes feel like a smooth sail—until you encounter an error that halts your compilation or messes up your document formatting. Debugging LaTeX documents can be a frustrating task, especially when dealing with complex structures and multiple files. However, Visual Studio Code (VS Code), coupled with the LaTeX Workshop extension, provides simple yet powerful tools and features to simplify the debugging process. Here are the places you can look for information when debugging LaTeX documents in VS Code:</p>
+<ul>
+<li><strong>Error Messages</strong>: LaTeX error messages often include the line number and a description of the issue, which can be cryptic at first glance. The first step in debugging is to carefully read these messages and identify the problematic code snippet. Fortunately, VS Code’s LaTeX Workshop extension highlights errors directly in the editor, making it easier to locate and address them.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="errors.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">An underlined error</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><p><strong>Log Files</strong>: When LaTeX compiles a document, it generates a log file (.log) that contains detailed information about the compilation process, including warnings and errors. Reviewing the log file can provide insights into what went wrong and why. You can access the log file through the LaTeX Workshop extension’s “View LaTeX Workshop log” command, or by looking at the output of the LaTeX compiler in the output panel.</p></li>
+<li><p><strong>Version Control</strong>: If you use Git to track changes in your work you can use the version control features of VS Code to review the history of your document and identify when an error was introduced. This can be especially helpful in pinpointing the source of an error and reverting to earlier versions of your document if necessary.</p></li>
+<li><p><strong>GitHub Copilot</strong>: GitHub Copilot can provide suggestions for LaTeX commands and environments, which can be helpful when you’re unsure about the correct syntax or usage of a particular command. You can ask Copilot for help fixing an error by typing a description of the problem. It will then provide suggestions based on the context of your document.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fixing-copilot.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Fixing with Copilot</figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusion-and-further-resources" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-and-further-resources">Conclusion and Further Resources</h2>
+<p>In this guide, we’ve covered the basics of setting up and optimizing Visual Studio Code (VS Code) for LaTeX projects. We’ve discussed installation, configuration, debugging, and version control best practices. Additionally, we’ve highlighted some useful extensions that can improve your writing workflow in VS Code.</p>
+<p>I strongly recommend that you use a version control system for your LaTeX projects. This will allow you to track changes, collaborate with others, and maintain a history of your work. If you are new to version control, I recommend reading my post on <a href="../../posts/github-for-research/">Using GitHub for academic research</a>.</p>
+<p>If you want to further customize your LaTeX writing environment, you can! Have a look at the <a href="https://github.com/James-Yu/LaTeX-Workshop/wiki">LaTeX Workshop extension documentation</a> to see all the features it offers.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>I used <a href="https://www.texstudio.org/">TeXstudio</a> for over a decade before switching to VS Code, and before that I used <a href="https://www.xm1math.net/texmaker/">Texmaker</a>, <a href="https://www.texniccenter.org/">TeXnicCenter</a>, and <a href="https://pages.uoregon.edu/koch/texshop/">TeXShop</a> for many years each.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You can access your <code>settings.json</code> file by opening the Command Palette (<code>Cmd+Shift+P</code> on Mac, <code>Ctrl+Shift+P</code> on Windows/Linux) and searching for <code>Preferences: Open User Settings (JSON)</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>You can access your <code>settings.json</code> file by opening the Command Palette (<code>Cmd+Shift+P</code> on Mac, <code>Ctrl+Shift+P</code> on Windows/Linux) and searching for <code>Preferences: Open User Settings (JSON)</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Vincent Grégoire</div>   
+    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

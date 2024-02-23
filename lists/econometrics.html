@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Coding (mostly) in Python for empirical research in finance">
 
-<title>Vincent Codes Finance</title>
+<title>Vincent Codes Finance – econometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,29 +23,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/cookie-consent/cookie-consent.js"></script>
-<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,35 +64,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-subtitle','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XG6JSNQZJK"></script>
 
 <script type="text/plain" cookie-consent="tracking">
@@ -122,22 +90,7 @@ cookieconsent.run({
 </script> 
   
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml"><meta property="og:title" content="Vincent Codes Finance">
-<meta property="og:description" content="Coding (mostly) in Python for empirical research in finance">
-<meta property="og:image" content="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png">
-<meta property="og:site-name" content="Vincent Codes Finance">
-<meta property="og:locale" content="en_US">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1792">
-<meta name="twitter:title" content="Vincent Codes Finance">
-<meta name="twitter:description" content="Coding (mostly) in Python for empirical research in finance">
-<meta name="twitter:image" content="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1792">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
@@ -147,10 +100,10 @@ cookieconsent.run({
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./vcf-logo.png" alt="" class="navbar-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../vcf-logo.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
     </a>
   </div>
@@ -166,17 +119,17 @@ cookieconsent.run({
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
         <li>
-    <a class="dropdown-item" href="./posts/install-python-312/index.html" rel="" target="">
+    <a class="dropdown-item" href="../posts/install-python-312/index.html" rel="" target="">
  <span class="dropdown-text">Install Python 3.12</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./intro-to-python/python-basics/index.html" rel="" target="">
+    <a class="dropdown-item" href="../intro-to-python/python-basics/index.html" rel="" target="">
  <span class="dropdown-text">Python basics</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
@@ -203,28 +156,7 @@ cookieconsent.run({
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Vincent Codes Finance</h1>
-                  <div>
-        <div class="description">
-          Coding (mostly) in Python for empirical research in finance
-        </div>
-      </div>
-                </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
@@ -312,319 +244,20 @@ cookieconsent.run({
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
 </div></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Beginner">Beginner <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Collaboration">Collaboration <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Econometrics">Econometrics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Git">Git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LaTeX">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Linearmodels">Linearmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="News">News <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Reproducibility">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Statsmodels">Statsmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tutorial">Tutorial <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VS Code">VS Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Writing">Writing <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
+<ul>
+<li><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a>: Online textbook on causal inference with Python.</li>
+<li></li>
+</ul>
 
 
 
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="VS Code,LaTeX,Writing" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1708615979945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
-<div class="thumbnail">
-<p><a href="./posts/vscode-latex/index.html"> <img src="./posts/vscode-latex/vscode-latex.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/vscode-latex/index.html">
-<h3 class="no-anchor listing-title">
-Writing LaTeX Documents in VS Code
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('VS Code'); return false;">
-VS Code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('LaTeX'); return false;">
-LaTeX
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Writing'); return false;">
-Writing
-</div>
-</div>
-<a href="./posts/vscode-latex/index.html">
-<div class="listing-description">
-LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/vscode-latex/index.html">
-<div class="listing-date">
-Feb 18, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Collaboration,Git,GitHub,Reproducibility" data-listing-date-sort="1707454800000" data-listing-file-modified-sort="1708088820728" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36">
-<div class="thumbnail">
-<p><a href="./posts/github-for-research/index.html"> <img src="./posts/github-for-research/github-for-research.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/github-for-research/index.html">
-<h3 class="no-anchor listing-title">
-Using GitHub for academic research
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Collaboration'); return false;">
-Collaboration
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Git'); return false;">
-Git
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('GitHub'); return false;">
-GitHub
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Reproducibility'); return false;">
-Reproducibility
-</div>
-</div>
-<a href="./posts/github-for-research/index.html">
-<div class="listing-description">
-Git and GitHub are powerful version control tools for managing your research projects and collaborating with…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/github-for-research/index.html">
-<div class="listing-date">
-Feb 9, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Python,Econometrics,Statsmodels" data-listing-date-sort="1706677200000" data-listing-file-modified-sort="1708182083873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
-<div class="thumbnail">
-<p><a href="./posts/timeseries-standard-errors/index.html"> <img src="./posts/timeseries-standard-errors/spy_ts.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/timeseries-standard-errors/index.html">
-<h3 class="no-anchor listing-title">
-Estimating standard errors in time series data with Python and statsmodels
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Econometrics'); return false;">
-Econometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Statsmodels'); return false;">
-Statsmodels
-</div>
-</div>
-<a href="./posts/timeseries-standard-errors/index.html">
-<div class="listing-description">
-In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the statsmodels library.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/timeseries-standard-errors/index.html">
-<div class="listing-date">
-Jan 31, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Python,Econometrics,Linearmodels" data-listing-date-sort="1705813200000" data-listing-file-modified-sort="1706787364259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33">
-<div class="thumbnail">
-<p><a href="./posts/panel-ols-standard-errors/index.html"> <img src="./posts/panel-ols-standard-errors/linearmodels.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/panel-ols-standard-errors/index.html">
-<h3 class="no-anchor listing-title">
-Estimating standard errors in panel data with Python and linearmodels
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Econometrics'); return false;">
-Econometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Linearmodels'); return false;">
-Linearmodels
-</div>
-</div>
-<a href="./posts/panel-ols-standard-errors/index.html">
-<div class="listing-description">
-In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/panel-ols-standard-errors/index.html">
-<div class="listing-date">
-Jan 21, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1704633739647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/python-basics-tutorial/index.html"> <img src="./posts/python-basics-tutorial/python-code.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/python-basics-tutorial/index.html">
-<h3 class="no-anchor listing-title">
-Python basic tutorial
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Tutorial'); return false;">
-Tutorial
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Beginner'); return false;">
-Beginner
-</div>
-</div>
-<a href="./posts/python-basics-tutorial/index.html">
-<div class="listing-description">
-I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good…<code></code><code></code><code></code>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/python-basics-tutorial/index.html">
-<div class="listing-date">
-Jan 7, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1705661934716" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
-<div class="thumbnail">
-<p><a href="./posts/install-python-312/index.html"> <img src="./posts/install-python-312/install-py.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/install-python-312/index.html">
-<h3 class="no-anchor listing-title">
-Installing Python 3.12
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Tutorial'); return false;">
-Tutorial
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Beginner'); return false;">
-Beginner
-</div>
-</div>
-<a href="./posts/install-python-312/index.html">
-<div class="listing-description">
-In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/install-python-312/index.html">
-<div class="listing-date">
-Jan 3, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="News" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1704399924052" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/new-blog.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/welcome/index.html">
-<h3 class="no-anchor listing-title">
-New Year, new blog
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('News'); return false;">
-News
-</div>
-</div>
-<a href="./posts/welcome/index.html">
-<div class="listing-description">
-Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html">
-<div class="listing-date">
-Jan 1, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="News" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1708257219396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/speedup-profiling/index.html"> <img src="./posts/speedup-profiling/new-blog.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/speedup-profiling/index.html">
-<h3 class="no-anchor listing-title">
-New Year, new blog
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('News'); return false;">
-News
-</div>
-</div>
-<a href="./posts/speedup-profiling/index.html">
-<div class="listing-description">
-Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/speedup-profiling/index.html">
-<div class="listing-date">
-Jan 1, 2024
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

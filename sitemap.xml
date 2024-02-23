@@ -2,42 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2024-02-16T13:08:53.327Z</lastmod>
+    <lastmod>2024-02-22T15:34:23.932Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/books/finance/index.html</loc>
-    <lastmod>2024-02-16T13:08:52.498Z</lastmod>
+    <lastmod>2024-02-22T15:34:22.942Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/lists/my-stack.html</loc>
+    <lastmod>2024-02-22T15:34:13.157Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/speedup-profiling/index.html</loc>
+    <lastmod>2024-02-22T15:34:11.576Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/github-for-research/index.html</loc>
-    <lastmod>2024-02-16T13:08:43.827Z</lastmod>
+    <lastmod>2024-02-22T15:34:10.923Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/welcome/index.html</loc>
-    <lastmod>2024-02-16T13:08:40.724Z</lastmod>
+    <lastmod>2024-02-22T15:34:07.241Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/install-python-312/index.html</loc>
-    <lastmod>2024-02-16T13:08:39.246Z</lastmod>
+    <lastmod>2024-02-22T15:34:05.532Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/timeseries-standard-errors/index.html</loc>
-    <lastmod>2024-02-16T13:08:40.405Z</lastmod>
+    <lastmod>2024-02-22T15:34:06.883Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</loc>
-    <lastmod>2024-02-16T13:08:42.500Z</lastmod>
+    <lastmod>2024-02-22T15:34:09.342Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</loc>
-    <lastmod>2024-02-16T13:08:44.082Z</lastmod>
+    <lastmod>2024-02-22T15:34:11.237Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/vscode-latex/index.html</loc>
+    <lastmod>2024-02-22T15:34:12.408Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/lists/econometrics.html</loc>
+    <lastmod>2024-02-22T15:34:13.403Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/intro-to-python/python-basics/index.html</loc>
-    <lastmod>2024-02-16T13:08:52.205Z</lastmod>
+    <lastmod>2024-02-22T15:34:22.583Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/index.html</loc>
-    <lastmod>2024-02-16T13:08:52.992Z</lastmod>
+    <lastmod>2024-02-22T15:34:23.592Z</lastmod>
   </url>
 </urlset>
