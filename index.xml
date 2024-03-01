@@ -10,7 +10,21 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sun, 18 Feb 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 01 Mar 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/pandas-read-csv/index.html</link>
+  <description><![CDATA[ CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html"><code>pandas.read_csv()</code></a> function is flexible and easy to use, but it can be slow and memory-intensive for large files if not used properly. ]]></description>
+  <category>Python</category>
+  <category>Pandas</category>
+  <category>Arrow</category>
+  <category>Parquet</category>
+  <category>CSV</category>
+  <guid>https://vincent.codes.finance/posts/pandas-read-csv/index.html</guid>
+  <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
 <item>
   <title>Writing LaTeX Documents in VS Code</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
@@ -93,16 +107,6 @@
   <guid>https://vincent.codes.finance/posts/welcome/index.html</guid>
   <pubDate>Mon, 01 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/welcome/new-blog.png" medium="image" type="image/png" height="144" width="144"/>
-</item>
-<item>
-  <title>New Year, new blog</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/speedup-profiling/index.html</link>
-  <description><![CDATA[ Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to Python and coding in empirical finance research. I’m excited to share my knowledge and experience with you. ]]></description>
-  <category>News</category>
-  <guid>https://vincent.codes.finance/posts/speedup-profiling/index.html</guid>
-  <pubDate>Mon, 01 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/speedup-profiling/new-blog.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
