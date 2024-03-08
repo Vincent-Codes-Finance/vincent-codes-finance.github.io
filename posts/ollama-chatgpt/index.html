@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vincent Grégoire, PhD, CFA">
-<meta name="dcterms.date" content="2024-01-07">
+<meta name="dcterms.date" content="2024-03-08">
 
-<title>Vincent Codes Finance - Python basic tutorial</title>
+<title>Vincent Codes Finance - Using Ollama as a ChatGPT Replacement</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,18 +136,18 @@ cookieconsent.run({
   
 
 
-<meta property="og:title" content="Vincent Codes Finance - Python basic tutorial">
+<meta property="og:title" content="Vincent Codes Finance - Using Ollama as a ChatGPT Replacement">
 <meta property="og:description" content="A blog about coding for empirical research in finance">
-<meta property="og:image" content="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png">
+<meta property="og:image" content="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.png">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta property="og:image:height" content="554">
-<meta property="og:image:width" content="1036">
-<meta name="twitter:title" content="Vincent Codes Finance - Python basic tutorial">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="Vincent Codes Finance - Using Ollama as a ChatGPT Replacement">
 <meta name="twitter:description" content="A blog about coding for empirical research in finance">
-<meta name="twitter:image" content="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png">
-<meta name="twitter:image-height" content="554">
-<meta name="twitter:image-width" content="1036">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -183,11 +217,14 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Python basic tutorial</h1>
+      <h1 class="title">Using Ollama as a ChatGPT Replacement</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">Tutorial</div>
-                <div class="quarto-category">Beginner</div>
+                <div class="quarto-category">Ollama</div>
+                <div class="quarto-category">ChatGPT</div>
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">Writing</div>
+                <div class="quarto-category">Llama</div>
+                <div class="quarto-category">Mistral</div>
               </div>
                   </div>
   </div>
@@ -205,7 +242,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 7, 2024</p>
+        <p class="date">March 8, 2024</p>
       </div>
     </div>
     
@@ -302,7 +339,34 @@ cookieconsent.run({
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
 </div>
 </div></div>
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a>
+  <ul class="collapse">
+  <li><a href="#what-is-ollama" id="toc-what-is-ollama" class="nav-link" data-scroll-target="#what-is-ollama">What is Ollama?</a></li>
+  <li><a href="#the-power-of-local-processing" id="toc-the-power-of-local-processing" class="nav-link" data-scroll-target="#the-power-of-local-processing">The Power of Local Processing</a></li>
+  <li><a href="#limitations-of-local-llms" id="toc-limitations-of-local-llms" class="nav-link" data-scroll-target="#limitations-of-local-llms">Limitations of Local LLMs</a></li>
+  <li><a href="#front-end-applications-for-enhanced-interaction" id="toc-front-end-applications-for-enhanced-interaction" class="nav-link" data-scroll-target="#front-end-applications-for-enhanced-interaction">Front-End Applications for Enhanced Interaction</a></li>
+  <li><a href="#other-use-cases" id="toc-other-use-cases" class="nav-link" data-scroll-target="#other-use-cases">Other Use Cases</a></li>
+  </ul></li>
+  <li><a href="#setting-up-ollama" id="toc-setting-up-ollama" class="nav-link" data-scroll-target="#setting-up-ollama">Setting Up Ollama</a>
+  <ul class="collapse">
+  <li><a href="#download-and-installation" id="toc-download-and-installation" class="nav-link" data-scroll-target="#download-and-installation">Download and Installation</a></li>
+  <li><a href="#downloading-and-running-llm-models" id="toc-downloading-and-running-llm-models" class="nav-link" data-scroll-target="#downloading-and-running-llm-models">Downloading and Running LLM Models</a></li>
+  <li><a href="#model-variants-and-sizes" id="toc-model-variants-and-sizes" class="nav-link" data-scroll-target="#model-variants-and-sizes">Model Variants and Sizes</a></li>
+  <li><a href="#models-i-use" id="toc-models-i-use" class="nav-link" data-scroll-target="#models-i-use">Models I Use</a></li>
+  </ul></li>
+  <li><a href="#setting-up-front-end-applications" id="toc-setting-up-front-end-applications" class="nav-link" data-scroll-target="#setting-up-front-end-applications">Setting Up Front-End Applications</a>
+  <ul class="collapse">
+  <li><a href="#ollama-ui" id="toc-ollama-ui" class="nav-link" data-scroll-target="#ollama-ui">Ollama-UI</a></li>
+  <li><a href="#open-webui" id="toc-open-webui" class="nav-link" data-scroll-target="#open-webui">Open WebUI</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -311,11 +375,125 @@ cookieconsent.run({
 
 
 
-<p>I posted <a href="../../intro-to-python/python-basics/">a tutorial</a> on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good starting point for those who want to learn Python. It does not cover the whole syntax, only the elements that I find essential to get started with data analysis and empirical research using Python. After the tutorial, you should have enough knowledge to start learning the modules that are relevant to data analysis such as <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, etc.</p>
-<p>I am in the process of recording a video tutorial that will be posted on my <a href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w">YouTube channel</a>. I will post the link to the video here once it is ready.</p>
-<p>If you haven’t done so already, I recommend you to install Python on your computer. You can find instructions on how to do so <a href="../../posts/install-python-312/">here</a>.</p>
+<p>Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a ChatGPT replacement for empirical finance research, focusing on privacy, customization, and computational flexibility. ChatGPT has become a daily driver for many researchers and professionals, including myself, offering a powerful tool for generating text, code, and insights across a wide range of domains. However, the reliance on closed, cloud-based solutions for leveraging Large Language Models (LLMs) like ChatGPT comes with inherent privacy, data security, and replicability concerns, especially in fields like empirical finance research.</p>
+<p>Enter Ollama, a tool that allows researchers and professionals to manage and run open-source LLMs such as Meta’s Llamma 2 and Mistral AI’s Mistral, bypassing the need for cloud-based solutions. This post, the first in a series of three, aims to demystify the process of installing and using Ollama as a ChatGPT replacement. We’ll delve into the advantages of running LLMs on your own machines, offering you full control over your data while catering to the specific needs of finance-related research. Subsequent posts will explore Ollama’s prowess as a replacement for GitHub Copilot, enhancing coding efficiency, and its capabilities as a Python API for advanced text processing, opening new doors for empirical finance analysis and beyond.</p>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/UmUDpxnmLW4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="ollama" class="level2">
+<h2 class="anchored" data-anchor-id="ollama">Ollama</h2>
+<p>The open-source community was set ablaze with excitement following Meta’s release of LLaMA, the first “big” open-source Large Language Model (LLM). This pivotal moment marked a shift towards democratizing access to powerful AI tools, sparking a fervent race to discover the most efficient ways to harness such models on consumer hardware. Amidst this bustling innovation, one solution emerged as a beacon for those seeking to leverage the immense potential of LLMs within their own computing environments: Ollama.</p>
+<section id="what-is-ollama" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-ollama">What is Ollama?</h3>
+<p>Ollama is a cutting-edge software designed to simplify the process of downloading, managing, and running open-source LLMs directly on your computer. Recognizing the complexities and technical challenges involved in setting up and deploying LLMs, Ollama offers a streamlined solution that makes these powerful tools more accessible to a wider audience. Whether you’re a researcher, developer, or enthusiast, Ollama provides the necessary “back-end” infrastructure to run these models smoothly on your local machine.</p>
+</section>
+<section id="the-power-of-local-processing" class="level3">
+<h3 class="anchored" data-anchor-id="the-power-of-local-processing">The Power of Local Processing</h3>
+<p>At its core, Ollama harnesses the power of local processing, offering users complete control over their data and the AI models they interact with. This approach not only enhances privacy and security but also allows for greater flexibility and customization to meet specific needs or research goals. With Ollama, the complexities of running LLMs are abstracted away, leaving users free to focus on their work without worrying about the underlying technicalities.</p>
+</section>
+<section id="limitations-of-local-llms" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-of-local-llms">Limitations of Local LLMs</h3>
+<p>While the benefits of local LLMs are clear, it’s important to acknowledge that running these models on consumer hardware comes with its own set of limitations. The computational resources required to run LLMs are substantial, and while Ollama provides a robust solution for managing these resources, users should be mindful of the hardware and memory constraints of their local machines. For best results, it’s recommended to run Ollama on a machine with a powerful GPU and ample memory to ensure smooth and efficient operation. Apple’s M-series chips, because they share memory between the CPU and GPU, are particularly well-suited for running Ollama and LLMs.</p>
+</section>
+<section id="front-end-applications-for-enhanced-interaction" class="level3">
+<h3 class="anchored" data-anchor-id="front-end-applications-for-enhanced-interaction">Front-End Applications for Enhanced Interaction</h3>
+<p>While Ollama serves as the robust engine running the models, most users seek a more intuitive way to interact with their LLMs beyond the command line. To address this, Ollama supports the integration of various “front-end” applications, each offering a unique interface and set of features tailored to different user preferences and use cases. In this post, we will explore two such front-end applications that serve as excellent ChatGPT replacements:</p>
+<ol type="1">
+<li><strong>Ollama-UI</strong>: A Chrome extension that enables users to access and interact with their LLMs directly from their web browser, offering convenience and flexibility for those who prefer web-based tools. Easy to install but limited in features.</li>
+<li><strong>Open WebUI</strong>: A comprehensive ChatGPT replacement that offers a full-featured web interface, catering to users looking for a robust and feature-rich platform to leverage the capabilities of their local LLMs.</li>
+</ol>
+<p>As we delve into the specifics of these front-end applications, it’s clear that Ollama is not just a tool but a gateway to unlocking the full potential of open-source LLMs. By bridging the gap between powerful AI models and everyday users, Ollama is setting the stage for a new era of innovation and accessibility in the world of artificial intelligence.</p>
+</section>
+<section id="other-use-cases" class="level3">
+<h3 class="anchored" data-anchor-id="other-use-cases">Other Use Cases</h3>
+<p>While this post focuses on using Ollama as a ChatGPT replacement, it’s important to note that Ollama’s capabilities extend far beyond text generation. In subsequent posts, we will explore two additional use cases for Ollama:</p>
+<ul>
+<li><strong>GitHub Copilot Replacement</strong>: Some models like CodeLlama and Mistral are designed to assist with code generation and programming tasks, making them ideal replacements for GitHub Copilot. Combined with Visual Studio Code extensions, Ollama offers a powerful alternative for developers seeking to enhance their coding efficiency and productivity.</li>
+<li><strong>OpenAI API Replacement</strong>: Ollama can serve as a Python API for advanced text processing, enabling users to leverage the capabilities of open-source LLMs for a wide range of natural language processing tasks. From sentiment analysis to language translation, Ollama opens new doors for researchers and professionals seeking to harness the power of AI in their work. For researchers in empirical finance, this means being able to use open-source LLMs to analyze and interpret financial documents, news articles, and other textual data with greater control, replicability, and privacy.</li>
+</ul>
+</section>
+</section>
+<section id="setting-up-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-ollama">Setting Up Ollama</h2>
+<p>Ollama is a command-line tool that is available for macOS, Linux, and (experimental) Windows, making it accessible to a wide range of users. In this section, we’ll walk through the process of downloading and installing Ollama, setting up the necessary LLM models, and running Ollama to interact with these models. We’ll also explore the front-end applications that can be used to enhance the user experience when working with Ollama.</p>
+<section id="download-and-installation" class="level3">
+<h3 class="anchored" data-anchor-id="download-and-installation">Download and Installation</h3>
+<p>The first step in setting up Ollama is to download and install the tool on your local machine. The installation process is straightforward and involves running a few commands in your terminal. Ollama’s <a href="https://ollama.com/download">download page</a> provides installers for macOS and Windows, as well as instructions for Linux users. Once you’ve downloaded the installer, follow the installation instructions to set up Ollama on your machine.</p>
+<p>If you’re using a Mac, you can install Ollama using Homebrew by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The benefit of using Homebrew is that it simplifies the installation process and also sets up Ollama as a service, allowing it to run in the background and manage the LLM models you download.</p>
+</section>
+<section id="downloading-and-running-llm-models" class="level3">
+<h3 class="anchored" data-anchor-id="downloading-and-running-llm-models">Downloading and Running LLM Models</h3>
+<p>The list of available LLM models that can be run using Ollama is constantly expanding, with new models being added regularly. To see the current list, you can check the <a href="https://ollama.com/library">Ollama Library</a> page. Once you’ve identified the models you’d like to use, you can download them using the <code>ollama pull</code> command followed by the model name. For example, to download the <code>llama2</code> model, you would run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In order to run the models, you will need to start the Ollama service. If you installed using Homebrew or activated the service during installation, you have nothing to do. If not, you can start the service using the <code>ollama serve</code> command. This will initialize the Ollama service and allow you to interact with the models you’ve downloaded.</p>
+<p>After downloading the model, you can run it using the <code>ollama run</code> command followed by the model name. For example, to start the <code>llama2</code> model, you would run:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will let you interact with the model directly from the command line, allowing you to generate text, code, or other outputs based on your input. However, for a more user-friendly experience, you will want to explore the front-end applications that Ollama supports instead of running it directly from the command line.</p>
+<p>The most popular models available for use with Ollama are <code>llama2</code>, <code>mistral</code>, and <code>mixtral</code>. Each of these models offers unique capabilities and performance characteristics, catering to different use cases and hardware configurations, but according to the latest benchmark, <code>mixtral</code> is the most powerful and capable model, offering the best performance across a wide range of tasks.</p>
+</section>
+<section id="model-variants-and-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="model-variants-and-sizes">Model Variants and Sizes</h3>
+<p>Models like Llama 2 and Mistral come in different sizes and variants, each offering a unique balance of computational power and specificity.</p>
+<p>For example, the <code>llama2</code> model is available in multiple variants along three dimensions:</p>
+<ul>
+<li><strong>Number of parameters</strong>: <code>7b</code>, <code>13b</code>, and <code>70b</code>, each representing the number of parameters in the model in billions. The larger the model, the more powerful and capable it is, but it also requires more computational resources to run.</li>
+<li><strong>Quantization</strong>: <code>q***</code>, where <code>***</code> represents the number of bits used to represent the model’s parameters and the quantization method used. LLM models weights are typically stored as 32-bit floating-point numbers, but quantization allows for the use of lower precision representations, such as 16-bit, 8-bit and as low as 2-bit. Lower quantization levels result in smaller model sizes and faster inference times, but may come at the cost of reduced model performance.</li>
+<li><strong>Tuning</strong>: <code>text</code> or <code>chat</code>, indicating whether the model has been fine-tuned for text generation or chat.</li>
+</ul>
+<p>The <code>mistral</code> and <code>mixtral</code> models also come in different sizes and variants, each tailored to specific use cases and hardware configurations. By understanding the available model variants and sizes, you can choose the one that best suits your needs and computing environment, ensuring optimal performance and efficiency when running Ollama. This will require some experimentation to find the right balance between model size and performance for your specific use case and hardware configuration.</p>
+<p>Other models like <code>CodeLlama</code> and <code>Mistral</code> are designed specifically for code generation and programming tasks, offering a powerful alternative to GitHub Copilot. These models are optimized for understanding and generating code, making them ideal for developers and researchers working on programming-related projects.</p>
+</section>
+<section id="models-i-use" class="level3">
+<h3 class="anchored" data-anchor-id="models-i-use">Models I Use</h3>
+<p>Here are the commands to install the models I use on my MacBook Pro M3 Max with 64GB of RAM:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama2</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull mistral</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull Mixtral</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama2-uncensored</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull CodeLlama</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull deepseek-coder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mixtral is the most powerful, but it requires a lot of memory and a powerful GPU to run. I use it for generating long-form content and for more complex tasks. Llama2 is a good all-rounder, and I use it for most of my text generation tasks. Mistral is a smaller model that is well-suited for tasks that require less computational power, and CodeLlama is my go-to model for code generation and programming tasks.</p>
+<p>These are also some of the most popular models available for use with Ollama, but I have yet to explore the other models available in the Ollama Library.</p>
+</section>
+</section>
+<section id="setting-up-front-end-applications" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-front-end-applications">Setting Up Front-End Applications</h2>
+<p>I use two front-end applications to interact with Ollama: Ollama-UI and Open WebUI. These applications provide a more user-friendly interface for interacting with the LLM models, offering a range of features and capabilities that enhance the overall user experience. In this section, we’ll explore the installation and setup process for each of these front-end applications, highlighting their unique features and use cases.</p>
+<section id="ollama-ui" class="level3">
+<h3 class="anchored" data-anchor-id="ollama-ui">Ollama-UI</h3>
+<p>Ollama-UI is a Chrome extension that allows users to access and interact with their LLM models directly from their web browser. This convenient front-end application offers a simple and intuitive interface for generating text, code, and other outputs based on user input. To install Ollama-UI, you need to get it from the <a href="https://chromewebstore.google.com/detail/ollama-ui/cmgdpmlhgjhoadnonobjeekmfcehffco">Chrome Web Store</a>. Once installed, you can access it by clicking on the Ollama icon in your browser’s toolbar.</p>
+<p>For it to work, you need to have the Ollama service running on your local machine. The interface is simple and easy to use, allowing you to input text and receive outputs from the LLM models you’ve downloaded.</p>
+</section>
+<section id="open-webui" class="level3">
+<h3 class="anchored" data-anchor-id="open-webui">Open WebUI</h3>
+<p>Open WebUI is a full-featured web interface that offers a comprehensive platform for interacting with your local LLM models. This powerful front-end application provides a range of features and capabilities, including the ability to manage and run multiple models simultaneously, customize model settings, and access advanced options for generating text, code, and other outputs. Installing it is a bit more involved than Ollama-UI, but it offers a more robust and feature-rich platform for leveraging the capabilities of your local LLM models.</p>
+<p>To install Open WebUI, you will need to first install Docker if you don’t already have it on your machine. Docker is a platform running applications using containerization, i.e.&nbsp;in self-contained enverionments. You can download and install Docker from the <a href="https://www.docker.com/products/docker-desktop">official website</a>.</p>
+<p>If you’re using a Mac, you can install Docker and Docker Desktop using Homebrew by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install docker</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you have Docker installed, you can run the following command in your terminal to start Open WebUI:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 3000:8080 <span class="at">--add-host</span><span class="op">=</span>host.docker.internal:host-gateway <span class="at">-v</span> open-webui:/app/backend/data <span class="at">--name</span> open-webui <span class="at">--restart</span> always ghcr.io/open-webui/open-webui:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command will start the Open WebUI service and allow you to access the web interface by navigating to <code>http://localhost:3000</code> in your web browser. From there, you can interact with your local LLM models, customize settings, and generate text, code, and other outputs based on your input.</p>
+<p>Once you have Open WebUI up and running, you can explore its various features and capabilities. Note that the first time you start a new chat, Ollama will need to load the model, which can take a few seconds or longer depending on the model size and your hardware configuration. Once the model is loaded, you can start generating text and interacting with the model in real-time.</p>
+<p>In the chat interface, you can select the model you want to use, input text, and receive outputs from the model. You can even select multiple models to run simultaneously, allowing you to compare the outputs and performance of different models. Aside from basic chat, here are the main features of Open WebUI that are available in the sidebar:</p>
+<ul>
+<li><strong>Modelfiles</strong>: These are WebUI’s equivalent of ChatGPT’s “GTPs”. They are pre-defined combinations of prompts and settings that can be used to generate specific types of outputs. For example, you might have a modelfile for generating code, another for summarizing text, and another for answering questions. You can start by looking at the modelfiles created by the community and available at <a href="https://openwebui.com/">https://openwebui.com</a>.</li>
+<li><strong>Prompts</strong>: A place to save and manage prompt templates that you frequently use.</li>
+<li><strong>Documents</strong>: A place to save and manage documents that you want your models to be able to refer to. Note that the documents are not accessible as a whole to the model, instead they are available through a RAG (retrieval-augmented generation) mechanism. In practice, this means that the model can search for information in the documents and get the most relevant “chunks” of information to generate a response, but it doesn’t have access to the full documents. It is thus useful for accessing reference material, but not for summarizing or generating text based on the full content of the documents.</li>
+</ul>
+<p>Open WebUI offers a range of advanced options and settings that allow you to customize the behavior of your local LLM models, making it a powerful platform for leveraging the capabilities of Ollama. Other features that go beyond the scope of this post include the ability to have multiple registered users, to generate images, and to access text-to-speech and speech-to-text capabilities.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The rise of open-source LLMs has ushered in a new era of innovation and accessibility in the world of artificial intelligence. There is so much potential for these models to transform the way we work and interact with AI, and Ollama is at the forefront of this revolution. By providing a streamlined solution for running LLMs on consumer hardware, Ollama is empowering researchers, developers, and enthusiasts to harness the full potential of these powerful models without relying on cloud-based solutions. It’s now up to us to explore the possibilities and push the boundaries of what’s possible with Ollama and open-source LLMs.</p>
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

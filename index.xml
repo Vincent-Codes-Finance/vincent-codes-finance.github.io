@@ -6,105 +6,120 @@
       version="2.0">
 <channel>
 <title>Vincent Codes Finance</title>
-<link>https://vincent.codes.finance/index.html</link>
+<link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.3.450</generator>
-<lastBuildDate>Fri, 01 Mar 2024 05:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.551</generator>
+<lastBuildDate>Fri, 08 Mar 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using Ollama as a ChatGPT Replacement</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/ollama-chatgpt/</link>
+  <description><![CDATA[ Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a ChatGPT replacement for empirical finance research, focusing on privacy, customization, and computational flexibility. ChatGPT has become a daily driver for many researchers and professionals, including myself, offering a powerful tool for generating text, code, and insights across a wide range of domains. However, the reliance on closed, cloud-based solutions for leveraging Large Language Models (LLMs) like ChatGPT comes with inherent privacy, data security, and replicability concerns, especially in fields like empirical finance research. ]]></description>
+  <category>Ollama</category>
+  <category>ChatGPT</category>
+  <category>LLM</category>
+  <category>Writing</category>
+  <category>Llama</category>
+  <category>Mistral</category>
+  <guid>https://vincent.codes.finance/posts/ollama-chatgpt/</guid>
+  <pubDate>Fri, 08 Mar 2024 05:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/pandas-read-csv/index.html</link>
+  <link>https://vincent.codes.finance/posts/pandas-read-csv/</link>
   <description><![CDATA[ CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html"><code>pandas.read_csv()</code></a> function is flexible and easy to use, but it can be slow and memory-intensive for large files if not used properly. ]]></description>
   <category>Python</category>
   <category>Pandas</category>
   <category>Arrow</category>
   <category>Parquet</category>
   <category>CSV</category>
-  <guid>https://vincent.codes.finance/posts/pandas-read-csv/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/pandas-read-csv/</guid>
   <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Writing LaTeX Documents in VS Code</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/vscode-latex/index.html</link>
+  <link>https://vincent.codes.finance/posts/vscode-latex/</link>
   <description><![CDATA[ LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code editor that has gained popularity among developers and researchers. This extensibility made it possible to create a rich ecosystem of extensions that enhance the functionality of VS Code for various tasks, including writing and managing LaTeX documents. The LaTeX Workshop extension is one such tool that transforms VS Code into a feature-rich LaTeX editor, providing seamless compilation, real-time preview, and intelligent autocomplete, among other capabilities. ]]></description>
   <category>VS Code</category>
   <category>LaTeX</category>
   <category>Writing</category>
-  <guid>https://vincent.codes.finance/posts/vscode-latex/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/vscode-latex/</guid>
   <pubDate>Sun, 18 Feb 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png" medium="image" type="image/png" height="82" width="144"/>
 </item>
 <item>
   <title>Using GitHub for academic research</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/github-for-research/index.html</link>
+  <link>https://vincent.codes.finance/posts/github-for-research/</link>
   <description><![CDATA[ <a href="https://git-scm.com/">Git</a> and <a href="https://github.com/">GitHub</a> are powerful version control tools for managing your research projects and collaborating with others while keeping a detailed record of your work. In this tutorial, we will cover the basics of Git and GitHub, and how to use them to manage your research projects. ]]></description>
   <category>Collaboration</category>
   <category>Git</category>
   <category>GitHub</category>
   <category>Reproducibility</category>
-  <guid>https://vincent.codes.finance/posts/github-for-research/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/github-for-research/</guid>
   <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Estimating standard errors in time series data with Python and statsmodels</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/timeseries-standard-errors/index.html</link>
+  <link>https://vincent.codes.finance/posts/timeseries-standard-errors/</link>
   <description><![CDATA[ In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a> library. ]]></description>
   <category>Python</category>
   <category>Econometrics</category>
   <category>Statsmodels</category>
-  <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/</guid>
   <pubDate>Wed, 31 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.png" medium="image" type="image/png" height="108" width="144"/>
 </item>
 <item>
   <title>Estimating standard errors in panel data with Python and linearmodels</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</link>
+  <link>https://vincent.codes.finance/posts/panel-ols-standard-errors/</link>
   <description><![CDATA[ In this post, I show how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. ]]></description>
   <category>Python</category>
   <category>Econometrics</category>
   <category>Linearmodels</category>
-  <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/</guid>
   <pubDate>Sun, 21 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Python basic tutorial</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</link>
+  <link>https://vincent.codes.finance/posts/python-basics-tutorial/</link>
   <description><![CDATA[ I posted <a href="../../intro-to-python/python-basics/">a tutorial</a> on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good starting point for those who want to learn Python. It does not cover the whole syntax, only the elements that I find essential to get started with data analysis and empirical research using Python. After the tutorial, you should have enough knowledge to start learning the modules that are relevant to data analysis such as <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, etc. ]]></description>
   <category>Python</category>
   <category>Tutorial</category>
   <category>Beginner</category>
-  <guid>https://vincent.codes.finance/posts/python-basics-tutorial/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/python-basics-tutorial/</guid>
   <pubDate>Sun, 07 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png" medium="image" type="image/png" height="77" width="144"/>
 </item>
 <item>
   <title>Installing Python 3.12</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/install-python-312/index.html</link>
+  <link>https://vincent.codes.finance/posts/install-python-312/</link>
   <description><![CDATA[ In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment. ]]></description>
   <category>Python</category>
   <category>Tutorial</category>
   <category>Beginner</category>
-  <guid>https://vincent.codes.finance/posts/install-python-312/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/install-python-312/</guid>
   <pubDate>Wed, 03 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>New Year, new blog</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/welcome/index.html</link>
+  <link>https://vincent.codes.finance/posts/welcome/</link>
   <description><![CDATA[ Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to Python and coding in empirical finance research. I’m excited to share my knowledge and experience with you. ]]></description>
   <category>News</category>
-  <guid>https://vincent.codes.finance/posts/welcome/index.html</guid>
+  <guid>https://vincent.codes.finance/posts/welcome/</guid>
   <pubDate>Mon, 01 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/welcome/new-blog.png" medium="image" type="image/png" height="144" width="144"/>
 </item>

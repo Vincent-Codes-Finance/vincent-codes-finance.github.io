@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -86,7 +86,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -95,6 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,24 +128,26 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <meta property="og:title" content="Vincent Codes Finance - Efficient reading and parsing of large CSV files in Python with Pandas and Arrow">
-<meta property="og:description" content="">
+<meta property="og:description" content="A blog about coding for empirical research in finance">
 <meta property="og:image" content="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png">
-<meta property="og:site-name" content="Vincent Codes Finance">
+<meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
 <meta name="twitter:title" content="Vincent Codes Finance - Efficient reading and parsing of large CSV files in Python with Pandas and Arrow">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="A blog about coding for empirical research in finance">
 <meta name="twitter:image" content="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -148,10 +157,10 @@ cookieconsent.run({
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../vcf-logo.png" alt="" class="navbar-logo">
     </a>
@@ -166,44 +175,44 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Python tutorials</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
         <li>
-    <a class="dropdown-item" href="../../posts/install-python-312/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html">
  <span class="dropdown-text">Install Python 3.12</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html">
  <span class="dropdown-text">Python basics</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About VCF</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w" rel="" target=""><i class="bi bi-youtube" role="img">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/CodesFinance" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/CodesFinance"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -247,6 +256,7 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div>
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
 <script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
@@ -329,6 +339,7 @@ cookieconsent.run({
 </div>
 
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div>
 </div></div>
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
@@ -354,6 +365,7 @@ cookieconsent.run({
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -393,7 +405,7 @@ cookieconsent.run({
 </ul>
 <p>Arrow provides a set of libraries for different programming languages, including C++, Java, Python, and R. The <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarrow</code></a> library is the Python implementation of Arrow. It provides a way to work with Arrow data in Python, including converting data between Arrow and other formats, such as CSV and Parquet. A big change that came with pandas 2.0 is that<code>pyarrow</code> can now be used with <code>pandas</code> not only to read and write data, but also as a <code>dtype-backend</code>, which means that pandas can use the Arrow in-memory format to store and process data.</p>
 <p>Of note, <a href="https://wesmckinney.com/">Wes McKinney</a> who created pandas is also a co-creator of Apache Arrow.</p>
-<div class="cell" data-execution_count="22">
+<div id="cell-4" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -412,10 +424,11 @@ pyarrow version: 14.0.1</code></pre>
 <p>As an example, I use a large CSV file containing daily stock information such as prices, returns, and trading volumes for publicly listed U.S. stocks from the <a href="https://www.crsp.org/">Center for Research in Security Prices (CRSP)</a> that I obtained from <a href="https://wrds-www.wharton.upenn.edu/">Wharton Research Data Services (WRDS)</a>. The file contains 8,883,156 rows and 64 columns of different data types. The original file is a CSV file compressed in the gzip format (<code>.csv.gz</code>) that is 486.4 MB in size. The uncompressed file is 3.91 GB in size.</p>
 <p>The timing results presented in this post are obtained on a MacBook Pro with a M3 Max processor and 64 GB of RAM. If doing things properly, RAM should not be a limiting factor for reading and processing the sample file. My tips will focus on speed first and memory usage second.</p>
 <p>First, let’s take a look at the first few rows of the file to understand its structure:</p>
-<div class="cell" data-execution_count="1">
+<div id="cell-6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"files/crsp_dsf.csv"</span>, nrows<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
+<div>
 <div>
 
 
@@ -574,12 +587,13 @@ pyarrow version: 14.0.1</code></pre>
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="tip-1-keep-your-csv-files-compressed" class="level2">
 <h2 class="anchored" data-anchor-id="tip-1-keep-your-csv-files-compressed">Tip 1: Keep your CSV files compressed</h2>
 <p>Reading a large CSV file with pandas is slow, but it is not slower if compressed. Compressed files take less space on disk and are sometimes faster to read. In my experience, if you are using a modern computer with a fast SSD, reading compressed and uncompressed files is about the same speed, but if you are using a hard drive or other slower storage, reading compressed files will often be faster.</p>
 <p>The <code>gzip</code> format is a good choice for compressing CSV files. It is supported by most data processing tools and is fast to read and write. I found that the <a href="https://en.wikipedia.org/wiki/XZ_Utils"><code>xz</code></a> format is even better in terms of compression ratio for relatively similar performance, but it is not as widely supported as <code>gzip</code>.</p>
-<div class="cell" data-execution_count="2">
+<div id="cell-8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"files/crsp_dsf.csv"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Reading uncompressed file: </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> x<span class="sc">:.4f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -591,7 +605,7 @@ pyarrow version: 14.0.1</code></pre>
 <pre><code>Reading uncompressed file: 23.8861 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
+<div id="cell-9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"files/crsp_dsf.csv.gz"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Reading compressed file: </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> x<span class="sc">:.4f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -604,7 +618,7 @@ pyarrow version: 14.0.1</code></pre>
 </div>
 </div>
 <p>The times are very similar. Looking at the resulting DataFrame, we can see that the file contains 64 columns of different data types. The first few columns are identifiers such as the stock ticker, the date, and the exchange code. The remaining columns contain information about the stock such as prices, returns, and trading volumes. We can also see that the parsing of the file is incomplete as the dates are all of the <code>object</code> type. We will fix this shortly.</p>
-<div class="cell" data-execution_count="4">
+<div id="cell-11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -680,9 +694,10 @@ dtypes: float64(20), int64(5), object(39)
 memory usage: 4.2+ GB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div id="cell-12" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
+<div>
 <div>
 
 
@@ -985,11 +1000,12 @@ memory usage: 4.2+ GB</code></pre>
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="tip-2-use-the-pyarrow-library-with-pandas" class="level2">
 <h2 class="anchored" data-anchor-id="tip-2-use-the-pyarrow-library-with-pandas">Tip 2: Use the <code>pyarrow</code> library with pandas</h2>
 <p>The <code>c</code> engine was historically the fastest engine for reading CSV files in pandas. It is the default engine and is written in C. The <code>python</code> engine is the slowest engine and is written in Python, and is used when the user specifies parameters that are not supported by the <code>c</code> engine. Pandas 2.0 added support for the <code>pyarrow</code> engine is a new engine that leverages the <code>pyarrow</code> library. It can be faster and more memory efficient than the <code>c</code> engine because it supports multi-threading. Let’s compare the performance of the <code>c</code> engine with the <code>pyarrow</code> engine for reading the sample file (I tried with the <code>python</code>, but I got tired of waiting…). Note that the <code>pyarrow</code> engine should be faster when using the <code>pyarrow</code> dtype backend, so we will compare the performance of the two engines with the default, the <code>numpy_nullable</code> and the <code>pyarrow</code> dtype backends.</p>
-<div class="cell" data-execution_count="6">
+<div id="cell-14" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>date_cols <span class="op">=</span> [</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SecInfoStartDt"</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SecInfoEndDt"</span>,</span>
@@ -1000,7 +1016,7 @@ memory usage: 4.2+ GB</code></pre>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DlyPrevDt"</span>,</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div id="cell-15" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"files/crsp_dsf.csv.gz"</span>, parse_dates<span class="op">=</span>date_cols, engine<span class="op">=</span><span class="st">"c"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>time_c_default <span class="op">=</span> time.time() <span class="op">-</span> x</span>
@@ -1085,7 +1101,7 @@ memory usage: 4.2+ GB
 Reading using the c engine and default backend: 28.3934 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div id="cell-16" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>,</span>
@@ -1175,7 +1191,7 @@ memory usage: 4.4+ GB
 Reading using the c engine and numpy_nullable backend: 34.7816 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div id="cell-17" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>, parse_dates<span class="op">=</span>date_cols, engine<span class="op">=</span><span class="st">"c"</span>, dtype_backend<span class="op">=</span><span class="st">"pyarrow"</span></span>
@@ -1262,7 +1278,7 @@ memory usage: 4.2+ GB
 Reading using the c engine and pyarrow backend: 51.4582 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div id="cell-18" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"files/crsp_dsf.csv.gz"</span>, parse_dates<span class="op">=</span>date_cols, engine<span class="op">=</span><span class="st">"pyarrow"</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>time_arrow_default <span class="op">=</span> time.time() <span class="op">-</span> x</span>
@@ -1345,7 +1361,7 @@ memory usage: 4.2+ GB
 Reading using the pyarrow engine and default backend: 21.9848 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div id="cell-19" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>,</span>
@@ -1433,7 +1449,7 @@ memory usage: 4.4+ GB
 Reading using the pyarrow engine and numpy_nullable backend: 33.7553 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
+<div id="cell-20" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>,</span>
@@ -1528,7 +1544,7 @@ Reading using the pyarrow engine and pyarrow backend: 6.4519 seconds</code></pre
 <p>Parquet files are columnar, which means that the data is stored by column. This is especially efficient if you only need to read a subset of the columns. Another efficient columnar file format that is supported by pandas is <a href="https://orc.apache.org/">Apache ORC</a>. However, it is not as widely supported as Parquet.</p>
 <p>Parquet files are supported by pandas through the <code>pyarrow</code> library, so you will need to install it if you want to use Parquet files.</p>
 <p><strong>FIX</strong> In the example below, we can see that both the writing and reading of the Parquet file are faster than the writing and reading of the CSV file. Reading the parquet file is almost 5 times faster than reading the CSV file, and the disk space used by the parquet file is only 73.2 MB compared to 78.1 MB for the compressed CSV file.</p>
-<div class="cell" data-execution_count="13">
+<div id="cell-22" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df.to_parquet(<span class="st">"files/crsp_dsf.parquet"</span>, engine<span class="op">=</span><span class="st">"pyarrow"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>time_write_parquet <span class="op">=</span> time.time() <span class="op">-</span> x</span>
@@ -1539,7 +1555,7 @@ Reading using the pyarrow engine and pyarrow backend: 6.4519 seconds</code></pre
 <pre><code>Writing to Parquet using the pyarrow engine and pyarrow backend: 7.636731147766113 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div id="cell-23" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.parquet"</span>, engine<span class="op">=</span><span class="st">"pyarrow"</span>, dtype_backend<span class="op">=</span><span class="st">"pyarrow"</span></span>
@@ -1628,7 +1644,7 @@ Reading Parquet file using the pyarrow engine and pyarrow backend: 0.71891593933
 <section id="tip-4-only-read-the-columns-you-need" class="level2">
 <h2 class="anchored" data-anchor-id="tip-4-only-read-the-columns-you-need">Tip 4: Only read the columns you need</h2>
 <p>The second tip is to only read the columns you need. This is especially important if you are working with large files as it will save memory and time. We can specify the columns we want with the <code>usecols</code> parameter of the <code>read_csv</code> function or the <code>columns</code> parameter of the <code>read_parquet</code> function. Note that for CSV files the saved time is mostly because we do not have to parse the columns we are not interested in. However, because CSV files are not indexed, we still have to read the entire file. Parquet files are indexed and columnar, so the `pyarrow`` engine does not have to read the entire file if we only need a subset of the columns.</p>
-<div class="cell" data-execution_count="15">
+<div id="cell-25" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DlyCalDt"</span>,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PERMNO"</span>,</span>
@@ -1641,7 +1657,7 @@ Reading Parquet file using the pyarrow engine and pyarrow backend: 0.71891593933
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DlyPrc"</span>,</span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="16">
+<div id="cell-26" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>, usecols<span class="op">=</span>cols, parse_dates<span class="op">=</span>[<span class="st">"DlyCalDt"</span>], engine<span class="op">=</span><span class="st">"c"</span></span>
@@ -1675,7 +1691,7 @@ memory usage: 610.0+ MB
 Reading a subset of columns using the c engine and default backend: 11.7283 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+<div id="cell-27" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.csv.gz"</span>,</span>
@@ -1709,7 +1725,7 @@ memory usage: 583.0 MB
 Reading a subset of columns using the pyarrow engine and pyarrow backend: 2.9267 seconds</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div id="cell-28" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.parquet"</span>, columns<span class="op">=</span>cols, engine<span class="op">=</span><span class="st">"pyarrow"</span>, dtype_backend<span class="op">=</span><span class="st">"pyarrow"</span></span>
@@ -1743,7 +1759,7 @@ Reading a subset of columns from Parquet file using the pyarrow engine and pyarr
 <section id="tip-5-parquet-only-only-read-the-rows-you-need" class="level2">
 <h2 class="anchored" data-anchor-id="tip-5-parquet-only-only-read-the-rows-you-need">Tip 5 (Parquet-only): Only read the rows you need</h2>
 <p>Pandas’ <code>read_parquet()</code> function passes all the arguments to the <code>pyarrow.parquet.read_table()</code> function, so we can use the <code>filters</code> parameter to only read the rows we need. The <code>filters</code> parameter takes a list of tuples where each tuple contains the column name, the operator, and the value. For example, if we only want to read the rows for January 2023, we can use the following filter:</p>
-<div class="cell" data-execution_count="19">
+<div id="cell-30" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>filters <span class="op">=</span> [(<span class="st">"DlyCalDt"</span>, <span class="st">"&gt;="</span>, date(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="dv">1</span>)), (<span class="st">"DlyCalDt"</span>, <span class="st">"&lt;"</span>, date(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>))]</span>
@@ -1783,201 +1799,6 @@ Reading a subset of rows and columns from Parquet file using the pyarrow engine 
 </div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">DlyCalDt</th>
-<th data-quarto-table-cell-role="th">PERMNO</th>
-<th data-quarto-table-cell-role="th">CUSIP</th>
-<th data-quarto-table-cell-role="th">Ticker</th>
-<th data-quarto-table-cell-role="th">PrimaryExch</th>
-<th data-quarto-table-cell-role="th">SecurityType</th>
-<th data-quarto-table-cell-role="th">SICCD</th>
-<th data-quarto-table-cell-role="th">DlyRet</th>
-<th data-quarto-table-cell-role="th">DlyPrc</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>2023-01-03</td>
-<td>10026</td>
-<td>46603210</td>
-<td>JJSF</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>2052</td>
-<td>0.011823</td>
-<td>151.48</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>2023-01-04</td>
-<td>10026</td>
-<td>46603210</td>
-<td>JJSF</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>2052</td>
-<td>-0.001716</td>
-<td>151.22</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>2023-01-05</td>
-<td>10026</td>
-<td>46603210</td>
-<td>JJSF</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>2052</td>
-<td>-0.010713</td>
-<td>149.60</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>2023-01-06</td>
-<td>10026</td>
-<td>46603210</td>
-<td>JJSF</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>2052</td>
-<td>0.020321</td>
-<td>152.64</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>2023-01-09</td>
-<td>10026</td>
-<td>46603210</td>
-<td>JJSF</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>2052</td>
-<td>-0.019851</td>
-<td>149.61</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">189757</td>
-<td>2023-01-25</td>
-<td>93436</td>
-<td>88160R10</td>
-<td>TSLA</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>9999</td>
-<td>0.003753</td>
-<td>144.43</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">189758</td>
-<td>2023-01-26</td>
-<td>93436</td>
-<td>88160R10</td>
-<td>TSLA</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>9999</td>
-<td>0.109673</td>
-<td>160.27</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">189759</td>
-<td>2023-01-27</td>
-<td>93436</td>
-<td>88160R10</td>
-<td>TSLA</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>9999</td>
-<td>0.110002</td>
-<td>177.90</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">189760</td>
-<td>2023-01-30</td>
-<td>93436</td>
-<td>88160R10</td>
-<td>TSLA</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>9999</td>
-<td>-0.063182</td>
-<td>166.66</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">189761</td>
-<td>2023-01-31</td>
-<td>93436</td>
-<td>88160R10</td>
-<td>TSLA</td>
-<td>Q</td>
-<td>EQTY</td>
-<td>9999</td>
-<td>0.039362</td>
-<td>173.22</td>
-</tr>
-</tbody>
-</table>
-
-<p>189762 rows × 9 columns</p>
-</div>
-</div>
-</div>
-<p>Note that this is not necessarily faster than reading the entire file and then filtering the rows with pandas, but it can be more memory efficient because we do not have to read the entire file into memory.</p>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.parquet"</span>,</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>cols,</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    filters<span class="op">=</span>filters,</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    engine<span class="op">=</span><span class="st">"pyarrow"</span>,</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    dtype_backend<span class="op">=</span><span class="st">"pyarrow"</span>,</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">"DlyCalDt"</span>] <span class="op">&gt;=</span> date(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">&amp;</span> (df[<span class="st">"DlyCalDt"</span>] <span class="op">&lt;</span> date(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>))]</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>time_parquet_arrow_arrow_subset <span class="op">=</span> time.time() <span class="op">-</span> x</span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>df.info()</span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"Reading a subset of columns from Parquet file using the pyarrow engine and pyarrow backend and filtering rows using pandas: </span><span class="sc">{</span>time_parquet_arrow_arrow_subset<span class="sc">:.4f}</span><span class="ss"> seconds"</span></span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
-RangeIndex: 189762 entries, 0 to 189761
-Data columns (total 9 columns):
- #   Column        Non-Null Count   Dtype               
----  ------        --------------   -----               
- 0   DlyCalDt      189762 non-null  date32[day][pyarrow]
- 1   PERMNO        189762 non-null  int64[pyarrow]      
- 2   CUSIP         189695 non-null  string[pyarrow]     
- 3   Ticker        189655 non-null  string[pyarrow]     
- 4   PrimaryExch   189762 non-null  string[pyarrow]     
- 5   SecurityType  189695 non-null  string[pyarrow]     
- 6   SICCD         189762 non-null  int64[pyarrow]      
- 7   DlyRet        189592 non-null  double[pyarrow]     
- 8   DlyPrc        189633 non-null  double[pyarrow]     
-dtypes: date32[day][pyarrow](1), double[pyarrow](2), int64[pyarrow](2), string[pyarrow](4)
-memory usage: 12.6 MB
-Reading a subset of columns from Parquet file using the pyarrow engine and pyarrow backend and filtering rows using pandas: 0.0622 seconds</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 
 
@@ -2136,6 +1957,205 @@ Reading a subset of columns from Parquet file using the pyarrow engine and pyarr
 </div>
 </div>
 </div>
+</div>
+<p>Note that this is not necessarily faster than reading the entire file and then filtering the rows with pandas, but it can be more memory efficient because we do not have to read the entire file into memory.</p>
+<div id="cell-32" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> time.time()</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"files/crsp_dsf.parquet"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>cols,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    filters<span class="op">=</span>filters,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    engine<span class="op">=</span><span class="st">"pyarrow"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    dtype_backend<span class="op">=</span><span class="st">"pyarrow"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">"DlyCalDt"</span>] <span class="op">&gt;=</span> date(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">&amp;</span> (df[<span class="st">"DlyCalDt"</span>] <span class="op">&lt;</span> date(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>))]</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>time_parquet_arrow_arrow_subset <span class="op">=</span> time.time() <span class="op">-</span> x</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>df.info()</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"Reading a subset of columns from Parquet file using the pyarrow engine and pyarrow backend and filtering rows using pandas: </span><span class="sc">{</span>time_parquet_arrow_arrow_subset<span class="sc">:.4f}</span><span class="ss"> seconds"</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 189762 entries, 0 to 189761
+Data columns (total 9 columns):
+ #   Column        Non-Null Count   Dtype               
+---  ------        --------------   -----               
+ 0   DlyCalDt      189762 non-null  date32[day][pyarrow]
+ 1   PERMNO        189762 non-null  int64[pyarrow]      
+ 2   CUSIP         189695 non-null  string[pyarrow]     
+ 3   Ticker        189655 non-null  string[pyarrow]     
+ 4   PrimaryExch   189762 non-null  string[pyarrow]     
+ 5   SecurityType  189695 non-null  string[pyarrow]     
+ 6   SICCD         189762 non-null  int64[pyarrow]      
+ 7   DlyRet        189592 non-null  double[pyarrow]     
+ 8   DlyPrc        189633 non-null  double[pyarrow]     
+dtypes: date32[day][pyarrow](1), double[pyarrow](2), int64[pyarrow](2), string[pyarrow](4)
+memory usage: 12.6 MB
+Reading a subset of columns from Parquet file using the pyarrow engine and pyarrow backend and filtering rows using pandas: 0.0622 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">DlyCalDt</th>
+<th data-quarto-table-cell-role="th">PERMNO</th>
+<th data-quarto-table-cell-role="th">CUSIP</th>
+<th data-quarto-table-cell-role="th">Ticker</th>
+<th data-quarto-table-cell-role="th">PrimaryExch</th>
+<th data-quarto-table-cell-role="th">SecurityType</th>
+<th data-quarto-table-cell-role="th">SICCD</th>
+<th data-quarto-table-cell-role="th">DlyRet</th>
+<th data-quarto-table-cell-role="th">DlyPrc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-03</td>
+<td>10026</td>
+<td>46603210</td>
+<td>JJSF</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>2052</td>
+<td>0.011823</td>
+<td>151.48</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-04</td>
+<td>10026</td>
+<td>46603210</td>
+<td>JJSF</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>2052</td>
+<td>-0.001716</td>
+<td>151.22</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-05</td>
+<td>10026</td>
+<td>46603210</td>
+<td>JJSF</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>2052</td>
+<td>-0.010713</td>
+<td>149.60</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-06</td>
+<td>10026</td>
+<td>46603210</td>
+<td>JJSF</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>2052</td>
+<td>0.020321</td>
+<td>152.64</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-09</td>
+<td>10026</td>
+<td>46603210</td>
+<td>JJSF</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>2052</td>
+<td>-0.019851</td>
+<td>149.61</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">189757</td>
+<td>2023-01-25</td>
+<td>93436</td>
+<td>88160R10</td>
+<td>TSLA</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>9999</td>
+<td>0.003753</td>
+<td>144.43</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">189758</td>
+<td>2023-01-26</td>
+<td>93436</td>
+<td>88160R10</td>
+<td>TSLA</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>9999</td>
+<td>0.109673</td>
+<td>160.27</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">189759</td>
+<td>2023-01-27</td>
+<td>93436</td>
+<td>88160R10</td>
+<td>TSLA</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>9999</td>
+<td>0.110002</td>
+<td>177.90</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">189760</td>
+<td>2023-01-30</td>
+<td>93436</td>
+<td>88160R10</td>
+<td>TSLA</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>9999</td>
+<td>-0.063182</td>
+<td>166.66</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">189761</td>
+<td>2023-01-31</td>
+<td>93436</td>
+<td>88160R10</td>
+<td>TSLA</td>
+<td>Q</td>
+<td>EQTY</td>
+<td>9999</td>
+<td>0.039362</td>
+<td>173.22</td>
+</tr>
+</tbody>
+</table>
+
+<p>189762 rows × 9 columns</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="other-benefits-of-using-the-pyarrow-dtype-backend" class="level2">
 <h2 class="anchored" data-anchor-id="other-benefits-of-using-the-pyarrow-dtype-backend">Other benefits of using the pyarrow dtype backend</h2>
@@ -2166,7 +2186,7 @@ Reading a subset of columns from Parquet file using the pyarrow engine and pyarr
 <ol>
 <li id="fn1"><p>Note that the <code>numpy_nullable</code> backend has supported this for a while.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2208,6 +2228,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -2276,13 +2323,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2361,10 +2410,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vincent\.codes\.finance");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2374,8 +2440,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2387,7 +2462,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2431,6 +2629,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2456,6 +2655,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2518,13 +2743,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Vincent Grégoire</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-left">
+<p>Copyright 2024, Vincent Grégoire</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

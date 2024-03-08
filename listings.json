@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/ollama-chatgpt/index.html",
       "/posts/pandas-read-csv/index.html",
       "/posts/vscode-latex/index.html",
       "/posts/github-for-research/index.html",

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -78,7 +79,7 @@ div.csl-indent {
 }</style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -105,7 +106,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -114,6 +121,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -140,26 +148,55 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Vincent Codes Finance - Estimating standard errors in panel data with Python and linearmodels">
-<meta property="og:description" content="">
+<meta property="og:description" content="A blog about coding for empirical research in finance">
 <meta property="og:image" content="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png">
-<meta property="og:site-name" content="Vincent Codes Finance">
+<meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:height" content="594">
 <meta property="og:image:width" content="813">
 <meta name="twitter:title" content="Vincent Codes Finance - Estimating standard errors in panel data with Python and linearmodels">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="A blog about coding for empirical research in finance">
 <meta name="twitter:image" content="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png">
 <meta name="twitter:image-height" content="594">
 <meta name="twitter:image-width" content="813">
@@ -169,10 +206,10 @@ cookieconsent.run({
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../vcf-logo.png" alt="" class="navbar-logo">
     </a>
@@ -187,44 +224,44 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Python tutorials</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
         <li>
-    <a class="dropdown-item" href="../../posts/install-python-312/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html">
  <span class="dropdown-text">Install Python 3.12</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html">
  <span class="dropdown-text">Python basics</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About VCF</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w" rel="" target=""><i class="bi bi-youtube" role="img">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/CodesFinance" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/CodesFinance"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -266,6 +303,7 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div>
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
 <script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
@@ -348,6 +386,7 @@ cookieconsent.run({
 </div>
 
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div>
 </div></div>
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
@@ -375,6 +414,7 @@ cookieconsent.run({
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -461,7 +501,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <p>In his seminal paper, <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2009</a>)</span> compares the performance of different standard errors estimators in panel data. In addition, he provides <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/se_programming.htm">programming advice</a> on how to estimate standard errors in panel data with Stata and other languages, but not for Python.</p>
 <p>In this post, I explain how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. I do so by replicating the sample results from Petersen’s <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm">test data page</a> in Python, and cover a few more standard errors estimators that are useful in finance research.</p>
 <p>I use the test data set provided by Mitchell Petersen and available <a href="https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.txt">here</a>. The data set contains 500 firms and 10 years.</p>
-<div class="cell">
+<div id="cell-6" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_table(</span>
@@ -471,6 +511,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
+<div>
 <div>
 
 
@@ -569,6 +610,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="linearmodels" class="level2">
 <h2 class="anchored" data-anchor-id="linearmodels">linearmodels</h2>
@@ -587,10 +629,11 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <p>The library is easy to use, and intuitive for anyone familiar with <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a>. In this post, I will use two model types: <code>PanelOLS</code> and <code>FamaMacBeth</code>. As their names imply, the <code>PanelOLS</code> class is used to estimate panel data models, and the <code>FamaMacBeth</code> class is used to estimate Fama-MacBeth regressions. The library also provides implementations for random effects and first differences models, and for between estimation and pooled OLS estimators. In addition to panel data models, the library also provides implementations for instrumental variables models (including 2SLS, 3SLS, GMM, and SUR) and for estimating linear factor models.</p>
 <p>A key particularity of linearmodels is that it uses the indexing capabilities of pandas to identify the panel data structure. In particular, the <strong>DataFrame that contains your panel data must have a MultiIndex with the entity dimension in the first level and the time dimension in the second level</strong>:</p>
-<div class="cell">
+<div id="cell-9" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index([<span class="st">"firmid"</span>, <span class="st">"year"</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
+<div>
 <div>
 
 
@@ -675,6 +718,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </div>
 </div>
 </div>
+</div>
 <p>You define models by passing the dependent variable and the exogenous variables to the model class. Alternatively, following statsmodels, linearmodels leverages the patsy formula language to provide a more intuitive way to define models. For example, the following two lines of code are equivalent:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS(data[<span class="st">"y"</span>], data[[<span class="st">"x1"</span>, <span class="st">"x2"</span>]])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(formula<span class="op">=</span><span class="st">"y ~ x1 + x2"</span>, data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -711,7 +755,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 \end{array} \right].
 \]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate OLS models. The following code estimates the OLS coefficients and standard errors:</p>
-<div class="cell">
+<div id="cell-12" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> PanelOLS</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
@@ -719,6 +763,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit()</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -861,6 +906,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <br><br>
 </div>
 </div>
+</div>
 <p>Note that because the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, we need to add it manually to the model by adding <code>1</code> to the formula.</p>
 </section>
 <section id="white-standard-errors" class="level2">
@@ -884,10 +930,11 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 \end{array} \right].
 \]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate OLS models with White standard errors. The following code estimates the OLS coefficients and White standard errors:</p>
-<div class="cell">
+<div id="cell-14" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"robust"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -1030,6 +1077,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
+</div>
 <p>The estimated coefficients are the same as with the OLS standard errors, but the standard errors are different. In turn, all statistical measures that depend on the standard errors, such as t-statistics and p-values, are different.</p>
 </section>
 <section id="clustered-standard-errors" class="level2">
@@ -1037,7 +1085,6 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <p>Beyond homoskedasticity, a common concern with panel models is that the errors are correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect. Clustering standard errors is a widely used adjustment for this problem.</p>
 <p>The intuition behind clustering is that often the errors are correlated within groups, but not across groups. For example, in a panel data set with firms, the errors could correlated within the observations of a firm, but not across firms. In this case, we can cluster the standard errors by firm to obtain consistent standard errors. Implicitly we assume that the errors have the following structure:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <table class="table-striped table-sm table-hover small table">
-<caption></caption>
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1177,7 +1224,6 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </table>
 <p>If you assume that the errors are correlated within the observations of a firm, and across firms within each time period, you can use standard errors clustered by firm and year. In this case, the errors have the following structure:</p>
 <table class="table-striped table-sm table-hover small table">
-<caption></caption>
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1316,13 +1362,14 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tbody>
 </table>
 <p>You can easily estimate clustered standard errors with the <code>PanelOLS</code> class by passing <code>cov_type="clustered"</code> and the <code>entity_effects</code> and <code>time_effects</code> arguments to <code>fit()</code> method. The following code estimates the OLS coefficients and standard errors clustered by firm, year, and firm and year:</p>
-<div class="cell">
+<div id="cell-17" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">False</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="37">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -1465,13 +1512,15 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-<div class="cell">
+</div>
+<div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">False</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="38">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -1614,13 +1663,15 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-<div class="cell">
+</div>
+<div id="cell-19" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"clustered"</span>, cluster_entity<span class="op">=</span><span class="va">True</span>, cluster_time<span class="op">=</span><span class="va">True</span>, group_debias<span class="op">=</span><span class="va">True</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="39">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -1763,6 +1814,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1786,7 +1838,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 \]</span></p>
 <p>The <code>PanelOLS</code> class can be used to estimate panel regression with fixed effects by adding <code>EntityEffects</code> or <code>TimeEffects</code> to the formula. In theory this is equivalent to adding a dummy variable for each entity or time period (i.e.&nbsp;adding <code>C(firmid)</code> or <code>C(year)</code>), but in practice it is much more efficient because linear models will use a efficient transformation to apply the effetc of the dummy variables without including them in the regression estimation. linearmodels will thus not provide coefficients for the fixed effects. Also, the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, so linearmodels will not provide an intercept either.</p>
 <p>The following code estimates the OLS coefficients and standard errors with firm fixed effects, year fixed effects, and firm and year fixed effects, and clustered standard errors along the same dimensions:</p>
-<div class="cell">
+<div id="cell-22" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm only</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mod_ffe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects"</span>, df)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_ffe.fit(</span>
@@ -1794,6 +1846,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -1927,7 +1980,8 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 11.372<br>P-value: 0.0000<br>Distribution: F(499,4499)<br><br>Included effects: Entity
 </div>
 </div>
-<div class="cell">
+</div>
+<div id="cell-23" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod_yfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + TimeEffects"</span>, df)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_yfe.fit(</span>
@@ -1935,6 +1989,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="41">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -2068,7 +2123,8 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 0.6799<br>P-value: 0.7279<br>Distribution: F(9,4989)<br><br>Included effects: Time
 </div>
 </div>
-<div class="cell">
+</div>
+<div id="cell-24" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mod_fyfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects + TimeEffects"</span>, df)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fyfe.fit(</span>
@@ -2076,6 +2132,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -2209,6 +2266,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 11.203<br>P-value: 0.0000<br>Distribution: F(508,4490)<br><br>Included effects: Entity, Time
 </div>
 </div>
+</div>
 </section>
 <section id="driscoll-kraay-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="driscoll-kraay-standard-errors">Driscoll-Kraay standard errors</h2>
@@ -2219,10 +2277,11 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <li><code>kernel="bartlett"</code>: The kernel to use. <a href="https://stats.stackexchange.com/questions/329513/bartlett-kernel-newey-west-covariance-matrix">Bartlett</a> is the kernel used by the Newey-West estimator. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
 <li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
 </ul>
-<div class="cell">
+<div id="cell-26" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
@@ -2365,6 +2424,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>
 </div>
 </div>
+</div>
 </section>
 <section id="fama-macbeth-coefficients-and-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth coefficients and standard errors</h2>
@@ -2381,13 +2441,14 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 \hat{\Sigma}_{FM} = \frac{1}{T-1} \sum_{t=1}^{T} (\beta_t - \bar{\beta})(\beta_t - \bar{\beta})'.
 \]</span></p>
 <p>linearmodels provides a <code>FamaMacBeth</code> class that can be used to estimate Fama-MacBeth regressions. The following code estimates the Fama-MacBeth coefficients and standard errors:</p>
-<div class="cell">
+<div id="cell-28" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> linearmodels <span class="im">import</span> FamaMacBeth</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mod_fm <span class="op">=</span> FamaMacBeth.from_formula(<span class="st">"y ~ 1 + x"</span>, df)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fm.fit()</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="43">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>FamaMacBeth Estimation Summary</caption>
 <tbody>
@@ -2529,6 +2590,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </table>
 </div>
 </div>
+</div>
 </section>
 <section id="newey-west-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="newey-west-standard-errors">Newey-West standard errors</h2>
@@ -2539,10 +2601,11 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 <li><code>kernel="bartlett"</code>: The Newey-West estimator uses the Bartlett kernel. linearmodels also supports the Parzen (<code>parzen</code>) and the Quadratic Spectral (<code>qs</code>) kernels.</li>
 <li><code>bandwith=3</code>: the number of lags to use, automatically computed if not specified.</li>
 </ul>
-<div class="cell">
+<div id="cell-30" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fm_res <span class="op">=</span> fm_mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fm_res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="44">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>FamaMacBeth Estimation Summary</caption>
 <tbody>
@@ -2684,6 +2747,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </table>
 </div>
 </div>
+</div>
 </section>
 <section id="cheat-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="cheat-sheet">Cheat sheet</h2>
@@ -2754,7 +2818,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-driscoll1998consistent" class="csl-entry" role="listitem">
 Driscoll, John C, and Aart C Kraay. 1998. <span>“Consistent Covariance Matrix Estimation with Spatially Dependent Panel Data.”</span> <em>Review of Economics and Statistics</em> 80 (4): 549–60. <a href="https://www.mitpressjournals.org/doi/abs/10.1162/003465398557825">https://www.mitpressjournals.org/doi/abs/10.1162/003465398557825</a>.
 </div>
@@ -2778,7 +2842,7 @@ Petersen, Mitchell A. 2009. <span>“Estimating Standard Errors in Finance Panel
 <ol>
 <li id="fn1"><p>Credit: the two tables are taken from <span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#ref-petersen2008estimating" role="doc-biblioref">2009</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2820,6 +2884,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -2888,13 +2979,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2973,10 +3066,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vincent\.codes\.finance");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2986,8 +3096,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2999,7 +3118,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -3043,6 +3285,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -3068,6 +3311,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -3130,13 +3399,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Vincent Grégoire</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-left">
+<p>Copyright 2024, Vincent Grégoire</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -53,7 +53,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -62,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -117,6 +124,8 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
@@ -125,28 +134,49 @@ cookieconsent.run({
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml"><meta property="og:title" content="Vincent Codes Finance">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml" data-external="1"><meta property="og:title" content="Vincent Codes Finance">
 <meta property="og:description" content="Coding (mostly) in Python for empirical research in finance">
-<meta property="og:image" content="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png">
-<meta property="og:site-name" content="Vincent Codes Finance">
+<meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta property="og:image:height" content="720">
-<meta property="og:image:width" content="1280">
 <meta name="twitter:title" content="Vincent Codes Finance">
 <meta name="twitter:description" content="Coding (mostly) in Python for empirical research in finance">
-<meta name="twitter:image" content="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png">
-<meta name="twitter:image-height" content="720">
-<meta name="twitter:image-width" content="1280">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     <img src="./vcf-logo.png" alt="" class="navbar-logo">
     </a>
@@ -161,44 +191,44 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Python tutorials</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
         <li>
-    <a class="dropdown-item" href="./posts/install-python-312/index.html" rel="" target="">
+    <a class="dropdown-item" href="./posts/install-python-312/index.html">
  <span class="dropdown-text">Install Python 3.12</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./intro-to-python/python-basics/index.html" rel="" target="">
+    <a class="dropdown-item" href="./intro-to-python/python-basics/index.html">
  <span class="dropdown-text">Python basics</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About VCF</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w" rel="" target=""><i class="bi bi-youtube" role="img">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/CodesFinance" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/CodesFinance"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -216,7 +246,7 @@ cookieconsent.run({
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
     
@@ -228,6 +258,7 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div>
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
 <script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
@@ -310,9 +341,10 @@ cookieconsent.run({
 </div>
 
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div>
 </div></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Arrow">Arrow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Beginner">Beginner <span class="quarto-category-count">(2)</span></div><div class="category" data-category="CSV">CSV <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Collaboration">Collaboration <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Econometrics">Econometrics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Git">Git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LaTeX">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Linearmodels">Linearmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="News">News <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Pandas">Pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Parquet">Parquet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Reproducibility">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Statsmodels">Statsmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tutorial">Tutorial <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VS Code">VS Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Writing">Writing <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div><div class="category" data-category="Arrow">Arrow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Beginner">Beginner <span class="quarto-category-count">(2)</span></div><div class="category" data-category="CSV">CSV <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ChatGPT">ChatGPT <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Collaboration">Collaboration <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Econometrics">Econometrics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Git">Git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LLM">LLM <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LaTeX">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Linearmodels">Linearmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Llama">Llama <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Mistral">Mistral <span class="quarto-category-count">(1)</span></div><div class="category" data-category="News">News <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ollama">Ollama <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Pandas">Pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Parquet">Parquet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Reproducibility">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Statsmodels">Statsmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tutorial">Tutorial <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VS Code">VS Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Writing">Writing <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -323,21 +355,67 @@ cookieconsent.run({
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Python,Pandas,Arrow,Parquet,CSV" data-listing-date-sort="1709269200000" data-listing-file-modified-sort="1709294122005" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="0" data-categories="Ollama,ChatGPT,LLM,Writing,Llama,Mistral" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1709869274602" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2654">
 <div class="thumbnail">
-<p><a href="./posts/pandas-read-csv/index.html"> <img src="./posts/pandas-read-csv/pandas-arrow.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/ollama-chatgpt/index.html" class="no-external"></a></p><a href="./posts/ollama-chatgpt/index.html" class="no-external">
+<p><img src="./posts/ollama-chatgpt/futuristic_llama.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/ollama-chatgpt/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/pandas-read-csv/index.html">
 <h3 class="no-anchor listing-title">
-Efficient reading and parsing of large CSV files in Python with Pandas and Arrow
+<a href="./posts/ollama-chatgpt/index.html" class="no-external">Using Ollama as a ChatGPT Replacement</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/ollama-chatgpt/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Ollama'); return false;">
+Ollama
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('ChatGPT'); return false;">
+ChatGPT
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
+LLM
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Writing'); return false;">
+Writing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Llama'); return false;">
+Llama
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mistral'); return false;">
+Mistral
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/ollama-chatgpt/index.html" class="no-external">Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/ollama-chatgpt/index.html" class="no-external">
+<div class="listing-date">
+Mar 8, 2024
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Python,Pandas,Arrow,Parquet,CSV" data-listing-date-sort="1709269200000" data-listing-file-modified-sort="1709294122005" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1992">
+<div class="thumbnail">
+<p><a href="./posts/pandas-read-csv/index.html" class="no-external"></a></p><a href="./posts/pandas-read-csv/index.html" class="no-external">
+<p><img src="./posts/pandas-read-csv/pandas-arrow.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/pandas-read-csv/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/pandas-read-csv/index.html" class="no-external">Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/pandas-read-csv/index.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -355,33 +433,31 @@ Parquet
 CSV
 </div>
 </div>
-<a href="./posts/pandas-read-csv/index.html">
 <div class="listing-description">
-CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <code>pandas…</code>
+<a href="./posts/pandas-read-csv/index.html" class="no-external">CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <code>pandas.re…</code></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/pandas-read-csv/index.html">
+<a href="./posts/pandas-read-csv/index.html" class="no-external">
 <div class="listing-date">
 Mar 1, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="VS Code,LaTeX,Writing" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1708615979945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="2" data-categories="VS Code,LaTeX,Writing" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1708615979945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
 <div class="thumbnail">
-<p><a href="./posts/vscode-latex/index.html"> <img src="./posts/vscode-latex/vscode-latex.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/vscode-latex/index.html" class="no-external"></a></p><a href="./posts/vscode-latex/index.html" class="no-external">
+<p><img src="./posts/vscode-latex/vscode-latex.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/vscode-latex/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/vscode-latex/index.html">
 <h3 class="no-anchor listing-title">
-Writing LaTeX Documents in VS Code
+<a href="./posts/vscode-latex/index.html" class="no-external">Writing LaTeX Documents in VS Code</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/vscode-latex/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('VS Code'); return false;">
 VS Code
@@ -393,33 +469,31 @@ LaTeX
 Writing
 </div>
 </div>
-<a href="./posts/vscode-latex/index.html">
 <div class="listing-description">
-LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…
+<a href="./posts/vscode-latex/index.html" class="no-external">LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/vscode-latex/index.html">
+<a href="./posts/vscode-latex/index.html" class="no-external">
 <div class="listing-date">
 Feb 18, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Collaboration,Git,GitHub,Reproducibility" data-listing-date-sort="1707454800000" data-listing-file-modified-sort="1708088820728" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36">
+<div class="quarto-post image-right" data-index="3" data-categories="Collaboration,Git,GitHub,Reproducibility" data-listing-date-sort="1707454800000" data-listing-file-modified-sort="1708088820728" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36" data-listing-word-count-sort="7001">
 <div class="thumbnail">
-<p><a href="./posts/github-for-research/index.html"> <img src="./posts/github-for-research/github-for-research.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/github-for-research/index.html" class="no-external"></a></p><a href="./posts/github-for-research/index.html" class="no-external">
+<p><img src="./posts/github-for-research/github-for-research.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/github-for-research/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/github-for-research/index.html">
 <h3 class="no-anchor listing-title">
-Using GitHub for academic research
+<a href="./posts/github-for-research/index.html" class="no-external">Using GitHub for academic research</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/github-for-research/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Collaboration'); return false;">
 Collaboration
@@ -434,33 +508,31 @@ GitHub
 Reproducibility
 </div>
 </div>
-<a href="./posts/github-for-research/index.html">
 <div class="listing-description">
-Git and GitHub are powerful version control tools for managing your research projects and collaborating with…
+<a href="./posts/github-for-research/index.html" class="no-external">Git and GitHub are powerful version control tools for managing your research projects and collaborating with others while keeping a detailed record of your work. In this…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/github-for-research/index.html">
+<a href="./posts/github-for-research/index.html" class="no-external">
 <div class="listing-date">
 Feb 9, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="Python,Econometrics,Statsmodels" data-listing-date-sort="1706677200000" data-listing-file-modified-sort="1708182083873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="4" data-categories="Python,Econometrics,Statsmodels" data-listing-date-sort="1706677200000" data-listing-file-modified-sort="1708182083873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1697">
 <div class="thumbnail">
-<p><a href="./posts/timeseries-standard-errors/index.html"> <img src="./posts/timeseries-standard-errors/spy_ts.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a></p><a href="./posts/timeseries-standard-errors/index.html" class="no-external">
+<p><img src="./posts/timeseries-standard-errors/spy_ts.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/timeseries-standard-errors/index.html">
 <h3 class="no-anchor listing-title">
-Estimating standard errors in time series data with Python and statsmodels
+<a href="./posts/timeseries-standard-errors/index.html" class="no-external">Estimating standard errors in time series data with Python and statsmodels</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -472,33 +544,31 @@ Econometrics
 Statsmodels
 </div>
 </div>
-<a href="./posts/timeseries-standard-errors/index.html">
 <div class="listing-description">
-In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the statsmodels library.
+<a href="./posts/timeseries-standard-errors/index.html" class="no-external">In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the statsmodels library.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/timeseries-standard-errors/index.html">
+<a href="./posts/timeseries-standard-errors/index.html" class="no-external">
 <div class="listing-date">
 Jan 31, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,Econometrics,Linearmodels" data-listing-date-sort="1705813200000" data-listing-file-modified-sort="1706787364259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33">
+<div class="quarto-post image-right" data-index="5" data-categories="Python,Econometrics,Linearmodels" data-listing-date-sort="1705813200000" data-listing-file-modified-sort="1706787364259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6433">
 <div class="thumbnail">
-<p><a href="./posts/panel-ols-standard-errors/index.html"> <img src="./posts/panel-ols-standard-errors/linearmodels.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a></p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external">
+<p><img src="./posts/panel-ols-standard-errors/linearmodels.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/panel-ols-standard-errors/index.html">
 <h3 class="no-anchor listing-title">
-Estimating standard errors in panel data with Python and linearmodels
+<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">Estimating standard errors in panel data with Python and linearmodels</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -510,33 +580,31 @@ Econometrics
 Linearmodels
 </div>
 </div>
-<a href="./posts/panel-ols-standard-errors/index.html">
 <div class="listing-description">
-In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.
+<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/panel-ols-standard-errors/index.html">
+<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">
 <div class="listing-date">
 Jan 21, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1704633739647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="6" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1704633739647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
 <div class="thumbnail">
-<p><a href="./posts/python-basics-tutorial/index.html"> <img src="./posts/python-basics-tutorial/python-code.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/python-basics-tutorial/index.html" class="no-external"></a></p><a href="./posts/python-basics-tutorial/index.html" class="no-external">
+<p><img src="./posts/python-basics-tutorial/python-code.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/python-basics-tutorial/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/python-basics-tutorial/index.html">
 <h3 class="no-anchor listing-title">
-Python basic tutorial
+<a href="./posts/python-basics-tutorial/index.html" class="no-external">Python basic tutorial</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/python-basics-tutorial/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -548,33 +616,31 @@ Tutorial
 Beginner
 </div>
 </div>
-<a href="./posts/python-basics-tutorial/index.html">
 <div class="listing-description">
-I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good…<code></code><code></code><code></code>
+<a href="./posts/python-basics-tutorial/index.html" class="no-external">I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for…<code></code><code></code><code></code></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/python-basics-tutorial/index.html">
+<a href="./posts/python-basics-tutorial/index.html" class="no-external">
 <div class="listing-date">
 Jan 7, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1705661934716" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="7" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1705661934716" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
 <div class="thumbnail">
-<p><a href="./posts/install-python-312/index.html"> <img src="./posts/install-python-312/install-py.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/install-python-312/index.html" class="no-external"></a></p><a href="./posts/install-python-312/index.html" class="no-external">
+<p><img src="./posts/install-python-312/install-py.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/install-python-312/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/install-python-312/index.html">
 <h3 class="no-anchor listing-title">
-Installing Python 3.12
+<a href="./posts/install-python-312/index.html" class="no-external">Installing Python 3.12</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/install-python-312/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -586,46 +652,42 @@ Tutorial
 Beginner
 </div>
 </div>
-<a href="./posts/install-python-312/index.html">
 <div class="listing-description">
-In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.
+<a href="./posts/install-python-312/index.html" class="no-external">In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/install-python-312/index.html">
+<a href="./posts/install-python-312/index.html" class="no-external">
 <div class="listing-date">
 Jan 3, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="News" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1704399924052" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="8" data-categories="News" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1704399924052" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
 <div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/new-blog.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
+<p><img src="./posts/welcome/new-blog.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/welcome/index.html">
 <h3 class="no-anchor listing-title">
-New Year, new blog
+<a href="./posts/welcome/index.html" class="no-external">New Year, new blog</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/welcome/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('News'); return false;">
 News
 </div>
 </div>
-<a href="./posts/welcome/index.html">
 <div class="listing-description">
-Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to…
+<a href="./posts/welcome/index.html" class="no-external">Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/welcome/index.html">
+<a href="./posts/welcome/index.html" class="no-external">
 <div class="listing-date">
 Jan 1, 2024
 </div>
@@ -636,7 +698,7 @@ Jan 1, 2024
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC BY-NC-SA 4.0</div></div></section></div></main> <!-- /main -->
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -678,6 +740,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -746,13 +835,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -831,10 +922,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vincent\.codes\.finance");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -844,8 +952,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -857,7 +974,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -901,6 +1141,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -926,6 +1167,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -988,13 +1255,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2024, Vincent Grégoire</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-left">
+<p>Copyright 2024, Vincent Grégoire</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 
