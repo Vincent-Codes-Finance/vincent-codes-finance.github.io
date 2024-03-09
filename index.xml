@@ -38,7 +38,7 @@
   <category>CSV</category>
   <guid>https://vincent.codes.finance/posts/pandas-read-csv/</guid>
   <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png" medium="image" type="image/png" height="81" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Writing LaTeX Documents in VS Code</title>
@@ -50,7 +50,7 @@
   <category>Writing</category>
   <guid>https://vincent.codes.finance/posts/vscode-latex/</guid>
   <pubDate>Sun, 18 Feb 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png" medium="image" type="image/png" height="82" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Using GitHub for academic research</title>
@@ -75,7 +75,7 @@
   <category>Statsmodels</category>
   <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/</guid>
   <pubDate>Wed, 31 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.png" medium="image" type="image/png" height="108" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Estimating standard errors in panel data with Python and linearmodels</title>
@@ -87,7 +87,7 @@
   <category>Linearmodels</category>
   <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/</guid>
   <pubDate>Sun, 21 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/linearmodels.png" medium="image" type="image/png" height="105" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/panel-data.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Python basic tutorial</title>
@@ -99,7 +99,7 @@
   <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/python-basics-tutorial/</guid>
   <pubDate>Sun, 07 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png" medium="image" type="image/png" height="77" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Installing Python 3.12</title>
@@ -111,7 +111,7 @@
   <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/install-python-312/</guid>
   <pubDate>Wed, 03 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.png" medium="image" type="image/png" height="105" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>New Year, new blog</title>
