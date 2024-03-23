@@ -10,7 +10,19 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Fri, 08 Mar 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 22 Mar 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Speed up your scientific computing workflows with MLX</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/apple-mlx/</link>
+  <description><![CDATA[ The rapidly evolving landscape in machine learning (ML) tools and libraries sometimes offer positive spillovers for scientific computing and empirical finance research. One such innovation that has recently caught my attention is <a href="https://ml-explore.github.io/mlx/build/html/index.html">MLX</a>, an array framework developed by Apple Machine Learning Research. Designed to leverage the power of Apple silicon (M1/M2/M3 chips), MLX is engineered to optimize machine learning workflows with remarkable efficiency. But could this library, with its suite of features tailored for ML research, also benefit workflows in empirical finance research and other scientific domains? ]]></description>
+  <category>Apple</category>
+  <category>MLX</category>
+  <category>Numpy</category>
+  <guid>https://vincent.codes.finance/posts/apple-mlx/</guid>
+  <pubDate>Fri, 22 Mar 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/apple-mlx/apple-gears.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Using Ollama as a ChatGPT Replacement</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
