@@ -10,7 +10,23 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Fri, 22 Mar 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 30 Mar 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Summarize and query PDFs with AI using Ollama</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/documents-llm/</link>
+  <description><![CDATA[ Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy and efficiency. In this tutorial, we’ll explore how to leverage the power of LLMs to process and analyze PDF documents using Ollama, an open-source tool that manages and runs local LLMs. By combining Ollama with LangChain, we’ll build an application that can summarize and query PDFs using AI, all from the comfort and privacy of your computer. Utilizing Ollama to serve the models, along with <a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a> for its extensive library of convenience tools for accessing and interacting with large language models, we’ll construct an app that operates entirely locally on your machine. We’ll then use <a href="https://streamlit.io">Streamlit</a> to build an interactive dashboard, enhancing the usability of our application. ]]></description>
+  <category>Ollama</category>
+  <category>LLM</category>
+  <category>Python</category>
+  <category>Mistral</category>
+  <category>Tutorial</category>
+  <category>LangChain</category>
+  <category>Streamlit</category>
+  <guid>https://vincent.codes.finance/posts/documents-llm/</guid>
+  <pubDate>Sat, 30 Mar 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/documents-llm/documents.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Speed up your scientific computing workflows with MLX</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

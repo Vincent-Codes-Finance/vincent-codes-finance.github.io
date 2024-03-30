@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2024-03-30">
+
+<title>Vincent Codes Finance - Summarize and query PDFs with AI using Ollama</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XG6JSNQZJK"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XG6JSNQZJK', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+
+
+<meta property="og:title" content="Vincent Codes Finance - Summarize and query PDFs with AI using Ollama">
+<meta property="og:description" content="A blog about coding for empirical research in finance">
+<meta property="og:image" content="https://vincent.codes.finance/posts/documents-llm/documents.png">
+<meta property="og:site_name" content="Vincent Codes Finance">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="Vincent Codes Finance - Summarize and query PDFs with AI using Ollama">
+<meta name="twitter:description" content="A blog about coding for empirical research in finance">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/documents-llm/documents.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vincent Codes Finance</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Python tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html">
+ <span class="dropdown-text">Install Python 3.12</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html">
+ <span class="dropdown-text">Python basics</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About VCF</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CodesFinance"> <i class="bi bi-twitter-x" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.threads.net/@codesfinance"> <i class="bi bi-threads" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/vincent-codes-finance/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Summarize and query PDFs with AI using Ollama</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Ollama</div>
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Mistral</div>
+                <div class="quarto-category">Tutorial</div>
+                <div class="quarto-category">LangChain</div>
+                <div class="quarto-category">Streamlit</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 30, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div>
+<!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
+
+<script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
+<script type="text/javascript">
+    function runOnFormSubmit_sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a(th){
+        /*Before submit, if you want to trigger your event, "include your code here"*/
+    };
+</script>
+
+<style>
+.quick_form_8_css * {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word
+}
+@media only screen and (max-width: 600px) {.quick_form_8_css[name="SIGNUP_BODY"] { width: 100% !important; min-width: 100% !important; margin: 0px auto !important; padding: 0px !important } .SIGNUP_FLD { width: 90% !important; margin: 10px 5% !important; padding: 0px !important } .SIGNUP_FLD input { margin: 0 !important; border-radius: 25px !important } }
+</style>
+
+<!--Zoho Campaigns Web-Optin Form's Header Code Ends Here--><!--Zoho Campaigns Web-Optin Form Starts Here-->
+
+<div id="sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a" data-type="signupform" style="opacity: 1;">
+    <div id="customForm">
+        <div class="quick_form_8_css" style=" z-index: 2; border-width: 1px; border-style: solid; border-color: #b4befe; overflow: hidden; width: 208px" name="SIGNUP_BODY">
+            <div>
+                <div style="font-size: 14px; font-weight: bold; text-align: left; padding: 10px 20px 5px; display: block; height: 20px; width: 293px;" id="SIGNUP_HEADING">Subscribe to newsletter</div>
+                <div style="position:relative;">
+                    <div id="Zc_SignupSuccess" style="display:none;position:absolute;margin-left:4%;width:90%;background-color: white; padding: 3px; border: 3px solid rgb(194, 225, 154);  margin-top: 10px;margin-bottom:10px;word-break:break-all">
+                        
+<table data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0" class="table">
+<tbody>
+<tr class="odd">
+<td width="10%"><img src="https://zmp-glf.maillist-manage.com/images/challangeiconenable.jpg" class="successicon img-fluid" data-align="absmiddle"></td>
+<td><span id="signupSuccessMsg" style="color: rgb(73, 140, 132); font-size: 14px;word-break:break-word">&nbsp;&nbsp;Thank you for Signing Up</span></td>
+</tr>
+</tbody>
+</table>
+
+                    </div>
+                </div>
+                <form method="POST" id="zcampaignOptinForm" style="margin: 0px; width: 100%" action="https://zmp-glf.maillist-manage.com/weboptin.zc" target="_zcSignup">
+                    <div style="background-color: rgb(255, 235, 232); padding: 10px; color: rgb(210, 0, 0); font-size: 11px; margin: 20px 10px 0px; border: 1px solid rgb(255, 217, 211); opacity: 1; display: none" id="errorMsgDiv">Invalid email.</div>
+                    <div style="position: relative; margin: 10px; height: 30px; display: inline-block; width: 185px" class="SIGNUP_FLD">
+                        <input type="text" style="border: 1px solid rgb(221, 221, 221); border-radius: 0px; width: 100%; height: 100%; z-index: 4; outline: none; padding: 5px 10px; color: rgb(136, 136, 136); text-align: left; background-color: rgb(255, 255, 255); box-sizing: border-box; font-size: 11px" placeholder="Email" changeitem="SIGNUP_FORM_FIELD" name="CONTACT_EMAIL" id="EMBED_FORM_EMAIL_LABEL">
+                    </div>
+                    <div style="position: relative; margin: 10px; width: 100px; height: 30px; text-align: left; display: inline-block" class="SIGNUP_FLD">
+                        <input type="button" style="text-align: center; border-radius: 5px; width: 100%; height: 100%; z-index: 5; border: 0px; color: rgb(255, 255, 255); cursor: pointer; outline: none; font-size: 14px; background-color: #fab387; margin: 0px 0px 0px -5px" name="SIGNUP_SUBMIT_BUTTON" id="zcWebOptin" value="Subscribe">
+                    </div>
+                    <input type="hidden" id="fieldBorder" value="">
+                    <input type="hidden" id="submitType" name="submitType" value="optinCustomView">
+                    <input type="hidden" id="emailReportId" name="emailReportId" value="">
+                    <input type="hidden" id="formType" name="formType" value="QuickForm">
+                    <input type="hidden" name="zx" id="cmpZuid" value="132186a6c">
+                    <input type="hidden" name="zcvers" value="3.0">
+                    <input type="hidden" name="oldListIds" id="allCheckedListIds" value="">
+                    <input type="hidden" id="mode" name="mode" value="OptinCreateView">
+                    <input type="hidden" id="zcld" name="zcld" value="1109faaf6213b38dc">
+                    <input type="hidden" id="zctd" name="zctd" value="1109faaf6213b37a9">
+                    <input type="hidden" id="document_domain" value="">
+                    <input type="hidden" id="zc_Url" value="zmp-glf.maillist-manage.com">
+                    <input type="hidden" id="new_optin_response_in" value="0">
+                    <input type="hidden" id="duplicate_optin_response_in" value="0">
+                    <input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW">
+                    <input type="hidden" id="zc_formIx" name="zc_formIx" value="3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a">
+                    <input type="hidden" id="viewFrom" value="URL_ACTION">
+                    <span style="display: none" id="dt_CONTACT_EMAIL">1,true,6,Contact Email,2</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <img src="https://zmp-glf.maillist-manage.com/images/spacer.gif" id="refImage" onload="referenceSetter(this)" style="display:none;">
+</div>
+<input type="hidden" id="signupFormType" value="QuickForm_Horizontal">
+<div id="zcOptinOverLay" oncontextmenu="return false" style="display:none;text-align: center; background-color: rgb(0, 0, 0); opacity: 0.5; z-index: 100; position: fixed; width: 100%; top: 0px; left: 0px; height: 988px;"></div>
+<div id="zcOptinSuccessPopup" style="display:none;z-index: 9999;width: 800px; height: 40%;top: 84px;position: fixed; left: 26%;background-color: #FFFFFF;border-color: #E6E6E6; border-style: solid; border-width: 1px;  box-shadow: 0 1px 10px #424242;padding: 35px;">
+    <span style="position: absolute;top: -16px;right:-14px;z-index:99999;cursor: pointer;" id="closeSuccess">
+        <img src="https://zmp-glf.maillist-manage.com/images/videoclose.png">
+    </span>
+    <div id="zcOptinSuccessPanel"></div>
+</div>
+
+<!--Zoho Campaigns Web-Optin Form Ends Here-->
+</div>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-the-python-project" id="toc-setting-up-the-python-project" class="nav-link" data-scroll-target="#setting-up-the-python-project">Setting up the python project</a></li>
+  </ul></li>
+  <li><a href="#building-the-pdf-processing-app" id="toc-building-the-pdf-processing-app" class="nav-link" data-scroll-target="#building-the-pdf-processing-app">Building the PDF processing app</a></li>
+  <li><a href="#loading-pdf-documents-with-langchain" id="toc-loading-pdf-documents-with-langchain" class="nav-link" data-scroll-target="#loading-pdf-documents-with-langchain">Loading PDF Documents with LangChain</a>
+  <ul class="collapse">
+  <li><a href="#why-choose-langchain" id="toc-why-choose-langchain" class="nav-link" data-scroll-target="#why-choose-langchain">Why Choose LangChain?</a></li>
+  <li><a href="#loading-pdfs" id="toc-loading-pdfs" class="nav-link" data-scroll-target="#loading-pdfs">Loading PDFs</a></li>
+  </ul></li>
+  <li><a href="#summarizing-pdf-documents-using-the-stuffing-method" id="toc-summarizing-pdf-documents-using-the-stuffing-method" class="nav-link" data-scroll-target="#summarizing-pdf-documents-using-the-stuffing-method">Summarizing PDF Documents Using the Stuffing Method</a>
+  <ul class="collapse">
+  <li><a href="#crafting-the-prompt" id="toc-crafting-the-prompt" class="nav-link" data-scroll-target="#crafting-the-prompt">Crafting the Prompt</a></li>
+  <li><a href="#setting-up-the-llm-chain" id="toc-setting-up-the-llm-chain" class="nav-link" data-scroll-target="#setting-up-the-llm-chain">Setting up the LLM chain</a></li>
+  <li><a href="#invoking-the-stuff-documents-chain" id="toc-invoking-the-stuff-documents-chain" class="nav-link" data-scroll-target="#invoking-the-stuff-documents-chain">Invoking the stuff documents chain</a></li>
+  </ul></li>
+  <li><a href="#querying-pdf-documents-using-the-map-reduce-approach" id="toc-querying-pdf-documents-using-the-map-reduce-approach" class="nav-link" data-scroll-target="#querying-pdf-documents-using-the-map-reduce-approach">Querying PDF documents using the map-reduce approach</a>
+  <ul class="collapse">
+  <li><a href="#the-map-phase-document-specific-queries" id="toc-the-map-phase-document-specific-queries" class="nav-link" data-scroll-target="#the-map-phase-document-specific-queries">The map phase: document-specific queries</a></li>
+  <li><a href="#the-reduce-phase-aggregating-answers" id="toc-the-reduce-phase-aggregating-answers" class="nav-link" data-scroll-target="#the-reduce-phase-aggregating-answers">The reduce phase: aggregating answers</a></li>
+  <li><a href="#constructing-the-full-chain" id="toc-constructing-the-full-chain" class="nav-link" data-scroll-target="#constructing-the-full-chain">Constructing the full chain</a></li>
+  <li><a href="#execution-and-results" id="toc-execution-and-results" class="nav-link" data-scroll-target="#execution-and-results">Execution and results</a></li>
+  </ul></li>
+  <li><a href="#creating-a-ui-with-streamlit" id="toc-creating-a-ui-with-streamlit" class="nav-link" data-scroll-target="#creating-a-ui-with-streamlit">Creating a UI with Streamlit</a>
+  <ul class="collapse">
+  <li><a href="#structuring-the-streamlit-application" id="toc-structuring-the-streamlit-application" class="nav-link" data-scroll-target="#structuring-the-streamlit-application">Structuring the Streamlit application</a></li>
+  <li><a href="#user-input" id="toc-user-input" class="nav-link" data-scroll-target="#user-input">User input</a></li>
+  <li><a href="#helper-functions" id="toc-helper-functions" class="nav-link" data-scroll-target="#helper-functions">Helper functions</a></li>
+  <li><a href="#executing-summarization-and-querying-operations" id="toc-executing-summarization-and-querying-operations" class="nav-link" data-scroll-target="#executing-summarization-and-querying-operations">Executing summarization and querying operations</a></li>
+  </ul></li>
+  <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final thoughts</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy and efficiency. In this tutorial, we’ll explore how to leverage the power of LLMs to process and analyze PDF documents using Ollama, an open-source tool that manages and runs local LLMs. By combining Ollama with LangChain, we’ll build an application that can summarize and query PDFs using AI, all from the comfort and privacy of your computer. Utilizing Ollama to serve the models, along with <a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a> for its extensive library of convenience tools for accessing and interacting with large language models, we’ll construct an app that operates entirely locally on your machine. We’ll then use <a href="https://streamlit.io">Streamlit</a> to build an interactive dashboard, enhancing the usability of our application.</p>
+<p>All the code for this tutorial is available on <a href="https://github.com/Vincent-Codes-Finance/documents-llm">GitHub</a>, so you can follow along and experiment with the application yourself. If you’re ready to enhance your research process with a powerful, AI-driven tool for summarizing and querying PDF documents, then you’ve come to the right place. Let’s get started!</p>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Tnu_ykn1HmI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="ollama" class="level2">
+<h2 class="anchored" data-anchor-id="ollama">Ollama</h2>
+<p>Ollama is a tool to manage and run local LLMs, such as Meta’s Llama2 and Mistral’s Mixtral. I discussed how to use Ollama as a private, local ChatGPT replacement in a <a href="../../posts/ollama-chatgpt/index.html">previous post</a>.</p>
+<p>The first step in setting up Ollama is to download and install the tool on your local machine. The installation process is straightforward and involves running a few commands in your terminal. Ollama’s <a href="https://ollama.com/download">download page</a> provides installers for macOS and Windows, as well as instructions for Linux users. Once you’ve downloaded the installer, follow the installation instructions to set up Ollama on your machine.</p>
+<p>If you’re using a Mac, you can install Ollama using Homebrew by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The benefit of using Homebrew is that it simplifies the installation process and also sets up Ollama as a service, allowing it to run in the background and manage the LLM models you download.</p>
+<p>At the moment, the most popular code models on Ollama are:</p>
+<p>After installing Ollama, you can install a model from the command line using the <code>pull</code> command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull mixtral</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
+<p>Alongside Ollama, our project leverages several key Python libraries to enhance its functionality and ease of use:</p>
+<ul>
+<li><strong><a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a></strong> is our primary tool for interacting with large language models programmatically, offering a streamlined approach to processing and querying text data.</li>
+<li><strong><a href="https://pypdf.readthedocs.io/en/stable/">PyPDF</a></strong> is instrumental in handling PDF files, enabling us to read and extract text from documents, which is the first step in our summarization and querying process.</li>
+<li><strong><a href="https://python.langchain.com/docs/integrations/llms/openai">langchain_openai</a></strong> and the <strong><a href="https://github.com/openai/openai-python">openai</a></strong> modules are used to access the OpenAI API-compatible API of Ollama. The added benefit is that it allows for a seamless transition to compatible cloud-based LLMs such as <a href="https://openai.com/product">OpenAI</a> or <a href="https://groq.com/">Groq</a>.</li>
+<li><strong><a href="https://github.com/openai/tiktoken">tiktoken</a></strong> assists in token counting within queries, ensuring we optimize the model’s performance by staying within limits.</li>
+<li><strong><a href="https://github.com/theskumar/python-dotenv">python-dotenv</a></strong> is used for environment management, allowing us to store and access API keys and other sensitive information securely. To construct our interactive dashboard, we employ <strong><a href="https://streamlit.io">Streamlit</a></strong>, which significantly simplifies the development of user-friendly interfaces.</li>
+<li><strong><a href="https://github.com/Textualize/rich">Rich</a></strong> (optional) is a library that enhances command-line outputs with rich text and formatting, useful for developers who prefer CLI tools. I won’t be using Rich in this tutorial, but I also have a CLI tool in the repository that uses Rich for formatting the output.</li>
+</ul>
+<section id="setting-up-the-python-project" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-the-python-project">Setting up the python project</h3>
+<p><strong>Easiest</strong>: If you are using poetry to manage your Python dependencies, you can get the <code>pyproject.toml</code> file from the repository and run <code>poetry install</code> to install the dependencies.</p>
+<section id="using-pip" class="level4">
+<h4 class="anchored" data-anchor-id="using-pip">Using pip</h4>
+<p>To begin, create a dedicated project directory to house all your files and dependencies. Open your terminal or command prompt, navigate to your project directory, and initiate a Python virtual environment and activate it by running:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="library">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><i class="fa-brands fa-apple" aria-label="apple"></i> macOS/ <i class="fa-brands fa-linux" aria-label="linux"></i> Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><i class="fa-brands fa-windows" aria-label="windows"></i> Windows</a></li></ul>
+<div class="tab-content" data-group="library">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span><span class="dt">\v</span>env<span class="dt">\S</span>cripts<span class="dt">\a</span>ctivate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>This ensures that all the dependencies installed are confined to this project, avoiding conflicts with other Python projects. Once your environment is active, install the aforementioned dependencies using pip, Python’s package installer. You can do this by running:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install langchain pypdf langchain-openai openai tiktoken python-dotenv streamlit rich</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With your environment set and dependencies installed, you’re well-prepared to dive into the development of your AI-powered PDF processing app.</p>
+</section>
+</section>
+</section>
+<section id="building-the-pdf-processing-app" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-pdf-processing-app">Building the PDF processing app</h2>
+<p>For this app, I will be showcasing two methods for exploring documents: the <strong>stuffing method</strong> for document summarization and the <strong>map-reduce method</strong> for targeted document querying. It is adapted from the <a href="https://python.langchain.com/docs/use_cases/summarization">Summarization example</a> in the LangChain documentation.</p>
+<p>The <strong>stuffing method</strong> involves condensing the entire content of a PDF into a single, comprehensive query that the LLM can interpret and summarize. This technique is particularly useful for generating succinct overviews of documents, allowing users to grasp the core essence without reading the entire text. It’s a straightforward approach that mimics how one might ask a colleague to summarize a report they’ve read, providing us with a distilled version of the document’s contents. It works best for shorter documents that can fit within the model’s context window, ensuring the summary remains concise and informative.</p>
+<p>On the other hand, the <strong>map-reduce method</strong> takes a more granular approach, dissecting the document into manageable pieces and applying specific queries (mapping) to each segment. This method is akin to conducting a thorough examination of each page of a document to answer a particular question, with the “reduce” phase aggregating these individual insights into a cohesive answer. It’s especially powerful for extracting specific information from documents, enabling precise and targeted queries across the entire text. The map-reduce method is ideal for longer documents or those with complex structures, allowing users to pinpoint and extract the data they need efficiently. It is, however, more computationally intensive than the stuffing method, as it requires processing each segment individually before combining the results.</p>
+<p>Another popular method for querying documents is RAG (Retrieval-Augmented Generation), which involves first retrieving and filtering relevant information from a database or document corpus before generating a response with an LLM. While I won’t be covering RAG in this tutorial, it’s a powerful technique that can significantly enhance the quality of responses generated by LLMs, especially when dealing with very large or diverse datasets.</p>
+<p>In the following sections, I’ll cover the implementation details of these methods, guiding you through the process of building a fully functioning PDF processing app. From loading and processing documents to interfacing with LLMs and designing a user-friendly dashboard, I’ll cover all the bases, ensuring you have the knowledge and tools to replicate and customize this solution for your own needs.</p>
+</section>
+<section id="loading-pdf-documents-with-langchain" class="level2">
+<h2 class="anchored" data-anchor-id="loading-pdf-documents-with-langchain">Loading PDF Documents with LangChain</h2>
+<p>The initial step in creating our PDF processing app involves efficiently loading and preparing the PDF documents for further analysis. To facilitate this, we will use <strong><a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a></strong>, a comprehensive library designed to streamline the interaction with large language models and various document types, including PDFs, CSV files, and more.</p>
+<section id="why-choose-langchain" class="level3">
+<h3 class="anchored" data-anchor-id="why-choose-langchain">Why Choose LangChain?</h3>
+<p>LangChain stands out for its flexibility and robustness in <a href="https://python.langchain.com/docs/modules/data_connection/document_loaders/">handling different document formats</a>, making it an ideal choice for our project. Not only does it support local files like PDFs, which are our primary focus, but it also offers compatibility with multiple other file types and integrates seamlessly with third-party data providers. After loading, the documents are transformed into a structured format that can be easily processed by the other components of our app, such as the AI models responsible for summarization and querying.</p>
+</section>
+<section id="loading-pdfs" class="level3">
+<h3 class="anchored" data-anchor-id="loading-pdfs">Loading PDFs</h3>
+<p>We begin by importing the PDF document loader provided by LangChain, specifically designed for handling PDF files. For the examples in this tutorial, I’ll be using my paper titled <a href="https://doi.org/10.1016/j.jfineco.2021.12.006"><em>Price revelation from insider trading: Evidence from hacked earnings news</em></a> (🔓 open access).</p>
+<p>With the file path specified, we proceed to create an instance of the PDF loader. Upon initiating the loader with our document, it parses the PDF, generating a list of documents where each entry corresponds to a page in the PDF. This structured approach ensures that each page is individually accessible for detailed analysis.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.document_loaders.pdf <span class="im">import</span> PyPDFLoader</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">"hacking_prices.pdf"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(file_path)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="summarizing-pdf-documents-using-the-stuffing-method" class="level2">
+<h2 class="anchored" data-anchor-id="summarizing-pdf-documents-using-the-stuffing-method">Summarizing PDF Documents Using the Stuffing Method</h2>
+<p>After successfully loading our PDF into “documents” (one for each page), our next objective is to use a LLM to summarize these documents. The process we will use, known as the “stuffing method,” involves feeding the entire text of the document into a large language model (LLM) to generate a concise summary. The beauty of this method lies in its ability to produce an overview that captures the essence of the document, making it invaluable for quick insights into extensive research papers or reports.</p>
+<section id="crafting-the-prompt" class="level3">
+<h3 class="anchored" data-anchor-id="crafting-the-prompt">Crafting the Prompt</h3>
+<p>The first step in this process involves crafting a prompt that will guide the LLM in summarizing the document. For our application, we employ a template that instructs the model to focus exclusively on the content provided, excluding any external opinions or analysis. Here’s the structure of our prompt:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prompt</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>prompt_template <span class="op">=</span> <span class="st">"""Write a long summary of the following document. </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">Only include information that is part of the document. </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">Do not include your own opinion or analysis.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">Document:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="sc">{document}</span><span class="st">"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">Summary:"""</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> PromptTemplate.from_template(prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The prompt is defined as a template that specifies the desired output format and the content to be summarized. When invoking the LLM, LangChain will replace the <code>{document}</code> placeholder with the actual text from the PDF document.</p>
+</section>
+<section id="setting-up-the-llm-chain" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-the-llm-chain">Setting up the LLM chain</h3>
+<p>To execute our summarization task, we utilize Ollama, specifically its OpenAI-compatible API, which allows for a seamless transition to GPT-4 or similar models in the future. Configuring the model involves setting parameters such as the temperature, which controls the creativity of the responses, and specifying the model name. In our case, I chose “Mixtral” for its balance of speed and performance. Additionally, an API key is required for model authentication, and the base URL is adjusted to point to our local machine where Ollama is running. Note that even though we are using a local model, we must still provide an API key, which will be ignored by Ollama.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define LLM Chain</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains.llm <span class="im">import</span> LLMChain</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"mixtral:latest"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    api_key<span class="op">=</span><span class="st">"ollama"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>llm_chain <span class="op">=</span> LLMChain(llm<span class="op">=</span>llm, prompt<span class="op">=</span>prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="invoking-the-stuff-documents-chain" class="level3">
+<h3 class="anchored" data-anchor-id="invoking-the-stuff-documents-chain">Invoking the stuff documents chain</h3>
+<p>With our language model chain configured, we proceed to create a “Stuff Documents” chain using LangChain. This specialized chain will take our prompt templates and LLM configuration to generate summaries for each page of the PDF document.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create full chain</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains.combine_documents.stuff <span class="im">import</span> StuffDocumentsChain</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>stuff_chain <span class="op">=</span> StuffDocumentsChain(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    llm_chain<span class="op">=</span>llm_chain, document_variable_name<span class="op">=</span><span class="st">"document"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once set up, we can invoke this chain with our loaded documents to generate the summary:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> stuff_chain.invoke(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The result will contain the summarized text. With my paper, the summary was:</p>
+<blockquote class="blockquote">
+<p>This paper examines whether informed trading activities, such as insider trading and institutional trading, can predict post-earnings announcement drift (PEAD). The authors find that informed trading activities are positively related to PEAD, suggesting that these trades contain valuable information about future stock returns. They also find that the relation between informed trading and PEAD is stronger for stocks with higher levels of information asymmetry, such as those with lower institutional ownership or higher bid-ask spreads. The results suggest that informed traders are able to extract private information from earnings announcements and use it to earn abnormal returns.</p>
+</blockquote>
+<p>This summary is not very good, as it takes the information from references in the paper’s bibliography and includes them in the summary. We can refine the summary by selecting only the pages that contain relevant information and omitting those that are primarily references or irrelevant details.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Invoke with limited pages</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> stuff_chain.invoke(docs[:<span class="op">-</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this, I get a much more accurate summary that focuses on the content of the paper itself, excluding the references:</p>
+<blockquote class="blockquote">
+<p>The paper examines the impact of hacked newswire services on informed trading and stock prices. It finds that hacked firms experience a significant increase in effective spreads, which is driven by an increase in realized spreads rather than price impacts. However, there is no evidence of higher absolute order imbalance or quoted spreads for these firms. The paper also suggests that liquidity providers may be adjusting quotes to manage inventory risk associated with large buy/sell pressure. A placebo test using morning trades shows no significant differences in informed trading measures, further supporting the findings.</p>
+</blockquote>
+</section>
+</section>
+<section id="querying-pdf-documents-using-the-map-reduce-approach" class="level2">
+<h2 class="anchored" data-anchor-id="querying-pdf-documents-using-the-map-reduce-approach">Querying PDF documents using the map-reduce approach</h2>
+<p>After exploring document summarization, we will see how we can query PDF documents for specific information. This includes a summary, but it can be much more. This capability is particularly useful when looking for particular data or answers within extensive documents. Unlike the stuffing method used for summarization, the map-reduce method involves dissecting and analyzing documents at a granular level.</p>
+<p>For this example, I will use the following user query:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>user_query <span class="op">=</span> <span class="st">"What is the data used in this analysis?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-map-phase-document-specific-queries" class="level3">
+<h3 class="anchored" data-anchor-id="the-map-phase-document-specific-queries">The map phase: document-specific queries</h3>
+<p>In the map phase, we apply a unique query to each page of the document, treating each page as a separate document within a larger set. This approach ensures that no detail is overlooked in our search for answers. To implement this, we craft a prompt that instructs the large language model to identify information relevant to a specific query from the text of each page. If a page is deemed irrelevant, the model is instructed to note this, ensuring only pertinent information is processed further.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>map_template <span class="op">=</span> <span class="st">"""The following is a set of documents</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{docs}</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">Based on this list of documents, please identify the information that is most relevant to the following query:</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{user_query}</span><span class="st"> </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">If the document is not relevant, please write "not relevant".</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">Helpful Answer:"""</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>map_prompt <span class="op">=</span> PromptTemplate.from_template(map_template)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>map_prompt <span class="op">=</span> map_prompt.partial(user_query<span class="op">=</span>user_query)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>map_chain <span class="op">=</span> LLMChain(llm<span class="op">=</span>llm, prompt<span class="op">=</span>map_prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-reduce-phase-aggregating-answers" class="level3">
+<h3 class="anchored" data-anchor-id="the-reduce-phase-aggregating-answers">The reduce phase: aggregating answers</h3>
+<p>After mapping, we move to the reduce phase, where the outputs from the map phase are consolidated into a final, comprehensive answer. This step involves another carefully designed prompt that guides the model to distill the collected answers into a singular, coherent response to the original query. This process not only synthesizes the information gathered from each page but also ensures the final answer is succinct and directly addresses the query.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>reduce_template <span class="op">=</span> <span class="st">"""The following is set of partial answers to a user query:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{docs}</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">Take these and distill it into a final, consolidated answer to the following query:</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{user_query}</span><span class="st"> </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">Complete Answer:"""</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>reduce_prompt <span class="op">=</span> PromptTemplate.from_template(reduce_template)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>reduce_prompt <span class="op">=</span> reduce_prompt.partial(user_query<span class="op">=</span>user_query)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="constructing-the-full-chain" class="level3">
+<h3 class="anchored" data-anchor-id="constructing-the-full-chain">Constructing the full chain</h3>
+<p>To bring our querying process to life, we construct a full chain that encompasses both the map and reduce phases. This includes setting up separate LLM chains for mapping and reducing, ensuring each is tailored to its specific task within the overall process. The MapReduce Documents chain then binds these components together, managing the flow of information and ensuring the efficiency of the query process. This comprehensive setup guarantees that our queries are not only accurate but also optimized for performance, avoiding unnecessary processing and token usage.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> MapReduceDocumentsChain, ReduceDocumentsChain</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>reduce_chain <span class="op">=</span> LLMChain(llm<span class="op">=</span>llm, prompt<span class="op">=</span>reduce_prompt)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Takes a list of documents, combines them into a single string, and passes this to an LLMChain</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>combine_documents_chain <span class="op">=</span> StuffDocumentsChain(</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    llm_chain<span class="op">=</span>reduce_chain, document_variable_name<span class="op">=</span><span class="st">"docs"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combines and iteratively reduces the mapped documents</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>reduce_documents_chain <span class="op">=</span> ReduceDocumentsChain(</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    combine_documents_chain<span class="op">=</span>combine_documents_chain,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    collapse_documents_chain<span class="op">=</span>combine_documents_chain,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The maximum number of tokens to group documents into.</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    token_max<span class="op">=</span><span class="dv">4000</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining documents by mapping a chain over them, then combining results</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>map_reduce_chain <span class="op">=</span> MapReduceDocumentsChain(</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    llm_chain<span class="op">=</span>map_chain,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    reduce_documents_chain<span class="op">=</span>reduce_documents_chain,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    document_variable_name<span class="op">=</span><span class="st">"docs"</span>,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    return_intermediate_steps<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="execution-and-results" class="level3">
+<h3 class="anchored" data-anchor-id="execution-and-results">Execution and results</h3>
+<p>Executing this map-reduce process on a document will be more time-consuming than summarization due to the complexity and number of queries involved. However, the results are worth the wait, providing precise answers to specific questions, which, in our case, included a detailed summary of the data used in a research project. It will also work for longer documents that will not fit within the LLM’s context window and for which the stuffing method would not be suitable.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> map_reduce_chain.invoke(docs[:<span class="op">-</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After about 5 minutes, the result was:</p>
+<blockquote class="blockquote">
+<p>The data used in this analysis includes stock prices, trading volume, and order imbalance measures for a sample of U.S. firms that experienced a newswire hack between 2010 and 2014. Specifically, the authors use minute-level trade and quote data from the Trade and Quote (TAQ) database, which is maintained by the New York Stock Exchange. They also use firm-level financial data from Compustat and measures of media coverage from Factiva. The sample includes all U.S. common stocks listed on the NYSE, NASDAQ, or AMEX exchanges during the study period. Not all variables are available for all firms and time periods, resulting in an unbalanced panel. Additionally, the analysis uses information from legal documents of SEC prosecutions, newswire servers, and a set of control variables such as log market capitalization, fraction of shares held by institutional investors, natural logarithm of number of analysts, natural logarithm of newswire news in the quarter leading to the announcement, daily cost of borrowing from Markit, and the inverse of the stock price. The data is used to examine the impact of hackers’ trading on volume, spreads, and order flow measures.</p>
+</blockquote>
+<p>Overall, this is a pretty decent answer to the query, providing a detailed overview of the data used in the analysis. The map-reduce method is a powerful tool for extracting specific information from documents, enabling targeted queries and detailed responses that address user queries effectively.</p>
+</section>
+</section>
+<section id="creating-a-ui-with-streamlit" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-ui-with-streamlit">Creating a UI with Streamlit</h2>
+<p>Transforming our PDF summarization and querying capabilities into a user-friendly application enhances accessibility and utility, making these powerful functions easier to use and understand. For this purpose, I use <a href="https://streamlit.io">Streamlit</a>, a dynamic Python framework that simplifies the creation of interactive web applications. Streamlit’s intuitive design and extensive features allow us to build a sleek UI without the need for complex web development skills. This approach enables the user to interact with our local AI models through a browser interface, providing a seamless experience for summarizing and querying documents. Streamlit apps are easy to deploy and share, but in this case, it would not be possible to share the app with others, as it requires access to the local LLM.</p>
+<section id="structuring-the-streamlit-application" class="level3">
+<h3 class="anchored" data-anchor-id="structuring-the-streamlit-application">Structuring the Streamlit application</h3>
+<p>Our Streamlit application, encapsulated within <code>doc_app.py</code>, serves as the gateway for users to access the summarization and querying functionalities. The application’s architecture is straightforward yet efficient, integrating various components that facilitate user interaction and display results.</p>
+<p>Here is the basic structure of the files for this application:</p>
+<pre class="plaintext"><code>.
+├── doc_app.py : Streamlit application
+├── documents_llm
+│   ├── __init__.py
+│   ├── document.py : Document loading and processing
+│   ├── query.py : Querying operations
+│   ├── st_helpers.py : Streamlit helper functions
+│   └── summarize.py: Summarization operations
+├── poetry.lock : Poetry lock file
+└── pyproject.toml : Poetry project file</code></pre>
+<p>The files <code>document.py</code>, <code>query.py</code> and <code>summarize.py</code> contain the logic for loading and processing documents, querying operations, and summarization tasks, respectively. These files encapsulate the core functionality of our application, abstracting the underlying operations into modular components for enhanced readability and maintainability.</p>
+<p>They provide the following functions that encapsulate what we have done in the previous sections:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_pdf(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    file_path: Path <span class="op">|</span> <span class="bu">str</span>, start_page: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>, end_page: <span class="bu">int</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>[Document]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> summarize_document(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    docs: <span class="bu">list</span>[Document],</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    model_name: <span class="bu">str</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    openai_api_key: <span class="bu">str</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    base_url: <span class="bu">str</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    temperature: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> query_document(</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    docs: <span class="bu">list</span>[Document],</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    user_query: <span class="bu">str</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    model_name: <span class="bu">str</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    openai_api_key: <span class="bu">str</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    base_url: <span class="bu">str</span>,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    temperature: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The Streamlit application is defined in <code>doc_app.py</code>. Here is what the header of the file looks like:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> documents_llm.st_helpers <span class="im">import</span> run_query</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load environment variables</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model parameters</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> os.getenv(<span class="st">"MODEL_NAME"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>OPENAI_API_KEY <span class="op">=</span> os.getenv(<span class="st">"OPENAI_API_KEY"</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>OPENAI_URL <span class="op">=</span> os.getenv(<span class="st">"OPENAI_URL"</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>st.title(<span class="st">"🐍 VCF Document Analyzer"</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>st.write(</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"This is a simple document analyzer that uses LLM models to summarize and answer questions about documents. "</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You can upload a PDF or text file and the model will summarize the document and answer questions about it."</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We first import dependencies, load environment variables, and define the title and introductory text for our application. The <code>st.</code> functions are used to create various UI elements, such as titles, text, and file upload buttons, making it easy to design a user-friendly interface.</p>
+</section>
+<section id="user-input" class="level3">
+<h3 class="anchored" data-anchor-id="user-input">User input</h3>
+<p>The application’s sidebar is designed to collect user inputs, such as the model name, temperature settings, and the document to be analyzed. This design allows for a customizable experience, where users can adjust parameters according to their needs and upload PDF files directly into the application.</p>
+<p>Once a document is uploaded, users can specify the range of pages they wish to include in their analysis, further refining the scope of the summarization or query. This functionality ensures that the application’s output is tailored to the user’s precise requirements.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> st.sidebar:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    st.header(<span class="st">"Model"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    model_name <span class="op">=</span> st.text_input(<span class="st">"Model name"</span>, value<span class="op">=</span>MODEL_NAME)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    temperature <span class="op">=</span> st.slider(<span class="st">"Temperature"</span>, value<span class="op">=</span><span class="fl">0.1</span>, min_value<span class="op">=</span><span class="fl">0.0</span>, max_value<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    st.header(<span class="st">"Document"</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="st">"Upload a PDF file"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span> <span class="op">=</span> st.file_uploader(<span class="st">"Upload a PDF file"</span>, <span class="bu">type</span><span class="op">=</span>[<span class="st">"pdf"</span>])</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">file</span>:</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="st">"File uploaded successfully!"</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="st">"Page range"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    st.write(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Select page range. Pages are numbered starting at 0. For end page, you can also use negative numbers to count from the end, e.g., -1 is the last page, -2 is the second to last page, etc."</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    col1, col2 <span class="op">=</span> st.columns(<span class="dv">2</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col1:</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>        start_page <span class="op">=</span> st.number_input(<span class="st">"Start page:"</span>, value<span class="op">=</span><span class="dv">0</span>, min_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col2:</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        end_page <span class="op">=</span> st.number_input(<span class="st">"End page:"</span>, value<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="st">"Query type"</span>)</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    query_type <span class="op">=</span> st.radio(<span class="st">"Select the query type"</span>, [<span class="st">"Summarize"</span>, <span class="st">"Query"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the user selects the “Query” option, we also need to get the query from the user. We want this in the main body of the page, so it will be displayed outside of the <code>with st.sidebar</code> block.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> query_type <span class="op">==</span> <span class="st">"Query"</span>:</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    user_query <span class="op">=</span> st.text_area(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"User query"</span>, value<span class="op">=</span><span class="st">"What is the data used in this analysis?"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="helper-functions" class="level3">
+<h3 class="anchored" data-anchor-id="helper-functions">Helper functions</h3>
+<p>The core of our application lies in its ability to perform summarization and querying tasks based on the user’s inputs. To this end, we have abstracted the logic into helper functions that manage the loading of PDF files, the construction of prompts, and the invocation of the appropriate LangChain processes. These functions are defined in <code>st_helpers.py</code> and are imported into the Streamlit application.</p>
+<p>The first helper function, <code>save_uploaded_file</code>, handles the file upload process, saving the uploaded PDF file to a temporary location for processing. Streamlit keeps uploaded files in memory, but we need to save them to disk to work with LangChain.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_uploaded_file(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    uploaded_file: <span class="st">"UploadedFile"</span>, output_dir: Path <span class="op">=</span> Path(<span class="st">"/tmp"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Path:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> Path(output_dir) <span class="op">/</span> uploaded_file.name</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    output_path.parent.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(output_path, <span class="st">"wb"</span>) <span class="im">as</span> f:</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        f.write(uploaded_file.getbuffer())</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this function in place, we can now see how the application’s main logic is structured to handle document loading, summarization, and querying based on user inputs:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_query(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    uploaded_file: <span class="st">"UploadedFile"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    summarize: <span class="bu">bool</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    user_query: <span class="bu">str</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    start_page: <span class="bu">int</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    end_page: <span class="bu">int</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    model_name: <span class="bu">str</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    openai_api_key: <span class="bu">str</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    openai_url: <span class="bu">str</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    temperature: <span class="bu">float</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Saves the uploaded file to a temporary location, loads the PDF, and deletes the file</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    st.write(<span class="st">"Saving the uploaded file..."</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    file_path <span class="op">=</span> save_uploaded_file(uploaded_file, output_dir<span class="op">=</span>Path(<span class="st">"/tmp"</span>))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    st.write(<span class="st">"Loading the document..."</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    docs <span class="op">=</span> load_pdf(file_path, start_page<span class="op">=</span>start_page, end_page<span class="op">=</span>end_page)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    file_path.unlink()</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> summarize:</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="st">"Summarizing the document..."</span>)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> summarize_document(</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>            docs,</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>            model_name<span class="op">=</span>model_name,</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>            openai_api_key<span class="op">=</span>openai_api_key,</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>            base_url<span class="op">=</span>openai_url,</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>            temperature<span class="op">=</span>temperature,</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    st.write(<span class="st">"Querying the document..."</span>)</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> query_document(</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        docs,</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        user_query<span class="op">=</span>user_query,</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        model_name<span class="op">=</span>model_name,</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>        openai_api_key<span class="op">=</span>openai_api_key,</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>        base_url<span class="op">=</span>openai_url,</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature,</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that the <code>st.write</code> statements are used to provide feedback to the user during the processing of the document. Because this function is called inside a <code>with st.status</code> block (see below), the user will see these messages inside the status widget as the document is being processed.</p>
+</section>
+<section id="executing-summarization-and-querying-operations" class="level3">
+<h3 class="anchored" data-anchor-id="executing-summarization-and-querying-operations">Executing summarization and querying operations</h3>
+<p>Finally, the rest of the Streamlit application is dedicated to executing the summarization and querying operations based on the user’s inputs. We have one button for running the query and displaying the results or an error message:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> st.button(<span class="st">"Run"</span>):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time.time()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">file</span> <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        st.error(<span class="st">"Please upload a file."</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> st.status(<span class="st">"Running..."</span>, expanded<span class="op">=</span><span class="va">True</span>) <span class="im">as</span> status:</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                result <span class="op">=</span> run_query(</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                    uploaded_file<span class="op">=</span><span class="bu">file</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>                    summarize<span class="op">=</span>query_type <span class="op">==</span> <span class="st">"Summarize"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                    user_query<span class="op">=</span>user_query <span class="cf">if</span> query_type <span class="op">==</span> <span class="st">"Query"</span> <span class="cf">else</span> <span class="st">""</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>                    start_page<span class="op">=</span>start_page,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>                    end_page<span class="op">=</span>end_page,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                    model_name<span class="op">=</span>model_name,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                    openai_api_key<span class="op">=</span>OPENAI_API_KEY,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                    openai_url<span class="op">=</span>OPENAI_URL,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                    temperature<span class="op">=</span>temperature,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                status.update(label<span class="op">=</span><span class="st">"Done!"</span>, state<span class="op">=</span><span class="st">"complete"</span>, expanded<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>                status.update(label<span class="op">=</span><span class="st">"Error"</span>, state<span class="op">=</span><span class="st">"error"</span>, expanded<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>                st.error(<span class="ss">f"An error occurred: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                result <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> result:</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> st.container(border<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>                st.header(<span class="st">"Result"</span>)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>                st.markdown(result)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>                st.info(<span class="ss">f"Time taken: </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss"> seconds"</span>, icon<span class="op">=</span><span class="st">"⏱️"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the app is complete, you can run it using the following command:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run doc_app.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="final-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="final-thoughts">Final thoughts</h2>
+<p>By integrating Streamlit into our project, we’ve created an accessible and powerful tool that bridges the gap between complex AI models and end-users seeking to extract valuable insights from PDF documents.</p>
+<p>This application demonstrates the practical application of AI in document analysis, but it remains very simple. I hope it inspires you to explore the possibilities of AI-driven document processing further, whether for research, business, or personal use. The combination of LangChain, Ollama, and Streamlit provides a robust foundation for building sophisticated applications that leverage the power of large language models to enhance productivity and efficiency.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vincent\.codes\.finance");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Vincent Grégoire</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
