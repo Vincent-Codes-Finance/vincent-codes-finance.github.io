@@ -10,7 +10,19 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Sat, 30 Mar 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 06 Apr 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/edgartools/</link>
+  <description><![CDATA[ In the ever-evolving field of finance, the application of machine learning, especially text analysis, has become increasingly popular. Researchers are constantly seeking out rich datasets to mine for insights, with company filings offering a treasure trove of information. One of the most comprehensive sources of such data is the <a href="https://www.sec.gov/edgar/search-and-access">Edgar database</a>, maintained by the Securities and Exchange Commission (SEC). This publicly available resource contains a vast array of filings from companies, making it an invaluable tool for empirical finance research. ]]></description>
+  <category>Python</category>
+  <category>Scraping</category>
+  <category>SEC Edgar</category>
+  <guid>https://vincent.codes.finance/posts/edgartools/</guid>
+  <pubDate>Sat, 06 Apr 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/edgartools/edgartools.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Summarize and query PDFs with AI using Ollama</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

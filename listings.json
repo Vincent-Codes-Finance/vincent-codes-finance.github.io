@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/edgartools/index.html",
       "/posts/documents-llm/index.html",
       "/posts/apple-mlx/index.html",
       "/posts/ollama-chatgpt/index.html",

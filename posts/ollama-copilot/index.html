@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Coding (mostly) in Python for empirical research in finance">
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2024-03-08">
 
-<title>Vincent Codes Finance</title>
+<title>Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,32 +22,64 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/cookie-consent/cookie-consent.js"></script>
-<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,35 +107,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-subtitle','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XG6JSNQZJK"></script>
 
 <script type="text/plain" cookie-consent="tracking">
@@ -131,42 +135,13 @@ cookieconsent.run({
 </script> 
   
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml" data-external="1"><meta property="og:title" content="Vincent Codes Finance">
-<meta property="og:description" content="Coding (mostly) in Python for empirical research in finance">
+<meta property="og:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta property="og:description" content="A blog about coding for empirical research in finance">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:title" content="Vincent Codes Finance">
-<meta name="twitter:description" content="Coding (mostly) in Python for empirical research in finance">
+<meta name="twitter:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta name="twitter:description" content="A blog about coding for empirical research in finance">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -177,10 +152,10 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./vcf-logo.png" alt="" class="navbar-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
     </a>
   </div>
@@ -196,17 +171,17 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-python-tutorials">    
         <li>
-    <a class="dropdown-item" href="./posts/install-python-312/index.html">
+    <a class="dropdown-item" href="../../posts/install-python-312/index.html">
  <span class="dropdown-text">Install Python 3.12</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./intro-to-python/python-basics/index.html">
+    <a class="dropdown-item" href="../../intro-to-python/python-basics/index.html">
  <span class="dropdown-text">Python basics</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
@@ -245,26 +220,40 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Vincent Codes Finance</h1>
-                  <div>
-        <div class="description">
-          Coding (mostly) in Python for empirical research in finance
-        </div>
-      </div>
-                </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Using Ollama with Continue as a GitHub Copilot Replacement</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Ollama</div>
+                <div class="quarto-category">Copilot</div>
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Llama</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 8, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
@@ -353,482 +342,100 @@ window.Quarto = {
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
 </div>
 </div></div>
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Apple">Apple <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Arrow">Arrow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Beginner">Beginner <span class="quarto-category-count">(2)</span></div><div class="category" data-category="CSV">CSV <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ChatGPT">ChatGPT <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Collaboration">Collaboration <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Econometrics">Econometrics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Git">Git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LLM">LLM <span class="quarto-category-count">(2)</span></div><div class="category" data-category="LaTeX">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LangChain">LangChain <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Linearmodels">Linearmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Llama">Llama <span class="quarto-category-count">(1)</span></div><div class="category" data-category="MLX">MLX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Mistral">Mistral <span class="quarto-category-count">(2)</span></div><div class="category" data-category="News">News <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Numpy">Numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ollama">Ollama <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Pandas">Pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Parquet">Parquet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Reproducibility">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SEC Edgar">SEC Edgar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Scraping">Scraping <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Statsmodels">Statsmodels <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Streamlit">Streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tutorial">Tutorial <span class="quarto-category-count">(3)</span></div><div class="category" data-category="VS Code">VS Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Writing">Writing <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a></li>
+  <li><a href="#install-ollama" id="toc-install-ollama" class="nav-link" data-scroll-target="#install-ollama">Install Ollama</a></li>
+  <li><a href="#continue" id="toc-continue" class="nav-link" data-scroll-target="#continue">Continue</a>
+  <ul class="collapse">
+  <li><a href="#install-continue" id="toc-install-continue" class="nav-link" data-scroll-target="#install-continue">Install Continue</a></li>
+  <li><a href="#limitations-of-local-llms-for-code-completion" id="toc-limitations-of-local-llms-for-code-completion" class="nav-link" data-scroll-target="#limitations-of-local-llms-for-code-completion">Limitations of Local LLMs for Code Completion</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p><a href="https://github.com/features/copilot">GitHub Copilot</a> is an amazing AI-assistant that helps developers write code faster and with fewer errors. However, it does have some limitations, such as the need for an internet connection (not ideal for airplane mode), and it sends your code to cloud servers for processing. In this post, I will show you how you can use <a href="https://ollama.com/">Ollama</a>, a tool to manage and run local LLMs, with <a href="https://continue.dev/">Continue</a>, a Visual Studio Code extension that provides an AI-assistant, to get the same functionality as GitHub Copilot, but without the need for an internet connection or sending your code to the cloud, all for free.</p>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Ehutnn1AqbE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="ollama" class="level2">
+<h2 class="anchored" data-anchor-id="ollama">Ollama</h2>
+<p>Ollama is a tool to manage and run local LLMs, such as Meta’s Llama2. I discussed how to use Ollama as a private, local ChatGPT replacement in a <a href="../../posts/ollama-chatgpt/index.html">previous post</a>. Ollama can also be used to run LLMs for code completion, such as Codellama, which is a model trained on code.</p>
+</section>
+<section id="install-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="install-ollama">Install Ollama</h2>
+<p>The first step in setting up Ollama is to download and install the tool on your local machine. The installation process is straightforward and involves running a few commands in your terminal. Ollama’s <a href="https://ollama.com/download">download page</a> provides installers for macOS and Windows, as well as instructions for Linux users. Once you’ve downloaded the installer, follow the installation instructions to set up Ollama on your machine.</p>
+<p>If you’re using a Mac, you can install Ollama using Homebrew by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The benefit of using Homebrew is that it simplifies the installation process and also sets up Ollama as a service, allowing it to run in the background and manage the LLM models you download.</p>
+<p>At the moment, the most popular code models on Ollama are:</p>
+<ul>
+<li><a href="https://ollama.com/library/codellama">codellama</a></li>
+<li><a href="https://ollama.com/library/deepseek-coder">deepseek-coder</a></li>
+<li><a href="https://ollama.com/library/wizardcoder">wizardcoder</a></li>
+<li><a href="https://ollama.com/library/phind-codellama">phind-codellama</a></li>
+<li><a href="https://ollama.com/library/starcoder">starcoder</a></li>
+<li><a href="https://ollama.com/library/starcoder2">starcoder2</a></li>
+</ul>
+<p>After installing Ollama, you can install a model from the command line using the <code>pull</code> command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull codellama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While you can run the model from the command line, it is more convenient to use it with Continue, a Visual Studio Code extension that provides an AI-assistant directly in your editor.</p>
+</section>
+<section id="continue" class="level2">
+<h2 class="anchored" data-anchor-id="continue">Continue</h2>
+<p>Continue is an open-source autopilot for developers that seamlessly integrates with popular IDEs like VS Code and JetBrains. It offers features such as task and tab autocomplete, allowing it to generate, refactor, and explain entire sections of code efficiently. With Continue, developers can easily highlight sections of code to get another perspective on their work, ask specific coding questions, instruct the tool to refactor code in natural language, or even generate new files from scratch across various programming languages and frameworks. This makes coding more intuitive and significantly reduces the need for manual lookups or switching between windows for assistance.</p>
+<p>One of the most compelling aspects of Continue is its flexibility and integration capabilities. It allows developers to choose from a wide array of large language models (LLMs) and providers, whether deploying locally or in the cloud. Continue ensures that your codebase serves as context for queries, enhancing the relevance and accuracy of its assistance. Its local-first, modular design promotes offline use and privacy, making it a great alternative to cloud-based solutions like GitHub Copilot.</p>
+<section id="install-continue" class="level3">
+<h3 class="anchored" data-anchor-id="install-continue">Install Continue</h3>
+<p>To use Continue, you need to install the Visual Studio Code extension. You can find it in the <a href="https://marketplace.visualstudio.com/items?itemName=continue.continue">Visual Studio Code Marketplace</a>. Once installed, you can configure it to use Ollama as a provider for code completion.</p>
+<p><code>~/.continue/config.json</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"models"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"llama2-7b"</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"completionOptions"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"models"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"codellama"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"completionOptions"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"num_thread"</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="limitations-of-local-llms-for-code-completion" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-of-local-llms-for-code-completion">Limitations of Local LLMs for Code Completion</h3>
+<p>While the benefits of local LLMs are clear, it’s important to acknowledge that running these models on consumer hardware comes with its own set of limitations. The computational resources required to run LLMs are substantial, and while Ollama provides a robust solution for managing these resources, users should be mindful of the hardware and memory constraints of their local machines. For best results, it’s recommended to run Ollama on a machine with a powerful GPU and ample memory to ensure smooth and efficient operation. Apple’s M-series chips, because they share memory between the CPU and GPU, are particularly well-suited for running Ollama and LLMs. Note that because of the computational resources required, using a local coding assistant demands more power and can drain your battery faster than using a cloud-based solution like GitHub Copilot.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>For my part, my daily driver for code completion is still GitHub Copilot, as it provides a more seamless and responsive experience, and I’m willing to trade off the privacy and control of a local solution for the convenience and reliability of a cloud-based one. However, I’m glad to have the option to use Ollama and other local LLMs when I need them, and I’m excited to see how this technology continues to evolve and improve in the future.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Python,Scraping,SEC Edgar" data-listing-date-sort="1712376000000" data-listing-file-modified-sort="1712416565078" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2286">
-<div class="thumbnail">
-<p><a href="./posts/edgartools/index.html" class="no-external"></a></p><a href="./posts/edgartools/index.html" class="no-external">
-<p><img src="./posts/edgartools/edgartools.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/edgartools/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/edgartools/index.html" class="no-external">Scrape financial data from SEC Edgar with Python and edgartools</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/edgartools/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Scraping'); return false;">
-Scraping
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SEC Edgar'); return false;">
-SEC Edgar
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/edgartools/index.html" class="no-external">In the ever-evolving field of finance, the application of machine learning, especially text analysis, has become increasingly popular. Researchers are constantly seeking out…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/edgartools/index.html" class="no-external">
-<div class="listing-date">
-Apr 6, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Ollama,LLM,Python,Mistral,Tutorial,LangChain,Streamlit" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1711808221828" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
-<div class="thumbnail">
-<p><a href="./posts/documents-llm/index.html" class="no-external"></a></p><a href="./posts/documents-llm/index.html" class="no-external">
-<p><img src="./posts/documents-llm/documents.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/documents-llm/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/documents-llm/index.html" class="no-external">Summarize and query PDFs with AI using Ollama</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/documents-llm/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Ollama'); return false;">
-Ollama
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
-LLM
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Mistral'); return false;">
-Mistral
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Tutorial'); return false;">
-Tutorial
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('LangChain'); return false;">
-LangChain
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Streamlit'); return false;">
-Streamlit
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/documents-llm/index.html" class="no-external">Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/documents-llm/index.html" class="no-external">
-<div class="listing-date">
-Mar 30, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Apple,MLX,Numpy" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1711224486557" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
-<div class="thumbnail">
-<p><a href="./posts/apple-mlx/index.html" class="no-external"></a></p><a href="./posts/apple-mlx/index.html" class="no-external">
-<p><img src="./posts/apple-mlx/apple-gears.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/apple-mlx/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/apple-mlx/index.html" class="no-external">Speed up your scientific computing workflows with MLX</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/apple-mlx/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Apple'); return false;">
-Apple
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('MLX'); return false;">
-MLX
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Numpy'); return false;">
-Numpy
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/apple-mlx/index.html" class="no-external">The rapidly evolving landscape in machine learning (ML) tools and libraries sometimes offer positive spillovers for scientific computing and empirical finance research. One…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/apple-mlx/index.html" class="no-external">
-<div class="listing-date">
-Mar 22, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Ollama,ChatGPT,LLM,Writing,Llama,Mistral" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1710007797079" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
-<div class="thumbnail">
-<p><a href="./posts/ollama-chatgpt/index.html" class="no-external"></a></p><a href="./posts/ollama-chatgpt/index.html" class="no-external">
-<p><img src="./posts/ollama-chatgpt/futuristic_llama.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/ollama-chatgpt/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">Using Ollama as a ChatGPT Replacement</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Ollama'); return false;">
-Ollama
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ChatGPT'); return false;">
-ChatGPT
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
-LLM
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Writing'); return false;">
-Writing
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Llama'); return false;">
-Llama
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Mistral'); return false;">
-Mistral
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">
-<div class="listing-date">
-Mar 8, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,Pandas,Arrow,Parquet,CSV" data-listing-date-sort="1709269200000" data-listing-file-modified-sort="1709294122005" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1992">
-<div class="thumbnail">
-<p><a href="./posts/pandas-read-csv/index.html" class="no-external"></a></p><a href="./posts/pandas-read-csv/index.html" class="no-external">
-<p><img src="./posts/pandas-read-csv/pandas-arrow.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/pandas-read-csv/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/pandas-read-csv/index.html" class="no-external">Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/pandas-read-csv/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Pandas'); return false;">
-Pandas
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Arrow'); return false;">
-Arrow
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Parquet'); return false;">
-Parquet
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('CSV'); return false;">
-CSV
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/pandas-read-csv/index.html" class="no-external">CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <code>pandas.re…</code></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/pandas-read-csv/index.html" class="no-external">
-<div class="listing-date">
-Mar 1, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="VS Code,LaTeX,Writing" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1708615979945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
-<div class="thumbnail">
-<p><a href="./posts/vscode-latex/index.html" class="no-external"></a></p><a href="./posts/vscode-latex/index.html" class="no-external">
-<p><img src="./posts/vscode-latex/vscode-latex.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/vscode-latex/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/vscode-latex/index.html" class="no-external">Writing LaTeX Documents in VS Code</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/vscode-latex/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('VS Code'); return false;">
-VS Code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('LaTeX'); return false;">
-LaTeX
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Writing'); return false;">
-Writing
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/vscode-latex/index.html" class="no-external">LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/vscode-latex/index.html" class="no-external">
-<div class="listing-date">
-Feb 18, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="Collaboration,Git,GitHub,Reproducibility" data-listing-date-sort="1707454800000" data-listing-file-modified-sort="1708088820728" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36" data-listing-word-count-sort="7001">
-<div class="thumbnail">
-<p><a href="./posts/github-for-research/index.html" class="no-external"></a></p><a href="./posts/github-for-research/index.html" class="no-external">
-<p><img src="./posts/github-for-research/github-for-research.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/github-for-research/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/github-for-research/index.html" class="no-external">Using GitHub for academic research</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/github-for-research/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Collaboration'); return false;">
-Collaboration
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Git'); return false;">
-Git
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('GitHub'); return false;">
-GitHub
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Reproducibility'); return false;">
-Reproducibility
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/github-for-research/index.html" class="no-external">Git and GitHub are powerful version control tools for managing your research projects and collaborating with others while keeping a detailed record of your work. In this…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/github-for-research/index.html" class="no-external">
-<div class="listing-date">
-Feb 9, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="Python,Econometrics,Statsmodels" data-listing-date-sort="1706677200000" data-listing-file-modified-sort="1708182083873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1697">
-<div class="thumbnail">
-<p><a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a></p><a href="./posts/timeseries-standard-errors/index.html" class="no-external">
-<p><img src="./posts/timeseries-standard-errors/spy_ts.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/timeseries-standard-errors/index.html" class="no-external">Estimating standard errors in time series data with Python and statsmodels</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/timeseries-standard-errors/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Econometrics'); return false;">
-Econometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Statsmodels'); return false;">
-Statsmodels
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/timeseries-standard-errors/index.html" class="no-external">In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the statsmodels library.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/timeseries-standard-errors/index.html" class="no-external">
-<div class="listing-date">
-Jan 31, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="Python,Econometrics,Linearmodels" data-listing-date-sort="1705813200000" data-listing-file-modified-sort="1710006320992" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6433">
-<div class="thumbnail">
-<p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a></p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external">
-<p><img src="./posts/panel-ols-standard-errors/panel-data.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">Estimating standard errors in panel data with Python and linearmodels</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/panel-ols-standard-errors/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Econometrics'); return false;">
-Econometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Linearmodels'); return false;">
-Linearmodels
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">In this post, I show how to estimate standard errors in panel data with Python and the linearmodels library.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/panel-ols-standard-errors/index.html" class="no-external">
-<div class="listing-date">
-Jan 21, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1704633739647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
-<div class="thumbnail">
-<p><a href="./posts/python-basics-tutorial/index.html" class="no-external"></a></p><a href="./posts/python-basics-tutorial/index.html" class="no-external">
-<p><img src="./posts/python-basics-tutorial/python-code.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/python-basics-tutorial/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">Python basic tutorial</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Tutorial'); return false;">
-Tutorial
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Beginner'); return false;">
-Beginner
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for…<code></code><code></code><code></code></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">
-<div class="listing-date">
-Jan 7, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="Python,Tutorial,Beginner" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1705661934716" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
-<div class="thumbnail">
-<p><a href="./posts/install-python-312/index.html" class="no-external"></a></p><a href="./posts/install-python-312/index.html" class="no-external">
-<p><img src="./posts/install-python-312/install-py.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/install-python-312/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/install-python-312/index.html" class="no-external">Installing Python 3.12</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/install-python-312/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Tutorial'); return false;">
-Tutorial
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Beginner'); return false;">
-Beginner
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/install-python-312/index.html" class="no-external">In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/install-python-312/index.html" class="no-external">
-<div class="listing-date">
-Jan 3, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="News" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1704399924052" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
-<p><img src="./posts/welcome/new-blog.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">New Year, new blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/welcome/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('News'); return false;">
-News
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/welcome/index.html" class="no-external">Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Jan 1, 2024
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
