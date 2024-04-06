@@ -362,17 +362,14 @@ cookieconsent.run({
   </ul></li>
   <li><a href="#retrieving-company-filings" id="toc-retrieving-company-filings" class="nav-link" data-scroll-target="#retrieving-company-filings">Retrieving company filings</a>
   <ul class="collapse">
-  <li><a href="#querying-company-data" id="toc-querying-company-data" class="nav-link" data-scroll-target="#querying-company-data">Querying Company Data</a>
-  <ul class="collapse">
+  <li><a href="#querying-company-data" id="toc-querying-company-data" class="nav-link" data-scroll-target="#querying-company-data">Querying Company Data</a></li>
   <li><a href="#company-filings" id="toc-company-filings" class="nav-link" data-scroll-target="#company-filings">Company Filings</a></li>
-  </ul></li>
-  <li><a href="#accessing-filing-data" id="toc-accessing-filing-data" class="nav-link" data-scroll-target="#accessing-filing-data">Accessing Filing Data</a>
-  <ul class="collapse">
+  <li><a href="#accessing-filing-data" id="toc-accessing-filing-data" class="nav-link" data-scroll-target="#accessing-filing-data">Accessing Filing Data</a></li>
   <li><a href="#xbrl-data" id="toc-xbrl-data" class="nav-link" data-scroll-target="#xbrl-data">XBRL Data</a></li>
   </ul></li>
-  <li><a href="#working-with-8-ks-and-press-releases" id="toc-working-with-8-ks-and-press-releases" class="nav-link" data-scroll-target="#working-with-8-ks-and-press-releases">Working with 8-Ks and press releases</a></li>
-  <li><a href="#retrieving-8-k-filings" id="toc-retrieving-8-k-filings" class="nav-link" data-scroll-target="#retrieving-8-k-filings">Retrieving 8-K Filings</a>
+  <li><a href="#working-with-8-ks-and-press-releases" id="toc-working-with-8-ks-and-press-releases" class="nav-link" data-scroll-target="#working-with-8-ks-and-press-releases">Working with 8-Ks and press releases</a>
   <ul class="collapse">
+  <li><a href="#retrieving-8-k-filings" id="toc-retrieving-8-k-filings" class="nav-link" data-scroll-target="#retrieving-8-k-filings">Retrieving 8-K Filings</a></li>
   <li><a href="#extracting-press-releases" id="toc-extracting-press-releases" class="nav-link" data-scroll-target="#extracting-press-releases">Extracting press releases</a></li>
   </ul></li>
   <li><a href="#scraping-edgar-at-scale" id="toc-scraping-edgar-at-scale" class="nav-link" data-scroll-target="#scraping-edgar-at-scale">Scraping Edgar at scale</a>
@@ -382,7 +379,6 @@ cookieconsent.run({
   </ul></li>
   <li><a href="#exploring-other-form-types" id="toc-exploring-other-form-types" class="nav-link" data-scroll-target="#exploring-other-form-types">Exploring other form types</a></li>
   <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final thoughts</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -431,10 +427,10 @@ cookieconsent.run({
 <p>In the following sections, we’ll dive deeper into how to retrieve company information, access filings, and work with the data to extract valuable insights for your research.</p>
 </section>
 </section>
-<section id="retrieving-company-filings" class="level1">
-<h1>Retrieving company filings</h1>
-<section id="querying-company-data" class="level2">
-<h2 class="anchored" data-anchor-id="querying-company-data">Querying Company Data</h2>
+<section id="retrieving-company-filings" class="level2">
+<h2 class="anchored" data-anchor-id="retrieving-company-filings">Retrieving company filings</h2>
+<section id="querying-company-data" class="level3">
+<h3 class="anchored" data-anchor-id="querying-company-data">Querying Company Data</h3>
 <p>To begin working with a specific company, you need to define a <code>Company</code> object in <code>edgartools</code>. This object serves as your gateway to a wealth of information about the company, including its filings, financial summaries, and historical data. You can define a company object using either the company’s ticker symbol or its Central Index Key (CIK) code.</p>
 <div id="cell-8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> edgar <span class="im">import</span> Company</span>
@@ -593,6 +589,7 @@ cookieconsent.run({
   'to': '1997-07-28T00:00:00.000Z'}]</code></pre>
 </div>
 </div>
+</section>
 <section id="company-filings" class="level3">
 <h3 class="anchored" data-anchor-id="company-filings">Company Filings</h3>
 <p>You can also use this <code>Company</code> object to access the company’s filings. The <code>get_filings</code> method allows you to retrieve a list of filings for the company, filtered by form type, date range, and other criteria. Here’s an example of how to retrieve the 10-Q filings (quarterly earnings) for a company:</p>
@@ -878,9 +875,8 @@ cookieconsent.run({
 </div>
 <p>This DataFrame contains metadata about each filing, which can be invaluable for preliminary analyses or for identifying filings of interest.</p>
 </section>
-</section>
-<section id="accessing-filing-data" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-filing-data">Accessing Filing Data</h2>
+<section id="accessing-filing-data" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-filing-data">Accessing Filing Data</h3>
 <p>Beyond metadata, edgartools facilitates downloading and accessing the content of filings. Let’s work with the latest filing from the list we retrieved earlier.</p>
 <div id="cell-17" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>latest_10q <span class="op">=</span> filings.latest()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1155,6 +1151,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </code></pre>
 </div>
 </div>
+</section>
 <section id="xbrl-data" class="level3">
 <h3 class="anchored" data-anchor-id="xbrl-data">XBRL Data</h3>
 <p>XBRL (eXtensible Business Reporting Language) data offers a standardized format for financial reporting, making it easier to compare financial information across companies. SEC has required companies to submit their financial statements in XBRL format for many years, and this data is available through the Edgar database. <code>edgartools</code> provides tools to access this parsed data directly:</p>
@@ -1554,9 +1551,8 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <section id="working-with-8-ks-and-press-releases" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-8-ks-and-press-releases">Working with 8-Ks and press releases</h2>
 <p>8-K filings are an essential source of up-to-date information about significant corporate events. These documents can contain anything from financial results to news of mergers and acquisitions, making them invaluable for financial analysis. <code>edgartools</code> simplifies the process of accessing these filings and extracting press releases, if available.</p>
-</section>
-<section id="retrieving-8-k-filings" class="level2">
-<h2 class="anchored" data-anchor-id="retrieving-8-k-filings">Retrieving 8-K Filings</h2>
+<section id="retrieving-8-k-filings" class="level3">
+<h3 class="anchored" data-anchor-id="retrieving-8-k-filings">Retrieving 8-K Filings</h3>
 <p>To start, you’ll need to query the Edgar database for 8-K filings for a specific company:</p>
 <div id="cell-32" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>latest_8ks <span class="op">=</span> apple.get_filings(form<span class="op">=</span><span class="st">"8-K"</span>)</span>
@@ -1630,6 +1626,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <div id="cell-34" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>eightk <span class="op">=</span> [x.obj() <span class="cf">for</span> x <span class="kw">in</span> latest_8ks.latest(<span class="dv">10</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="extracting-press-releases" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-press-releases">Extracting press releases</h3>
 <p>Not all 8-K filings will include press releases. To filter out the filings that contain press releases, you will need to inspect each filing individually using the <code>has_press_release</code> attribute. Here’s a simplified approach to identify and collect filings with press releases:</p>
@@ -2077,7 +2074,6 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <p>The <code>edgartools</code> library is a powerful tool to access and analyze financial data from the SEC’s EDGAR database. Even with the tremendous amount of work that went into creating this library, many bugs and edge cases remain, which highlights the complexity of working with financial data. However, the library is actively maintained and updated, with bug fixes, new features, and improvements being added regularly. Dwight Gunning, the creator and maintainer, is very reponsive to issues and pull requests. Of all the (many) libraries I’ve used, <code>edgartools</code> is by far the best choice for working with SEC Edgar data in Python in my opinion. Note that I have not tried any of the commercial alternatives, so I can’t compare them to <code>edgartools</code>.</p>
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
