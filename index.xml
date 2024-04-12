@@ -10,7 +10,22 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Sat, 06 Apr 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 12 Apr 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/sentiment/</link>
+  <description><![CDATA[ In the dynamic world of finance, understanding market sentiment is crucial for researchers and practitioners alike. ]]></description>
+  <category>Python</category>
+  <category>Sentiment</category>
+  <category>FinBert</category>
+  <category>Ollama</category>
+  <category>Llama2</category>
+  <category>Mixtral</category>
+  <guid>https://vincent.codes.finance/posts/sentiment/</guid>
+  <pubDate>Fri, 12 Apr 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/sentiment/sentiment.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

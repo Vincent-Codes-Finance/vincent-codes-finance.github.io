@@ -9,7 +9,7 @@
 <meta name="author" content="Vincent Grégoire, PhD, CFA">
 <meta name="dcterms.date" content="2024-04-12">
 
-<title>Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement</title>
+<title>Vincent Codes Finance - Scrape financial data from SEC Edgar with Python and edgartools</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,10 +22,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -100,15 +134,25 @@ cookieconsent.run({
 });
 </script> 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<meta property="og:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta property="og:title" content="Vincent Codes Finance - Scrape financial data from SEC Edgar with Python and edgartools">
 <meta property="og:description" content="A blog about coding for empirical research in finance">
+<meta property="og:image" content="https://vincent.codes.finance/posts/sentiment/sentiment.png">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="Vincent Codes Finance - Scrape financial data from SEC Edgar with Python and edgartools">
 <meta name="twitter:description" content="A blog about coding for empirical research in finance">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/sentiment/sentiment.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vincent.codes.finance/posts/sentiment/index.html" />
 </head>
 
 <body class="nav-fixed">
@@ -187,13 +231,14 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Using Ollama with Continue as a GitHub Copilot Replacement</h1>
+      <h1 class="title">Scrape financial data from SEC Edgar with Python and edgartools</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Ollama</div>
-                <div class="quarto-category">Copilot</div>
-                <div class="quarto-category">LLM</div>
                 <div class="quarto-category">Python</div>
-                <div class="quarto-category">Llama</div>
+                <div class="quarto-category">Sentiment</div>
+                <div class="quarto-category">FinBert</div>
+                <div class="quarto-category">Ollama</div>
+                <div class="quarto-category">Llama2</div>
+                <div class="quarto-category">Mixtral</div>
               </div>
                   </div>
   </div>
@@ -312,7 +357,22 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a>
+  <ul class="collapse">
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
+  </ul></li>
+  <li><a href="#dictionnary-based-approach" id="toc-dictionnary-based-approach" class="nav-link" data-scroll-target="#dictionnary-based-approach">Dictionnary-based approach</a>
+  <ul class="collapse">
+  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-processing</a></li>
+  <li><a href="#dictionary" id="toc-dictionary" class="nav-link" data-scroll-target="#dictionary">Dictionary</a></li>
+  <li><a href="#sentiment-score" id="toc-sentiment-score" class="nav-link" data-scroll-target="#sentiment-score">Sentiment score</a></li>
+  </ul></li>
+  <li><a href="#bert-based-models" id="toc-bert-based-models" class="nav-link" data-scroll-target="#bert-based-models">Bert-based models</a>
+  <ul class="collapse">
+  <li><a href="#pre-processing-1" id="toc-pre-processing-1" class="nav-link" data-scroll-target="#pre-processing-1">Pre-processing</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  </ul></li>
+  <li><a href="#llm-models" id="toc-llm-models" class="nav-link" data-scroll-target="#llm-models">LLM models</a></li>
   </ul>
 </nav>
     </div>
@@ -323,11 +383,1201 @@ cookieconsent.run({
 
 
 
-<p>THIS POST WILL BE PUBLISHED ON 2024-04-12 AT 5pm ET</p>
+<p>In the dynamic world of finance, understanding market sentiment is crucial for researchers and practitioners alike.</p>
+<p>In today’s tutorial,I present three methods for extracting sentiments from financial news using Python. Starting with a simple yet effective dictionary-based approach, we progress to exploring <a href="https://huggingface.co/ProsusAI/finbert">FinBERT</a>, a sophisticated BERT-based model tailored for financial texts. Lastly, we examine the capabilities of large language models (LLMs) in sentiment analysis.</p>
+<p>All the code for this tutorial is available on <a href="https://github.com/Vincent-Codes-Finance/sentiment">GitHub</a>.</p>
 <section id="video-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
 <p>This post is also available as a video tutorial on YouTube.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/FRDKeNEeNAQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="dependencies" class="level3">
+<h3 class="anchored" data-anchor-id="dependencies">Dependencies</h3>
+<p>To follow along with this tutorial, you will need the following Python libraries:</p>
+<p>For managing data:</p>
+<ul>
+<li><code>pandas</code></li>
+</ul>
+<p>For loading the news data:</p>
+<ul>
+<li><code>langchain</code></li>
+<li><code>newspaper3k</code></li>
+<li><code>lxml-html-clean</code></li>
+</ul>
+<p>For BERT-based sentiment analysis:</p>
+<ul>
+<li><code>transformers</code></li>
+<li><code>sentence-transformers</code></li>
+<li><code>torch</code></li>
+<li><code>scipy</code></li>
+</ul>
+<p>For large language models:</p>
+<ul>
+<li><code>langchain</code></li>
+<li><code>tenacity</code></li>
+</ul>
+<p>Optional (to use additional LLMs those in Ollama):</p>
+<ul>
+<li>langchain-experimental</li>
+<li>openai</li>
+<li>langchain-openai</li>
+</ul>
+<p>First of all, let’s load some financial news data to work with.</p>
+<div id="cell-6" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.document_loaders <span class="im">import</span> NewsURLLoader</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ca.finance.yahoo.com/news/rising-oil-price-doesnt-shake-160556917.html"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ca.finance.yahoo.com/news/venezuela-detains-two-former-maduro-173140679.html"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ca.finance.yahoo.com/news/norfolk-southern-agrees-pay-600m-121211343.html"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ca.finance.yahoo.com/news/boeing-shares-fall-nyt-report-164509069.html"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ca.finance.yahoo.com/news/restaurants-along-eclipses-path-totality-153650201.html"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> NewsURLLoader(urls<span class="op">=</span>urls)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> loader.load()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>[Document(page_content='TORONTO — The price of oil has been on a steady climb all year, but the talk at Canada\'s biggest oil and gas conference is still focused on spending discipline.\n\nIndustry leaders at the Canadian Association of Petroleum Producers conference, held in Toronto this year, have been emphasizing their predictability and focus on returning money to shareholders, rather than talk of growth.\n\nSuncor Energy Inc. chief executive Rich Kruger, who was named head of the oil and gas producer last year as it struggled with safety and operational issues, said his goal is to bring clarity and simplicity to the company.\n\n"I want to become consistently and boringly excellent," said Kruger. "I\'m not a big one for surprise parties."\n\nADVERTISEMENT\n\nKruger has been working to standardize operations and create a steadier production plan, in contrast to some of the more rushed decisions when growth was the answer to all of the industry\'s questions.\n\nThe early development of the Fort Hills oilsands site, for example, saw mine plans that had slope angles too steep, and not enough was done to check for water issues, in what were fairly short-sighted decisions made to feed the processing plant faster, he said.\n\n"If you go back 10-plus years ago, we lived in a world we thought had resource scarcity, oil prices are going be $100 or better, where growth in production volumes was synonymous with growth in value, a different world than we live in today."\n\nEven with oil up about US$15 per barrel so far this year to US$85, industry leaders at the conference have been emphasizing that they no longer see production growth as so deeply tied to value, and that each added barrel has to be weighed against returning money to shareholders.\n\nThe shift is happening as investors worry about long-term demand prospects for fossil fuels as the push to reduce carbon emissions ramps up.\n\nHowever, forecasts do show that oil demand is still growing, said BMO analyst Randy Ollenberger.\n\nStory continues\n\n"We often hear the narrative that oil demand has peaked, that it\'s not growing and how that\'s negative for the space. That\'s not true, oil demand is actually continuing to grow, and in fact, it\'s continuing to grow at a pace that\'s higher than the average over the last 13 years."\n\nStill, with investors looking for the industry to reliably pump out cash, as much, if not more than they\'re looking for growth, company leaders are eager to assure they won\'t be lost in exuberance as prices rise.\n\nCenovus Energy Inc. CEO Jon McKenzie said his company is planning restrained and strategic growth, focused on reducing bottlenecks and finishing shelved projects.\n\n"Growth that we’ve kicked off in 2023 is very different than the kind of growth you would have seen 10, 15 years ago. We’re not talking about greenfield expansion, we’re not talking about phased expansions."\n\nSmaller producers were also keen to emphasize that they were no longer growing for growth\'s sake, including Whitecap Resources Inc. chief executive Grant Fagerheim.\n\n"Managing growth in a very disciplined manner, I think that’s a mantra that has been introduced to the energy sector, and I’m proud to be part of it."\n\nThis report by The Canadian Press was first published April 9, 2024.\n\nCompanies in this story: (TSX:SU, TSX:CVE, TSX:WCP)\n\nThe Canadian Press\n\nNote to readers: This is a corrected story. A previous version incorrectly called Suncor Energy Canada\'s largest oil and gas producer.', metadata={'title': "Higher oil doesn't shake industry talk on spending discipline at CAPP conference", 'link': 'https://ca.finance.yahoo.com/news/rising-oil-price-doesnt-shake-160556917.html', 'authors': ['The Canadian Press'], 'language': 'en', 'description': "TORONTO — The price of oil has been on a steady climb all year, but the talk at Canada's biggest oil and gas conference is still focused on spending discipline. Industry leaders at the Canadian Association of Petroleum Producers conference, held in Toronto this year, have been emphasizing their predictability and focus on returning money to shareholders, rather than talk of growth. Suncor Energy Inc. chief executive Rich Kruger, who was named head of the oil and gas producer last year as it stru", 'publish_date': None}),
+ Document(page_content='(Bloomberg) -- Venezuela detained former oil and finance ministers Tareck El Aissami and Simón Zerpa more than a year after an investigation into billions of lost Petroleos de Venezuela SA revenue that’s led to a purge of the ruling elite’s inner circle.\n\nMost Read from Bloomberg\n\nPublic Prosecutor Tarek William Saab said El Aissami and Zerpa, once President Nicolás Maduro’s closest allies, are part of a group of more than 50 others involved in a scheme to “destroy Venezuela’s economy,” including “corrupt” bankers based in Miami and Washington. Aissami’s business partner, Samark López, was also arrested, Saab said.\n\nADVERTISEMENT\n\nEl Aissami, who was shown wearing handcuffs and a black t-shirt, will be charged with treason, appropriation and money laundering, Saab said.\n\nThe arrests come at a pivotal moment for Maduro, who is facing criticism of unfair conditions ahead of presidential vote in July, in which he is seeking to win a third consecutive term. The US has said it’s willing to let an important oil and gas license expire on April 18 if the socialist government doesn’t take steps toward freer elections.\n\nRead more: Power Struggle and Missing Billions Roil Venezuelan Ruling Elite\n\nEl Aissami resigned as Venezuela’s oil minister in March 2023 when Maduro launched a sweeping anti-corruption operation after an internal audit revealed a financial black hole at state-owned PDVSA, the government’s most important source of funding. That triggered a widening corruption investigation that ensnared judges, elected officials, and the head of the nation’s crypto regulator.\n\nSaab said that El Aissami paid millions of dollars in bribes to allocate Venezuelan crude, pet-coke and fuel oil below market value through shell companies that bypassed the central bank. They also used the revenue from those sales to manipulate the country’s currency exchange system, Saab said.\n\nStory continues\n\n--With assistance from Fabiola Zerpa.\n\n(Updates with charges against El Aissami and US context starting in third paragraph.)\n\nMost Read from Bloomberg Businessweek\n\n©2024 Bloomberg L.P.', metadata={'title': 'Venezuela Detains Former Maduro Confidantes in PDVSA Probe', 'link': 'https://ca.finance.yahoo.com/news/venezuela-detains-two-former-maduro-173140679.html', 'authors': ['Patricia Laya', 'Andreina Itriago Acosta'], 'language': 'en', 'description': '(Bloomberg) -- Venezuela detained former oil and finance ministers Tareck El Aissami and Simón Zerpa more than a year after an investigation into billions of lost Petroleos de Venezuela SA revenue that’s led to a purge of the ruling elite’s inner circle. Most Read from BloombergUS Slams Strikes on Russia Oil Refineries as Risk to Oil MarketsBond Trader Places Record Futures Bet on Eve of Inflation DataIran’s Better, Stealthier Drones Are Remaking Global WarfareTrumpism Is Emptying ChurchesUkrain', 'publish_date': None}),
+ Document(page_content="Norfolk Southern has agreed to pay $600 million in a class-action lawsuit settlement for a fiery February 2023 train derailment in Ohio, but residents worry the money not only won’t go far enough to cover future health needs that could be tremendous but also won't amount to much once divvied up.\n\n“It’s not nowhere near my needs, let alone what the health effects are going to be five or 10 years down the road,” said Eric Cozza, who lived just three blocks from the derailment and had 47 family members living within a mile (1.61 kilometers).\n\nMore than three dozen of the freight train's 149 cars derailed on the outskirts of East Palestine, a town of almost 5,000 residents near the Pennsylvania state line. Several cars spilled a cocktail of hazardous materials that caught fire. Three days later, officials, fearing an explosion, blew open five tankcars filled with vinyl chloride and burned the toxic chemical — sending thick, black plumes of smoke into the air. Some 1,500 to 2,000 residents were evacuated.\n\nNorfolk Southern said the agreement, if approved by the court, will resolve all class action claims within a 20-mile (32-kilometer) radius of the derailment and, for residents who choose to participate, personal injury claims within a 10-mile (16-kilometer) radius of the derailment.\n\nADVERTISEMENT\n\nThe area includes East Palestine and people who evacuated, as well as several other larger towns.\n\nThe settlement, which doesn’t include or constitute any admission of liability, wrongdoing or fault, represents only a small slice of the $3 billion in revenue Norfolk Southern generated just in the first three months of this year. The railroad said that even after the settlement it still made a $213 million profit in the quarter.\n\nEast Palestine resident Krissy Ferguson called the settlement a “heart-wrenching day.”\n\n“I just feel like we’ve been victimized over and over and over again,” she said. “We fought and we’re still fighting. And contamination is still flowing down the creeks. People are still sick. And I think people that had the power to fight took an easy way out.”\n\nStory continues\n\nMore than a year later residents still complain about respiratory problems and unexplained rashes and nosebleeds, but the greater fear is that people will develop cancer or other serious conditions because of the chemicals they were exposed to. Researchers have only begun to work on determining the lasting repercussions of the derailment.\n\nThe company said Tuesday that individuals and businesses will be able to use compensation from the settlement in any manner they see fit.\n\nThe settlement is expected to be submitted for preliminary approval to the U.S. District Court for the Northern District of Ohio this month. Payments could begin to arrive by the end of the year, subject to final court approval.\n\nNorfolk Southern has already spent more than $1.1 billion on its response to the derailment, including more than $104 million in direct aid to East Palestine and its residents. Partly because Norfolk Southern is paying for the cleanup, President Joe Biden has never declared a disaster in the town, which remains a sore point for many.\n\nThe railroad has promised to create a fund to help pay for the long-term health needs of the community, but that hasn’t been finalized yet.\n\nThe plaintiffs' attorneys said the deal follows a year of intense investigation and should provide meaningful relief to residents.\n\nStill, residents like Misti Allison have many unanswered questions.\n\n“What goes through my head is, after all the lawyers are paid and the legal fees are accounted for, how much funding will be provided for families? And is that going to be enough for any of these potential damages moving forward?” she said.\n\nJami Wallace, too, worries about having a settlement without knowing the long-term impact of the derailment.\n\n“I would really like to see the numbers because in my opinion, taking a plea deal only is in the best interest of the attorneys,” she said. “They’re all going to get their money. But we’re the residents that are still going to be left to suffer.”\n\nCozza said he spent about $8,000 to move out of town and that — along with medical bills and the cost of replacing his contaminated belongings — exhausted what little savings he had. And he can't put a price on the 10-year relationship he lost or the way his extended family was scattered after the derailment.\n\nThe CEO of Threshold Residential, one of the biggest employers in town, estimates that his business has lost well over $100,000.\n\nLast week federal officials said that the aftermath of the train derailment doesn’t qualify as a public health emergency because widespread health problems and ongoing chemical exposure haven’t been documented, contrasting residents' reports.\n\nThe head of the National Transportation Safety Board recently said the agency’s investigation showed that venting and burning of the vinyl chloride was unnecessary because the producer of the chemical ascertained that no dangerous reaction occurred inside the tank cars. Officials who made the decision — Ohio’s governor and the local fire chief leading the response — have said they were never told that.\n\nThe NTSB’s full investigation into the cause of the derailment won’t be complete until June, but the agency has said that an overheating wheel bearing on one of the railcars, which wasn’t detected in time by a trackside sensor, likely caused the crash.\n\nThe EPA has said cleanup in East Palestine is expected to be completed this year.\n\nThe railroad announced preliminary first-quarter earnings of 23 cents per share Tuesday, which reflects the cost of the $600 million settlement. Without the settlement and some other one-time costs, the railroad said it would have made $2.39 per share.\n\nRailroad CEO Alan Shaw, who is fighting for his job against an activist investor aiming to overhaul the railroad's operations, said Norfolk Southern is “becoming a more productive and efficient railroad” but acknowledged there is more work to do.\n\nAncora Holdings is trying to persuade investors to support its nominees for Norfolk Southern's board and its plan to replace Shaw and the rest of the management team at the railroad's May 9 annual meeting. Ancora says the company's profits have lagged behind the other major freight railroads for years and the investors question Shaw's leadership.\n\nThe railroad said that in addition to the settlement, its results were hurt by $91 million in unusual expenses including money it is spending to fight back against Ancora, management layoffs and the $25 million it gave to CPKC last month for the right to hire one of that railroad's executives to be Norfolk Southern's new chief operating officer.\n\nThe railroad said Tuesday that even though volume was up 4% during the first quarter, company revenue fell by 4% because of lower fuel surcharge revenue and changes in the mix of shipments it handled to include more containers of imported goods that railroads get paid less to deliver than other commodities.\n\nShares of Norfolk Southern Corp., based in Atlanta, were up slightly through the day after a flat start following the settlement announcement.\n\n___\n\nAssociated Press writer Brooke Schultz contributed to this report from Harrisburg, Pennsylvania, and Michelle Chapman contributed from New York.\n\nJosh Funk, The Associated Press", metadata={'title': 'Norfolk Southern agrees to $600M settlement in fiery Ohio derailment. Locals fear it’s not enough', 'link': 'https://ca.finance.yahoo.com/news/norfolk-southern-agrees-pay-600m-121211343.html', 'authors': ['The Canadian Press'], 'language': 'en', 'description': "Norfolk Southern has agreed to pay $600 million in a class-action lawsuit settlement for a fiery February 2023 train derailment in Ohio, but residents worry the money not only won’t go far enough to cover future health needs that could be tremendous but also won't amount to much once divvied up. “It’s not nowhere near my needs, let alone what the health effects are going to be five or 10 years down the road,” said Eric Cozza, who lived just three blocks from the derailment and had 47 family memb", 'publish_date': None}),
+ Document(page_content='(Bloomberg) -- Boeing Co. faces a deepening crisis of confidence after an engineer at the US planemaker alleged the company took manufacturing shortcuts on its 787 Dreamliner aircraft in order to ease production bottlenecks of its most advanced airliner.\n\nMost Read from Bloomberg\n\nFactory workers wrongly measured and filled gaps that can occur when airframe segments of the 787 are joined together, according to Sam Salehpour, a longtime Boeing employee who made his concerns public on Tuesday. That assembly process could create “significant fatigue” in the composite material of the barrel sections and impair the structural integrity of more than 1,000 of the widebody jets in service, he said.\n\nADVERTISEMENT\n\nSalehpour, who according to his attorneys at Katz Banks Kumin LLP in Washington worked on the 787 from 2020 through early 2022, said the issues he described “may dramatically reduce the life of the plane.” Boeing disputes the allegations.\n\n“In a mad rush to reduce the backlog of the planes and get them to market, Boeing did not follow its own engineering requirements,” the engineer said on a conference call with reporters and his lawyers.\n\nThe claims risk opening another flank at the embattled planemaker, which is already facing intense scrutiny of its manufacturing and quality practices since a fuselage panel blew off a nearly new 737 Max 9 shortly after takeoff on Jan. 5. The allegations now extend the spotlight to the Dreamliner, a critical source of cash for Boeing as 737 output remains muted under close oversight by the US Federal Aviation Administration.\n\nAfter the allegations were made public, Senator Richard Blumenthal, a Connecticut Democrat, announced that he had asked Boeing’s departing Chief Executive Officer Dave Calhoun to appear at an April 17 subcommittee hearing called to examine the planemaker’s safety culture. Calhoun last month announced that he’s stepping down by the end of the year, part of a wider management shakeup in the wake of the Jan. 5 accident.\n\nStory continues\n\nHalted Deliveries\n\n“Boeing understands the important oversight responsibilities of the subcommittee and we are cooperating with this inquiry,” the company said, when asked if Calhoun or other executives planned to testify. “We have offered to provide documents, testimony and technical briefings, and are in discussions with the subcommittee regarding next steps.”\n\nIn separate statements, Boeing disputed Salehpour’s account. The company noted it had halted 787 deliveries for nearly two years earlier this decade under close FAA supervision after it found a spate of tiny structural imperfections in the joints where the carbon-fiber barrel sections are bolted together.\n\n“These claims about the structural integrity of the 787 are inaccurate and do not represent the comprehensive work Boeing has done to ensure the quality and long-term safety of the aircraft,” the planemaker said in a statement responding to the allegations, which were reported earlier Tuesday by the New York Times.\n\nCompany engineers are “completing exhaustive analysis to determine any long-term inspection and maintenance required, with oversight from the FAA,” Boeing said.\n\nThe latest allegations cast Boeing in an unfavorable light as it grapples with a crisis of confidence after the Jan. 5 panel blowout. While nobody on that flight was seriously hurt, the issue has put the spotlight on Boeing’s manufacturing and safety procedures and has led to a wholesale makeover of senior management. The crisis has jolted investors as well.\n\nBoeing shares fell 1.9% Tuesday, extending their decline to almost 32% this year, the worst performance on the Dow Jones Industrial Average.\n\nSenate Hearing\n\nSalehpour plans to discuss the manufacturing shortfalls he witnessed during the hearing before the Senate Permanent Subcommittee on Investigations scheduled for April 17.\n\nIn a March 19 letter to Calhoun, Blumenthal and Wisconsin’s Ron Johnson, the panel’s top-ranking Republican, asked for Boeing’s “immediate cooperation” with the panel’s review of Salehpour’s allegations.\n\nSalehpour’s attorneys flagged the issues to the FAA in a whistleblower letter dated Jan. 19. The agency has launched an investigation and interviewed Salehpour, his attorneys said, adding that other whistleblowers have come forward.\n\n“Voluntary reporting without fear of reprisal is a critical component in aviation safety,” the FAA said in a statement. “We strongly encourage everyone in the aviation industry to share information. We thoroughly investigate all reports.”\n\nBoeing disputed his attorney’s suggestion that in-service 787 Dreamliners face shorter commercial lives. The company said it has confirmed the finding through extensive fatigue testing, including forces that were more than 10 times the maximum allowed in production.\n\nSalehpour said he flagged his concerns to Boeing management but was ignored and ultimately transferred to the 777 program. There he claims to have also witnessed improper production practices after the planemaker ripped out a flawed robotic system without properly redesigning the relevant parts to match the new assembly process.\n\nIn a separate statement, Boeing said the claims were also inaccurate. “We are fully confident in the safety and durability of the 777 family,” the company said.\n\n(Adds whistleblower comment in fourth paragraph.)\n\nMost Read from Bloomberg Businessweek\n\n©2024 Bloomberg L.P.', metadata={'title': 'Boeing Crisis of Confidence Deepens With 787 Now Under Scrutiny', 'link': 'https://ca.finance.yahoo.com/news/boeing-shares-fall-nyt-report-164509069.html', 'authors': ['Siddharth Philip', 'Julie Johnsson'], 'language': 'en', 'description': '(Bloomberg) -- Boeing Co. faces a deepening crisis of confidence after an engineer at the US planemaker alleged the company took manufacturing shortcuts on its 787 Dreamliner aircraft in order to ease production bottlenecks of its most advanced airliner.Most Read from BloombergUS Slams Strikes on Russia Oil Refineries as Risk to Oil MarketsChinese Cement Maker Halted After 99% Crash in 15 MinutesBond Trader Places Record Futures Bet on Eve of Inflation DataApple’s India iPhone Output Hits $14 Bi', 'publish_date': None}),
+ Document(page_content='Restaurants on the eclipse\'s path of totality saw a jump in sales on Monday as people flocked to find the best spots to see the celestial event, according to sales data from payments technology company Square.\n\n"The eclipse was genuinely a unique cosmic event, but also a unique event for commerce," said Ara Kharazian, research and data lead at Square.\n\nSquare said Tuesday restaurants that use its technology in Niagara Falls, Ont., which saw a huge influx of visitors for the eclipse, saw 404 per cent higher sales than the average Monday in 2024.\n\nHamilton, Ont., saw a 67 per cent jump, while Montreal restaurants saw sales rise 55 per cent.\n\nADVERTISEMENT\n\nThe increases mirrored a similar pattern in the U.S., where some counties saw restaurant sales rise by more than 500 per cent.\n\nThis kind of spike in spending is almost as rare as an eclipse, Kharazian said, as multiple places across North America saw sales skyrocket.\n\n"It’s simultaneously expected and also pretty stunning," he said.\n\n"It is genuinely rare to see this level of highly localized and also supercharged level of spending."\n\nThe spike gave a welcome boost to restaurants, which are highly seasonal, he said.\n\n"It wasn\'t a one-day event, we know that we saw some spending leading up to the weekend as well," he added.\n\n"That excess sales revenue is going to be very helpful to a business ... We hear often from restaurants who report that some of their biggest challenges have to do with access to cash and liquidity."\n\nMunicipalities across Central and Eastern Canada spent months preparing for the brief window of time in which the sun, Earth and moon aligned on Monday afternoon.\n\nDemand for hotels and short-term rentals surged for the weekend ahead of the eclipse, while municipalities planned events centred around the phenomenon.\n\nA February report from Airbnb said Montreal and the Niagara Region were among the most popular cities on its platform along the path of totality.\n\nStory continues\n\nMunicipalities like Hamilton and Niagara Falls urged visitors to plan ahead, anticipating heavy traffic and high demand. The mayor of Niagara Falls said about a million people were expected to fill the city, the largest crowd in its history.\n\n"It was not a typical Monday in April, that’s for sure," said Janice Thomson, president and CEO of Niagara Falls Tourism.\n\nThough Niagara Falls is a yearlong tourist destination, Thomson said she\'d never experienced anything like what happened on Monday, with a huge crowd of people cheering every time the clouds parted.\n\nCanada\'s telecom companies deployed additional infrastructure in preparation for large crowds of people. In a statement, Rogers said its network handled more than six times the amount of traffic it normally does in Niagara Falls, thanks in part to portable mobile towers.\n\nThis report by The Canadian Press was first published April 9, 2024.\n\nRosa Saba, The Canadian Press', metadata={'title': "Restaurants along eclipse's path of totality saw sales boom: Square", 'link': 'https://ca.finance.yahoo.com/news/restaurants-along-eclipses-path-totality-153650201.html', 'authors': ['The Canadian Press'], 'language': 'en', 'description': 'Restaurants on the eclipse\'s path of totality saw a jump in sales on Monday as people flocked to find the best spots to see the celestial event, according to sales data from payments technology company Square. "The eclipse was genuinely a unique cosmic event, but also a unique event for commerce," said Ara Kharazian, research and data lead at Square. Square said Tuesday restaurants that use its technology in Niagara Falls, Ont., which saw a huge influx of visitors for the eclipse, saw 404 per ce', 'publish_date': None})]</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    [{<span class="st">"title"</span>: d.metadata[<span class="st">"title"</span>], <span class="st">"text"</span>: d.page_content} <span class="cf">for</span> d <span class="kw">in</span> data]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="dictionnary-based-approach" class="level2">
+<h2 class="anchored" data-anchor-id="dictionnary-based-approach">Dictionnary-based approach</h2>
+<p>A dictionary-based approach is a simple way to perform sentiment analysis. It consists of using a list of words with associated sentiment scores. The sentiment score of a sentence is the sum of the sentiment scores of the words it contains. You can also normalize the score by the number of words in the sentence.</p>
+<p>For this type of approach, we will need to use a financial sentiment dictionary. I will use the Loughran-McDonald dictionary, which is widely used in finance. Note that this dictionary is designed for financial statements, so it may not be the best choice for news articles.</p>
+<p>You can download the dictionary from <a href="https://sraf.nd.edu/loughranmcdonald-master-dictionary/">here</a> (direct link: <a href="https://drive.google.com/file/d/1ptUgGVeeUGhCbaKL14Ri3Xi5xOKkPkUD/view?usp=sharing">Loughran-McDonald_MasterDictionary_1993-2023.csv</a>)</p>
+<section id="pre-processing" class="level3">
+<h3 class="anchored" data-anchor-id="pre-processing">Pre-processing</h3>
+<p>The preprocessing steps to use a dictionnary based approach depend on the dictionnary you are using and the final measure you want to obtain. In this case, we will use the Loughran-McDonald dictionary, which contains variation of similar words, including plural forms, verb forms, etc. Therefore, we do not need to perform stemming or lemmatization, a common step in text preprocessing.</p>
+<p>The preprocessing steps we will perform are: - Lowercasing - Removing punctuation - Removing stopwords - Removing numbers</p>
+<p>The removal of stopwords and numbers is optional, but it will affect the sentiment score of the text as measure as a ratio of the number of words in the text. Other common filtering includes removing URLs, emails, cities, company names, etc.</p>
+<div id="cell-12" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the same ones as Loughran-McDonald</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"stopwords.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    stopwords <span class="op">=</span> f.read().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>stopwords[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>['about', 'and', 'from', 'now', 'where', 'you', 'am', 'until', 'them', 'in']</code></pre>
+</div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess_text(text):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> text.split()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w.lower() <span class="cf">for</span> w <span class="kw">in</span> words]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove punctuation and numbers</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w.isalpha()]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">" "</span>.join(words)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text_clean"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">apply</span>(preprocess_text)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">text_clean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>toronto price oil a steady climb talk biggest ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>venezuela detained former oil finance minister...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>norfolk southern agreed pay million a lawsuit ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>boeing faces a deepening crisis confidence eng...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>restaurants path totality saw a jump sales mon...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="dictionary">Dictionary</h3>
+<p>Next, will load the dictionary and make a list of positive words and a list of negative words.</p>
+<div id="cell-15" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lm_dict <span class="op">=</span> pd.read_csv(<span class="st">"Loughran-McDonald_MasterDictionary_1993-2023.csv"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lm_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Word</th>
+<th data-quarto-table-cell-role="th">Seq_num</th>
+<th data-quarto-table-cell-role="th">Word Count</th>
+<th data-quarto-table-cell-role="th">Word Proportion</th>
+<th data-quarto-table-cell-role="th">Average Proportion</th>
+<th data-quarto-table-cell-role="th">Std Dev</th>
+<th data-quarto-table-cell-role="th">Doc Count</th>
+<th data-quarto-table-cell-role="th">Negative</th>
+<th data-quarto-table-cell-role="th">Positive</th>
+<th data-quarto-table-cell-role="th">Uncertainty</th>
+<th data-quarto-table-cell-role="th">Litigious</th>
+<th data-quarto-table-cell-role="th">Strong_Modal</th>
+<th data-quarto-table-cell-role="th">Weak_Modal</th>
+<th data-quarto-table-cell-role="th">Constraining</th>
+<th data-quarto-table-cell-role="th">Complexity</th>
+<th data-quarto-table-cell-role="th">Syllables</th>
+<th data-quarto-table-cell-role="th">Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>AARDVARK</td>
+<td>1</td>
+<td>664</td>
+<td>2.690000e-08</td>
+<td>1.860000e-08</td>
+<td>4.050000e-06</td>
+<td>131</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>12of12inf</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>AARDVARKS</td>
+<td>2</td>
+<td>3</td>
+<td>1.210000e-10</td>
+<td>8.230000e-12</td>
+<td>9.020000e-09</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>12of12inf</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ABACI</td>
+<td>3</td>
+<td>9</td>
+<td>3.640000e-10</td>
+<td>1.110000e-10</td>
+<td>5.160000e-08</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>12of12inf</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>ABACK</td>
+<td>4</td>
+<td>29</td>
+<td>1.170000e-09</td>
+<td>6.330000e-10</td>
+<td>1.560000e-07</td>
+<td>28</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>12of12inf</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>ABACUS</td>
+<td>5</td>
+<td>9349</td>
+<td>3.790000e-07</td>
+<td>3.830000e-07</td>
+<td>3.460000e-05</td>
+<td>1239</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>12of12inf</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">86548</td>
+<td>ZYGOTE</td>
+<td>86529</td>
+<td>69</td>
+<td>2.790000e-09</td>
+<td>1.310000e-09</td>
+<td>2.940000e-07</td>
+<td>45</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>12of12inf</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">86549</td>
+<td>ZYGOTES</td>
+<td>86530</td>
+<td>1</td>
+<td>4.050000e-11</td>
+<td>1.720000e-11</td>
+<td>1.880000e-08</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>12of12inf</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">86550</td>
+<td>ZYGOTIC</td>
+<td>86531</td>
+<td>0</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>12of12inf</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">86551</td>
+<td>ZYMURGIES</td>
+<td>86532</td>
+<td>0</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>12of12inf</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">86552</td>
+<td>ZYMURGY</td>
+<td>86533</td>
+<td>0</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0.000000e+00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>12of12inf</td>
+</tr>
+</tbody>
+</table>
+
+<p>86553 rows × 17 columns</p>
+</div>
+</div>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pos_words <span class="op">=</span> lm_dict[lm_dict[<span class="st">"Positive"</span>] <span class="op">!=</span> <span class="dv">0</span>][<span class="st">"Word"</span>].<span class="bu">str</span>.lower().to_list()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>neg_words <span class="op">=</span> lm_dict[lm_dict[<span class="st">"Negative"</span>] <span class="op">!=</span> <span class="dv">0</span>][<span class="st">"Word"</span>].<span class="bu">str</span>.lower().to_list()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pos_words[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>['able',
+ 'abundance',
+ 'abundant',
+ 'acclaimed',
+ 'accomplish',
+ 'accomplished',
+ 'accomplishes',
+ 'accomplishing',
+ 'accomplishment',
+ 'accomplishments']</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>neg_words[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>['abandon',
+ 'abandoned',
+ 'abandoning',
+ 'abandonment',
+ 'abandonments',
+ 'abandons',
+ 'abdicated',
+ 'abdicates',
+ 'abdicating',
+ 'abdication']</code></pre>
+</div>
+</div>
+</section>
+<section id="sentiment-score" class="level3">
+<h3 class="anchored" data-anchor-id="sentiment-score">Sentiment score</h3>
+<p>The sentiment score of a text is the sum of the sentiment scores of the words it contains. We can also normalize the score by the number of words in the text.</p>
+<div id="cell-19" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n"</span>] <span class="op">=</span> df[<span class="st">"text_clean"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split()))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n_pos"</span>] <span class="op">=</span> df[<span class="st">"text_clean"</span>].<span class="bu">apply</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="bu">len</span>([w <span class="cf">for</span> w <span class="kw">in</span> x.split() <span class="cf">if</span> w <span class="kw">in</span> pos_words])</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n_neg"</span>] <span class="op">=</span> df[<span class="st">"text_clean"</span>].<span class="bu">apply</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="bu">len</span>([w <span class="cf">for</span> w <span class="kw">in</span> x.split() <span class="cf">if</span> w <span class="kw">in</span> neg_words])</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">text_clean</th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">n_pos</th>
+<th data-quarto-table-cell-role="th">n_neg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>toronto price oil a steady climb talk biggest ...</td>
+<td>261</td>
+<td>1</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>venezuela detained former oil finance minister...</td>
+<td>179</td>
+<td>1</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>norfolk southern agreed pay million a lawsuit ...</td>
+<td>578</td>
+<td>8</td>
+<td>31</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>boeing faces a deepening crisis confidence eng...</td>
+<td>402</td>
+<td>3</td>
+<td>38</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>restaurants path totality saw a jump sales mon...</td>
+<td>255</td>
+<td>4</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_level"</span>] <span class="op">=</span> df[<span class="st">"n_pos"</span>] <span class="op">-</span> df[<span class="st">"n_neg"</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_score1"</span>] <span class="op">=</span> (df[<span class="st">"n_pos"</span>] <span class="op">-</span> df[<span class="st">"n_neg"</span>]) <span class="op">/</span> df[<span class="st">"n"</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_score2"</span>] <span class="op">=</span> (df[<span class="st">"n_pos"</span>] <span class="op">-</span> df[<span class="st">"n_neg"</span>]) <span class="op">/</span> (df[<span class="st">"n_pos"</span>] <span class="op">+</span> df[<span class="st">"n_neg"</span>])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>CUTOFF <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_sentiment"</span>] <span class="op">=</span> df[<span class="st">"lm_score2"</span>].<span class="bu">apply</span>(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="st">"positive"</span> <span class="cf">if</span> x <span class="op">&gt;</span> CUTOFF <span class="cf">else</span> <span class="st">"negative"</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="op">-</span>CUTOFF <span class="cf">else</span> <span class="st">"neutral"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">text_clean</th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">n_pos</th>
+<th data-quarto-table-cell-role="th">n_neg</th>
+<th data-quarto-table-cell-role="th">lm_level</th>
+<th data-quarto-table-cell-role="th">lm_score1</th>
+<th data-quarto-table-cell-role="th">lm_score2</th>
+<th data-quarto-table-cell-role="th">lm_sentiment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>toronto price oil a steady climb talk biggest ...</td>
+<td>261</td>
+<td>1</td>
+<td>7</td>
+<td>-6</td>
+<td>-0.022989</td>
+<td>-0.750000</td>
+<td>negative</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>venezuela detained former oil finance minister...</td>
+<td>179</td>
+<td>1</td>
+<td>12</td>
+<td>-11</td>
+<td>-0.061453</td>
+<td>-0.846154</td>
+<td>negative</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>norfolk southern agreed pay million a lawsuit ...</td>
+<td>578</td>
+<td>8</td>
+<td>31</td>
+<td>-23</td>
+<td>-0.039792</td>
+<td>-0.589744</td>
+<td>negative</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>boeing faces a deepening crisis confidence eng...</td>
+<td>402</td>
+<td>3</td>
+<td>38</td>
+<td>-35</td>
+<td>-0.087065</td>
+<td>-0.853659</td>
+<td>negative</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>restaurants path totality saw a jump sales mon...</td>
+<td>255</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>0.011765</td>
+<td>0.600000</td>
+<td>positive</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="bert-based-models" class="level2">
+<h2 class="anchored" data-anchor-id="bert-based-models">Bert-based models</h2>
+<p>BERT-based models are often called “state-of-the-art models” in recent papers in the finance even if the original <a href="https://arxiv.org/abs/1810.04805">Bert paper</a> dates from 2018 and many more advanced models have come along since. They are pre-trained on a large corpus of text and fine-tuned on a specific task. In this case, we will use FinBert, a BERT model fine-tuned on financial data (see <a href="https://arxiv.org/abs/1908.10063">FinBert paper</a>).</p>
+<p>The way these models work is by taking a sequence of tokens as input and outputting a vector of size 768 (or 1024, depending on the model). This vector can be used as input to a classifier to predict the sentiment of the text. The FinBert model is trained to output softmax outputs (ie, probabilities) for three classes: positive, negative, and neutral.</p>
+<section id="pre-processing-1" class="level3">
+<h3 class="anchored" data-anchor-id="pre-processing-1">Pre-processing</h3>
+<p>You won’t perform any pre-processing on the text before feeding it to the model. The model will take care of tokenizing the text and converting it to a sequence of tokens. Common pre-processing for Bert models include masking some words (date, company names, etc.).</p>
+</section>
+<section id="usage" class="level3">
+<h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<p>Many Bert models, including FinBert, are available in the Hugging Face Transformers library adn can be fecthed automatically.</p>
+<div id="cell-22" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForSequenceClassification</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-23" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"ProsusAI/finbert"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(<span class="st">"ProsusAI/finbert"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-24" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> finbert_sentiment(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">float</span>, <span class="bu">float</span>, <span class="bu">float</span>, <span class="bu">str</span>]:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        inputs <span class="op">=</span> tokenizer(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            text, return_tensors<span class="op">=</span><span class="st">"pt"</span>, padding<span class="op">=</span><span class="va">True</span>, truncation<span class="op">=</span><span class="va">True</span>, max_length<span class="op">=</span><span class="dv">512</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        outputs <span class="op">=</span> model(<span class="op">**</span>inputs)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> outputs.logits</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        scores <span class="op">=</span> {</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>            k: v</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> k, v <span class="kw">in</span> <span class="bu">zip</span>(</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                model.config.id2label.values(),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                scipy.special.softmax(logits.numpy().squeeze()),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>            scores[<span class="st">"positive"</span>],</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>            scores[<span class="st">"negative"</span>],</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            scores[<span class="st">"neutral"</span>],</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">max</span>(scores, key<span class="op">=</span>scores.get),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this is the raw text, no preprocessing</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"finbert_pos"</span>, <span class="st">"finbert_neg"</span>, <span class="st">"finbert_neu"</span>, <span class="st">"finbert_sentiment"</span>]] <span class="op">=</span> (</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"text"</span>].<span class="bu">apply</span>(finbert_sentiment).<span class="bu">apply</span>(pd.Series)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"finbert_score"</span>] <span class="op">=</span> df[<span class="st">"finbert_pos"</span>] <span class="op">-</span> df[<span class="st">"finbert_neg"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_pos"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_neg"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_neu"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_sentiment"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_score"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">finbert_pos</th>
+<th data-quarto-table-cell-role="th">finbert_neg</th>
+<th data-quarto-table-cell-role="th">finbert_neu</th>
+<th data-quarto-table-cell-role="th">finbert_sentiment</th>
+<th data-quarto-table-cell-role="th">finbert_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>0.363470</td>
+<td>0.054056</td>
+<td>0.582474</td>
+<td>neutral</td>
+<td>0.309414</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>0.022471</td>
+<td>0.666017</td>
+<td>0.311512</td>
+<td>negative</td>
+<td>-0.643546</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>0.030382</td>
+<td>0.732271</td>
+<td>0.237347</td>
+<td>negative</td>
+<td>-0.701889</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>0.009635</td>
+<td>0.949322</td>
+<td>0.041043</td>
+<td>negative</td>
+<td>-0.939687</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>0.783017</td>
+<td>0.038716</td>
+<td>0.178267</td>
+<td>positive</td>
+<td>0.744301</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="llm-models" class="level2">
+<h2 class="anchored" data-anchor-id="llm-models">LLM models</h2>
+<p>LLM models are large language models that are trained on a large corpus of text. They are often used for text generation, but they can also be used for sentiment analysis. The approach is to design a prompt that will make the model output a sentiment score. Langchain is a library that makes it easy to use LLM models for different tasks, including sentiment analysis.</p>
+<div id="cell-29" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.pydantic_v1 <span class="im">import</span> BaseModel, Field</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> PydanticOutputParser</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.chat_models <span class="im">import</span> ChatOllama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-31" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For handling errors</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tenacity <span class="im">import</span> retry, stop_after_attempt, RetryError</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will first define the desired output format as a Pydantic model, from which we will create a PydanticOutputParser object. This object will be used to inject output definition into the prompt and to parse the output of the model.</p>
+<div id="cell-33" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentClassification(BaseModel):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    sentiment: <span class="bu">str</span> <span class="op">=</span> Field(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        ...,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"The sentiment of the text"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        enum<span class="op">=</span>[<span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"neutral"</span>],</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    score: <span class="bu">float</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The score of the sentiment"</span>, ge<span class="op">=-</span><span class="dv">1</span>, le<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    justification: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The justification of the sentiment"</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    main_entity: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The main entity discussed in the text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-34" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">@retry</span>(stop<span class="op">=</span>stop_after_attempt(<span class="dv">5</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chain(text: <span class="bu">str</span>, chain) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> chain.invoke({<span class="st">"news"</span>: text}).<span class="bu">dict</span>()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> llm_sentiment(text: <span class="bu">str</span>, llm) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">str</span>, <span class="bu">float</span>, <span class="bu">str</span>, <span class="bu">str</span>]:</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> PydanticOutputParser(pydantic_object<span class="op">=</span>SentimentClassification)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> PromptTemplate(</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        template<span class="op">=</span><span class="st">"Describe the sentiment of a text of financial news.</span><span class="ch">\n</span><span class="sc">{format_instructions}</span><span class="ch">\n</span><span class="sc">{news}</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        input_variables<span class="op">=</span>[<span class="st">"news"</span>],</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        partial_variables<span class="op">=</span>{<span class="st">"format_instructions"</span>: parser.get_format_instructions()},</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> prompt <span class="op">|</span> llm <span class="op">|</span> parser</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> run_chain(text, chain)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"sentiment"</span>],</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"score"</span>],</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"justification"</span>],</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"main_entity"</span>],</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> RetryError <span class="im">as</span> e:</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"error"</span>, <span class="dv">0</span>, <span class="st">""</span>, <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-35" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with the correct model, or use ChatOpenAI if you want to use OpenAI</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>llama2 <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"llama2"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"llama2_sentiment"</span>, <span class="st">"llama2_score"</span>, <span class="st">"llama2_justification"</span>, <span class="st">"llama2_main_entity"</span>]</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, llama2)).<span class="bu">apply</span>(pd.Series))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error: RetryError[&lt;Future at 0x329c35e50 state=finished raised OutputParserException&gt;]
+Error: RetryError[&lt;Future at 0x329c629c0 state=finished raised OutputParserException&gt;]
+Error: RetryError[&lt;Future at 0x3295c7680 state=finished raised OutputParserException&gt;]</code></pre>
+</div>
+</div>
+<div id="cell-36" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_score"</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_justification"</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_main_entity"</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">llama2_sentiment</th>
+<th data-quarto-table-cell-role="th">llama2_score</th>
+<th data-quarto-table-cell-role="th">llama2_justification</th>
+<th data-quarto-table-cell-role="th">llama2_main_entity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>positive</td>
+<td>0.7</td>
+<td>The article focuses on the oil and gas industr...</td>
+<td>Suncor Energy Inc.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>error</td>
+<td>0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>error</td>
+<td>0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>negative</td>
+<td>0.7</td>
+<td>The article reports on allegations of manufact...</td>
+<td>Boeing Co.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>error</td>
+<td>0.0</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-37" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mixtral <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"dolphin-mixtral:latest"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_score"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_justification"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_main_entity"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, mixtral)).<span class="bu">apply</span>(pd.Series)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error: RetryError[&lt;Future at 0x329d5b320 state=finished raised OutputParserException&gt;]</code></pre>
+</div>
+</div>
+<div id="cell-38" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_score"</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_justification"</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_main_entity"</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">mixtral_sentiment</th>
+<th data-quarto-table-cell-role="th">mixtral_score</th>
+<th data-quarto-table-cell-role="th">mixtral_justification</th>
+<th data-quarto-table-cell-role="th">mixtral_main_entity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>neutral</td>
+<td>0.00</td>
+<td>The text discusses the focus on spending disci...</td>
+<td>Canadian Association of Petroleum Producers co...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>negative</td>
+<td>-0.80</td>
+<td>The text discusses the detention of former oil...</td>
+<td>Tareck El Aissami and Simón Zerpa</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>error</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>negative</td>
+<td>-0.80</td>
+<td>The text discusses a crisis of confidence for ...</td>
+<td>Boeing</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>positive</td>
+<td>0.85</td>
+<td>The text discusses a significant increase in s...</td>
+<td>eclipse</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-39" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"text"</span>][:<span class="dv">500</span>] <span class="op">+</span> <span class="st">"..."</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Llama2: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"llama2_justification"</span>]) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Mixtral: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"mixtral_justification"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TORONTO — The price of oil has been on a steady climb all year, but
+the talk at Canada's biggest oil and gas conference is still focused
+on spending discipline.  Industry leaders at the Canadian Association
+of Petroleum Producers conference, held in Toronto this year, have
+been emphasizing their predictability and focus on returning money to
+shareholders, rather than talk of growth.  Suncor Energy Inc. chief
+executive Rich Kruger, who was named head of the oil and gas producer
+last year as it st...
+
+Llama2: The article focuses on the oil and gas industry in Canada and how
+companies are shifting their priorities from growth to spending
+discipline. The CEOs of Suncor Energy, Cenovus Energy, and Whitecap
+Resources emphasize the importance of returning money to shareholders
+rather than talking about growth. The article highlights the changing
+narrative around oil demand and how it's still growing despite
+investor concerns. The overall tone of the article is positive as
+companies are taking a more disciplined approach to their operations.
+
+Mixtral: The text discusses the focus on spending discipline and predictability
+in the Canadian oil and gas industry, with leaders emphasizing their
+goal of returning money to shareholders rather than pursuing growth.
+The sentiment is neutral as it does not express strong positive or
+negative emotions.</code></pre>
+</div>
+</div>
+<div id="cell-41" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lm_sentiment"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_sentiment"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">lm_sentiment</th>
+<th data-quarto-table-cell-role="th">finbert_sentiment</th>
+<th data-quarto-table-cell-role="th">llama2_sentiment</th>
+<th data-quarto-table-cell-role="th">mixtral_sentiment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Higher oil doesn't shake industry talk on spen...</td>
+<td>TORONTO — The price of oil has been on a stead...</td>
+<td>negative</td>
+<td>neutral</td>
+<td>positive</td>
+<td>neutral</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Venezuela Detains Former Maduro Confidantes in...</td>
+<td>(Bloomberg) -- Venezuela detained former oil a...</td>
+<td>negative</td>
+<td>negative</td>
+<td>error</td>
+<td>negative</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Norfolk Southern agrees to $600M settlement in...</td>
+<td>Norfolk Southern has agreed to pay $600 millio...</td>
+<td>negative</td>
+<td>negative</td>
+<td>error</td>
+<td>error</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Boeing Crisis of Confidence Deepens With 787 N...</td>
+<td>(Bloomberg) -- Boeing Co. faces a deepening cr...</td>
+<td>negative</td>
+<td>negative</td>
+<td>negative</td>
+<td>negative</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Restaurants along eclipse's path of totality s...</td>
+<td>Restaurants on the eclipse's path of totality ...</td>
+<td>positive</td>
+<td>positive</td>
+<td>error</td>
+<td>positive</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
