@@ -357,22 +357,26 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a>
-  <ul class="collapse">
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
   <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
-  </ul></li>
+  <li><a href="#financial-news-data" id="toc-financial-news-data" class="nav-link" data-scroll-target="#financial-news-data">Financial news data</a></li>
   <li><a href="#dictionnary-based-approach" id="toc-dictionnary-based-approach" class="nav-link" data-scroll-target="#dictionnary-based-approach">Dictionnary-based approach</a>
   <ul class="collapse">
   <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-processing</a></li>
   <li><a href="#dictionary" id="toc-dictionary" class="nav-link" data-scroll-target="#dictionary">Dictionary</a></li>
   <li><a href="#sentiment-score" id="toc-sentiment-score" class="nav-link" data-scroll-target="#sentiment-score">Sentiment score</a></li>
   </ul></li>
-  <li><a href="#bert-based-models" id="toc-bert-based-models" class="nav-link" data-scroll-target="#bert-based-models">Bert-based models</a>
+  <li><a href="#finbert" id="toc-finbert" class="nav-link" data-scroll-target="#finbert">FinBert</a>
   <ul class="collapse">
   <li><a href="#pre-processing-1" id="toc-pre-processing-1" class="nav-link" data-scroll-target="#pre-processing-1">Pre-processing</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   </ul></li>
-  <li><a href="#llm-models" id="toc-llm-models" class="nav-link" data-scroll-target="#llm-models">LLM models</a></li>
+  <li><a href="#llm-models" id="toc-llm-models" class="nav-link" data-scroll-target="#llm-models">LLM models</a>
+  <ul class="collapse">
+  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -384,7 +388,7 @@ cookieconsent.run({
 
 
 <p>In the dynamic world of finance, understanding market sentiment is crucial for researchers and practitioners alike.</p>
-<p>In today’s tutorial,I present three methods for extracting sentiments from financial news using Python. Starting with a simple yet effective dictionary-based approach, we progress to exploring <a href="https://huggingface.co/ProsusAI/finbert">FinBERT</a>, a sophisticated BERT-based model tailored for financial texts. Lastly, we examine the capabilities of large language models (LLMs) in sentiment analysis.</p>
+<p>In this tutorial,I present three methods for extracting sentiments from financial news using Python. Starting with a simple yet effective dictionary-based approach, we progress to exploring <a href="https://huggingface.co/ProsusAI/finbert">FinBert</a>, a sophisticated BERT-based model tailored for financial texts. Lastly, we examine the capabilities of large language models (LLMs) in sentiment analysis.</p>
 <p>All the code for this tutorial is available on <a href="https://github.com/Vincent-Codes-Finance/sentiment">GitHub</a>.</p>
 <section id="video-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
@@ -393,8 +397,9 @@ cookieconsent.run({
 <div id="cell-3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="dependencies" class="level3">
-<h3 class="anchored" data-anchor-id="dependencies">Dependencies</h3>
+</section>
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
 <p>To follow along with this tutorial, you will need the following Python libraries:</p>
 <p>For managing data:</p>
 <ul>
@@ -420,11 +425,14 @@ cookieconsent.run({
 </ul>
 <p>Optional (to use additional LLMs those in Ollama):</p>
 <ul>
-<li>langchain-experimental</li>
-<li>openai</li>
-<li>langchain-openai</li>
+<li><code>langchain-experimental</code></li>
+<li><code>openai</code></li>
+<li><code>langchain-openai</code></li>
 </ul>
-<p>First of all, let’s load some financial news data to work with.</p>
+</section>
+<section id="financial-news-data" class="level2">
+<h2 class="anchored" data-anchor-id="financial-news-data">Financial news data</h2>
+<p>First of all, let’s load some financial news data to work with. For that, we will use the <a href="https://api.python.langchain.com/en/latest/langchain_api_reference.html"><code>langchain</code></a> library, which provides a simple interface to <a href="https://api.python.langchain.com/en/latest/document_loaders/langchain_community.document_loaders.news.NewsURLLoader.html#langchain_community.document_loaders.news.NewsURLLoader">load news data</a> from various sources. In our case, we will load news articles from Yahoo Finance, and load it into a pandas DataFrame.</p>
 <div id="cell-6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.document_loaders <span class="im">import</span> NewsURLLoader</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -504,23 +512,27 @@ cookieconsent.run({
 </div>
 </div>
 </section>
-</section>
 <section id="dictionnary-based-approach" class="level2">
 <h2 class="anchored" data-anchor-id="dictionnary-based-approach">Dictionnary-based approach</h2>
 <p>A dictionary-based approach is a simple way to perform sentiment analysis. It consists of using a list of words with associated sentiment scores. The sentiment score of a sentence is the sum of the sentiment scores of the words it contains. You can also normalize the score by the number of words in the sentence.</p>
-<p>For this type of approach, we will need to use a financial sentiment dictionary. I will use the Loughran-McDonald dictionary, which is widely used in finance. Note that this dictionary is designed for financial statements, so it may not be the best choice for news articles.</p>
+<p>For this type of approach, we will need to use a financial sentiment dictionary. I will use the Loughran-McDonald dictionary, which is the most commonly used used in finance reasearch. Note that this dictionary is designed for financial statements and earnings calls, so it may not be the best choice for news articles.</p>
 <p>You can download the dictionary from <a href="https://sraf.nd.edu/loughranmcdonald-master-dictionary/">here</a> (direct link: <a href="https://drive.google.com/file/d/1ptUgGVeeUGhCbaKL14Ri3Xi5xOKkPkUD/view?usp=sharing">Loughran-McDonald_MasterDictionary_1993-2023.csv</a>)</p>
 <section id="pre-processing" class="level3">
 <h3 class="anchored" data-anchor-id="pre-processing">Pre-processing</h3>
 <p>The preprocessing steps to use a dictionnary based approach depend on the dictionnary you are using and the final measure you want to obtain. In this case, we will use the Loughran-McDonald dictionary, which contains variation of similar words, including plural forms, verb forms, etc. Therefore, we do not need to perform stemming or lemmatization, a common step in text preprocessing.</p>
-<p>The preprocessing steps we will perform are: - Lowercasing - Removing punctuation - Removing stopwords - Removing numbers</p>
+<p>The preprocessing steps we will perform are:</p>
+<ul>
+<li>Lowercasing</li>
+<li>Removing punctuation</li>
+<li>Removing stopwords (frequent words that do not carry much meaning)</li>
+<li>Removing numbers</li>
+</ul>
 <p>The removal of stopwords and numbers is optional, but it will affect the sentiment score of the text as measure as a ratio of the number of words in the text. Other common filtering includes removing URLs, emails, cities, company names, etc.</p>
-<div id="cell-12" class="cell" data-execution_count="7">
+<div id="cell-12" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the same ones as Loughran-McDonald</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"stopwords.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    stopwords <span class="op">=</span> f.read().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)[:<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>stopwords[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"stopwords.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    stopwords <span class="op">=</span> f.read().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>stopwords[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>['about', 'and', 'from', 'now', 'where', 'you', 'am', 'until', 'them', 'in']</code></pre>
 </div>
@@ -589,11 +601,12 @@ cookieconsent.run({
 </div>
 </div>
 </div>
+<p>After preprocessing, each article is a string containing only lower case words separated by spaces.</p>
 </section>
 <section id="dictionary" class="level3">
 <h3 class="anchored" data-anchor-id="dictionary">Dictionary</h3>
 <p>Next, will load the dictionary and make a list of positive words and a list of negative words.</p>
-<div id="cell-15" class="cell" data-execution_count="9">
+<div id="cell-16" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lm_dict <span class="op">=</span> pd.read_csv(<span class="st">"Loughran-McDonald_MasterDictionary_1993-2023.csv"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lm_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -853,7 +866,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="10">
+<div id="cell-17" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pos_words <span class="op">=</span> lm_dict[lm_dict[<span class="st">"Positive"</span>] <span class="op">!=</span> <span class="dv">0</span>][<span class="st">"Word"</span>].<span class="bu">str</span>.lower().to_list()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>neg_words <span class="op">=</span> lm_dict[lm_dict[<span class="st">"Negative"</span>] <span class="op">!=</span> <span class="dv">0</span>][<span class="st">"Word"</span>].<span class="bu">str</span>.lower().to_list()</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -871,7 +884,7 @@ cookieconsent.run({
  'accomplishments']</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-execution_count="11">
+<div id="cell-18" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>neg_words[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>['abandon',
@@ -889,8 +902,8 @@ cookieconsent.run({
 </section>
 <section id="sentiment-score" class="level3">
 <h3 class="anchored" data-anchor-id="sentiment-score">Sentiment score</h3>
-<p>The sentiment score of a text is the sum of the sentiment scores of the words it contains. We can also normalize the score by the number of words in the text.</p>
-<div id="cell-19" class="cell" data-execution_count="12">
+<p>We first need to compute the total number of words, and the number of positive and negative words in each article.</p>
+<div id="cell-20" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n"</span>] <span class="op">=</span> df[<span class="st">"text_clean"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split()))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n_pos"</span>] <span class="op">=</span> df[<span class="st">"text_clean"</span>].<span class="bu">apply</span>(</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="bu">len</span>([w <span class="cf">for</span> w <span class="kw">in</span> x.split() <span class="cf">if</span> w <span class="kw">in</span> pos_words])</span>
@@ -970,7 +983,8 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-<div id="cell-20" class="cell" data-execution_count="13">
+<p>The sentiment of a text is the sum of the sentiment scores of the words it contains (I call this the level). We can also normalize the score by the number of words in the text or by the number of <em>sentiment</em> words in the text. If we want to end up with a categorical classification, we can use a threshold to determine if the text is positive, negative or neutral.</p>
+<div id="cell-22" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_level"</span>] <span class="op">=</span> df[<span class="st">"n_pos"</span>] <span class="op">-</span> df[<span class="st">"n_neg"</span>]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lm_score1"</span>] <span class="op">=</span> (df[<span class="st">"n_pos"</span>] <span class="op">-</span> df[<span class="st">"n_neg"</span>]) <span class="op">/</span> df[<span class="st">"n"</span>]</span>
@@ -1077,27 +1091,28 @@ cookieconsent.run({
 </div>
 </section>
 </section>
-<section id="bert-based-models" class="level2">
-<h2 class="anchored" data-anchor-id="bert-based-models">Bert-based models</h2>
-<p>BERT-based models are often called “state-of-the-art models” in recent papers in the finance even if the original <a href="https://arxiv.org/abs/1810.04805">Bert paper</a> dates from 2018 and many more advanced models have come along since. They are pre-trained on a large corpus of text and fine-tuned on a specific task. In this case, we will use FinBert, a BERT model fine-tuned on financial data (see <a href="https://arxiv.org/abs/1908.10063">FinBert paper</a>).</p>
-<p>The way these models work is by taking a sequence of tokens as input and outputting a vector of size 768 (or 1024, depending on the model). This vector can be used as input to a classifier to predict the sentiment of the text. The FinBert model is trained to output softmax outputs (ie, probabilities) for three classes: positive, negative, and neutral.</p>
+<section id="finbert" class="level2">
+<h2 class="anchored" data-anchor-id="finbert">FinBert</h2>
+<p>BERT-based models are often called “state-of-the-art models” in recent papers in the finance even if the original <a href="https://arxiv.org/abs/1810.04805">Bert paper</a> dates from 2018 and many more advanced models have come along since. They are pre-trained on a large corpus of text and fine-tuned on a specific task. In this tutorial, we will use FinBert, a BERT model fine-tuned on financial data (see <a href="https://arxiv.org/abs/1908.10063">FinBert paper</a>).</p>
+<p>The way these models work is by taking a sequence of tokens as input and generating a vector embedding for the text, which is a representation of the <em>information</em> in the text. This vector can be used as input to a classifier to predict the sentiment of the text. The FinBert model is trained to output softmax outputs (ie, probabilities) for three classes: positive, negative, and neutral.</p>
 <section id="pre-processing-1" class="level3">
 <h3 class="anchored" data-anchor-id="pre-processing-1">Pre-processing</h3>
-<p>You won’t perform any pre-processing on the text before feeding it to the model. The model will take care of tokenizing the text and converting it to a sequence of tokens. Common pre-processing for Bert models include masking some words (date, company names, etc.).</p>
+<p>I won’t perform any pre-processing on the text before feeding it to the model. The model will take care of tokenizing the text and converting it to a sequence of tokens. Common pre-processing for Bert models include masking some words (date, company names, etc.), but I won’t do that here.</p>
 </section>
 <section id="usage" class="level3">
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
-<p>Many Bert models, including FinBert, are available in the Hugging Face Transformers library adn can be fecthed automatically.</p>
-<div id="cell-22" class="cell" data-execution_count="14">
+<p>Many <a href="https://huggingface.co/docs/transformers/model_doc/bert">Bert models</a>, including <a href="https://huggingface.co/ProsusAI/finbert">FinBert</a>, are available in the <a href="https://huggingface.co/docs/transformers/index">HuggingFace Transformers library</a> and can be fetched automatically.</p>
+<div id="cell-24" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForSequenceClassification</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="15">
+<div id="cell-25" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"ProsusAI/finbert"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(<span class="st">"ProsusAI/finbert"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-24" class="cell" data-execution_count="16">
+<p>To estimate the sentiment of a text, we will use a tokenizer to convert the text to a sequence of tokens, and then feed the tokens to the model to get the softmax outputs. This tokenizer will also pad or truncate the sequence to a fixed length if needed. The sentiment of the text is the class with the highest probability, which we can compute by applying the softmax function to the output of the model. We will also extract the probability associated with each class. Finally, we put the code behind a <code>with torch.no_grad():</code> block to avoid computing gradients, as we are only interested in the output of the model, not training the model.</p>
+<div id="cell-27" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> finbert_sentiment(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">float</span>, <span class="bu">float</span>, <span class="bu">float</span>, <span class="bu">str</span>]:</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        inputs <span class="op">=</span> tokenizer(</span>
@@ -1119,14 +1134,15 @@ cookieconsent.run({
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">max</span>(scores, key<span class="op">=</span>scores.get),</span>
 <span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-25" class="cell" data-execution_count="17">
+<p>We apply our sentiment function to each article in the DataFrame to get the sentiment of each article using the <code>apply()</code> method. We then apply the <code>pd.Series</code> constructor to convert the returned tuples so that we can assign the results to new columns in the DataFrame. Finally, we can also get a numerical score by taking the difference between the positive and negative probabilities.</p>
+<div id="cell-29" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this is the raw text, no preprocessing</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"finbert_pos"</span>, <span class="st">"finbert_neg"</span>, <span class="st">"finbert_neu"</span>, <span class="st">"finbert_sentiment"</span>]] <span class="op">=</span> (</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"text"</span>].<span class="bu">apply</span>(finbert_sentiment).<span class="bu">apply</span>(pd.Series)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"finbert_score"</span>] <span class="op">=</span> df[<span class="st">"finbert_pos"</span>] <span class="op">-</span> df[<span class="st">"finbert_neg"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-26" class="cell" data-execution_count="18">
+<div id="cell-30" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df[</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    [</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
@@ -1218,85 +1234,108 @@ cookieconsent.run({
 </section>
 <section id="llm-models" class="level2">
 <h2 class="anchored" data-anchor-id="llm-models">LLM models</h2>
-<p>LLM models are large language models that are trained on a large corpus of text. They are often used for text generation, but they can also be used for sentiment analysis. The approach is to design a prompt that will make the model output a sentiment score. Langchain is a library that makes it easy to use LLM models for different tasks, including sentiment analysis.</p>
-<div id="cell-29" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.pydantic_v1 <span class="im">import</span> BaseModel, Field</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> PydanticOutputParser</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>LLM models are large language models that are trained on a large corpus of text. They are often used for text generation, but they can also be used for sentiment analysis. The approach is to design a prompt that will make the model output a sentiment score. <a href="https://python.langchain.com/docs/get_started/introduction">Langchain</a> is a library that makes it easy to use LLM models for different tasks, including sentiment analysis.</p>
+<section id="ollama" class="level3">
+<h3 class="anchored" data-anchor-id="ollama">Ollama</h3>
+<p>Ollama is a tool to manage and run local LLMs, such as Meta’s Llama2 and Mistral’s Mixtral. I discussed how to use Ollama as a private, local ChatGPT replacement in a <a href="../../posts/ollama-chatgpt/index.html">previous post</a>.</p>
+<p>For this example, I will be using two open-source LLM models served locally by <a href="https://ollama.com/">Ollama</a>. The process would be similar if you were using other models such as OpenAI’s GPT-3.5 or GPT-4. The main difference in execution is that Langchain supports OpenAI’s function API which insures that the output is properly formatted, which as we will see can be an issue with Llama2 and Mixtral, the two models I will use.</p>
+<p>The first step in setting up Ollama is to download and install the tool on your local machine. The installation process is straightforward and involves running a few commands in your terminal. Ollama’s <a href="https://ollama.com/download">download page</a> provides installers for macOS and Windows, as well as instructions for Linux users. Once you’ve downloaded the installer, follow the installation instructions to set up Ollama on your machine.</p>
+<p>If you’re using a Mac, you can install Ollama using Homebrew by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The benefit of using Homebrew is that it simplifies the installation process and also sets up Ollama as a service, allowing it to run in the background and manage the LLM models you download.</p>
+<p>At the moment, the most popular code models on Ollama are:</p>
+<p>After installing Ollama, you can install a model from the command line using the <code>pull</code> command:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull mixtral</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="langchain" class="level4">
+<h4 class="anchored" data-anchor-id="langchain">Langchain</h4>
+<p>Langchain is a Python library that provides a simple interface to interact with LLM models. Specifically, our approach will be the following:</p>
+<ol type="1">
+<li>Define the desired output format using Langchain’s support for Pydantic models.</li>
+<li>Define a prompt template that will be used to generate the prompt for the model.</li>
+<li>Define the chat model that we want to use.</li>
+<li>Finally, combine the prompt, the model, and the output format to get the sentiment of the text.</li>
+</ol>
+<p>In case the returned output is not in the expected format, we can use the <code>tenacity</code> library to retry the request a few times until we get the expected output. Langchain also provides various features to handle bad outputs which I suggest you explore once you are comfortable with the basics.</p>
+<div id="cell-34" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.pydantic_v1 <span class="im">import</span> BaseModel, Field</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> PydanticOutputParser</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-30" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.chat_models <span class="im">import</span> ChatOllama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-35" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_community.chat_models <span class="im">import</span> ChatOllama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-31" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For handling errors</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tenacity <span class="im">import</span> retry, stop_after_attempt, RetryError</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-36" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For handling errors</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tenacity <span class="im">import</span> retry, stop_after_attempt, RetryError</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will first define the desired output format as a Pydantic model, from which we will create a PydanticOutputParser object. This object will be used to inject output definition into the prompt and to parse the output of the model.</p>
-<div id="cell-33" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentClassification(BaseModel):</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    sentiment: <span class="bu">str</span> <span class="op">=</span> Field(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        ...,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"The sentiment of the text"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        enum<span class="op">=</span>[<span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"neutral"</span>],</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    score: <span class="bu">float</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The score of the sentiment"</span>, ge<span class="op">=-</span><span class="dv">1</span>, le<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    justification: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The justification of the sentiment"</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    main_entity: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The main entity discussed in the text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-38" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentClassification(BaseModel):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    sentiment: <span class="bu">str</span> <span class="op">=</span> Field(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        ...,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"The sentiment of the text"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        enum<span class="op">=</span>[<span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"neutral"</span>],</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    score: <span class="bu">float</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The score of the sentiment"</span>, ge<span class="op">=-</span><span class="dv">1</span>, le<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    justification: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The justification of the sentiment"</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    main_entity: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"The main entity discussed in the text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-34" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">@retry</span>(stop<span class="op">=</span>stop_after_attempt(<span class="dv">5</span>))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chain(text: <span class="bu">str</span>, chain) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> chain.invoke({<span class="st">"news"</span>: text}).<span class="bu">dict</span>()</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> llm_sentiment(text: <span class="bu">str</span>, llm) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">str</span>, <span class="bu">float</span>, <span class="bu">str</span>, <span class="bu">str</span>]:</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> PydanticOutputParser(pydantic_object<span class="op">=</span>SentimentClassification)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> PromptTemplate(</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        template<span class="op">=</span><span class="st">"Describe the sentiment of a text of financial news.</span><span class="ch">\n</span><span class="sc">{format_instructions}</span><span class="ch">\n</span><span class="sc">{news}</span><span class="ch">\n</span><span class="st">"</span>,</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        input_variables<span class="op">=</span>[<span class="st">"news"</span>],</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        partial_variables<span class="op">=</span>{<span class="st">"format_instructions"</span>: parser.get_format_instructions()},</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> prompt <span class="op">|</span> llm <span class="op">|</span> parser</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> run_chain(text, chain)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"sentiment"</span>],</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"score"</span>],</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"justification"</span>],</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"main_entity"</span>],</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> RetryError <span class="im">as</span> e:</span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"error"</span>, <span class="dv">0</span>, <span class="st">""</span>, <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We then define our <code>llm_sentiment()</code> function that will create the output parser, the prompt, and the model and combine them in a chain. We will then wrap the call to <code>chain.invoke()</code> in order to handle bad outputs and retry the request a few times until we get the expected output with the <code>@retry</code> decorator from the <code>tenacity</code> library.</p>
+<div id="cell-40" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">@retry</span>(stop<span class="op">=</span>stop_after_attempt(<span class="dv">5</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chain(text: <span class="bu">str</span>, chain) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> chain.invoke({<span class="st">"news"</span>: text}).<span class="bu">dict</span>()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> llm_sentiment(text: <span class="bu">str</span>, llm) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">str</span>, <span class="bu">float</span>, <span class="bu">str</span>, <span class="bu">str</span>]:</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> PydanticOutputParser(pydantic_object<span class="op">=</span>SentimentClassification)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> PromptTemplate(</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        template<span class="op">=</span><span class="st">"Describe the sentiment of a text of financial news.</span><span class="ch">\n</span><span class="sc">{format_instructions}</span><span class="ch">\n</span><span class="sc">{news}</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        input_variables<span class="op">=</span>[<span class="st">"news"</span>],</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        partial_variables<span class="op">=</span>{<span class="st">"format_instructions"</span>: parser.get_format_instructions()},</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> prompt <span class="op">|</span> llm <span class="op">|</span> parser</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> run_chain(text, chain)</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"sentiment"</span>],</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"score"</span>],</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"justification"</span>],</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>            result[<span class="st">"main_entity"</span>],</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> RetryError <span class="im">as</span> e:</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"error"</span>, <span class="dv">0</span>, <span class="st">""</span>, <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-35" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with the correct model, or use ChatOpenAI if you want to use OpenAI</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>llama2 <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"llama2"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df[</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"llama2_sentiment"</span>, <span class="st">"llama2_score"</span>, <span class="st">"llama2_justification"</span>, <span class="st">"llama2_main_entity"</span>]</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, llama2)).<span class="bu">apply</span>(pd.Series))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we apply our sentiment function to each article in the DataFrame to get the sentiment of each article using the <code>apply()</code> method.</p>
+<div id="cell-42" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with the correct model, or use ChatOpenAI if you want to use OpenAI</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>llama2 <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"llama2"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"llama2_sentiment"</span>, <span class="st">"llama2_score"</span>, <span class="st">"llama2_justification"</span>, <span class="st">"llama2_main_entity"</span>]</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, llama2)).<span class="bu">apply</span>(pd.Series))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Error: RetryError[&lt;Future at 0x329c35e50 state=finished raised OutputParserException&gt;]
 Error: RetryError[&lt;Future at 0x329c629c0 state=finished raised OutputParserException&gt;]
 Error: RetryError[&lt;Future at 0x3295c7680 state=finished raised OutputParserException&gt;]</code></pre>
 </div>
 </div>
-<div id="cell-36" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df[</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_score"</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_justification"</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_main_entity"</span>,</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-43" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_score"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_justification"</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_main_entity"</span>,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 <div>
@@ -1367,34 +1406,35 @@ Error: RetryError[&lt;Future at 0x3295c7680 state=finished raised OutputParserEx
 </div>
 </div>
 </div>
-<div id="cell-37" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mixtral <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"dolphin-mixtral:latest"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>df[</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_score"</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_justification"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_main_entity"</span>,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, mixtral)).<span class="bu">apply</span>(pd.Series)</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Error: RetryError[&lt;Future at 0x329d5b320 state=finished raised OutputParserException&gt;]</code></pre>
-</div>
-</div>
-<div id="cell-38" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df[</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<p>As we can see, Llama 2 struggled to provide a valid result for some of the articles, even after 3 tries. This is a common issue with LLMs, and it is important to handle bad outputs properly. I will check if I get better results with Mixtral (more specifically <code>dolphin-mixtral</code>, a fine-tuned version of Mixtral), another LLM model available on Ollama.</p>
+<div id="cell-45" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mixtral <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"dolphin-mixtral:latest"</span>, temperature<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    [</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_score"</span>,</span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_justification"</span>,</span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_main_entity"</span>,</span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> (</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: llm_sentiment(x, mixtral)).<span class="bu">apply</span>(pd.Series)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error: RetryError[&lt;Future at 0x329d5b320 state=finished raised OutputParserException&gt;]</code></pre>
+</div>
+</div>
+<div id="cell-46" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_score"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_justification"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_main_entity"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 <div>
@@ -1465,12 +1505,13 @@ Error: RetryError[&lt;Future at 0x3295c7680 state=finished raised OutputParserEx
 </div>
 </div>
 </div>
-<div id="cell-39" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"text"</span>][:<span class="dv">500</span>] <span class="op">+</span> <span class="st">"..."</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Llama2: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"llama2_justification"</span>]) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Mixtral: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"mixtral_justification"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mixtral managed to provide a valid result for all the articles but one, which is an improvement over Llama 2. One advantage of LLMs is that they can provide not only a sentiment score but also a summary of the reasoning behind the score. This can be useful for understanding the model’s decision-making process and for debugging bad outputs.</p>
+<div id="cell-48" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"text"</span>][:<span class="dv">500</span>] <span class="op">+</span> <span class="st">"..."</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Llama2: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"llama2_justification"</span>]) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Mixtral: "</span> <span class="op">+</span> textwrap.fill(df.iloc[<span class="dv">0</span>][<span class="st">"mixtral_justification"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>TORONTO — The price of oil has been on a steady climb all year, but
 the talk at Canada's biggest oil and gas conference is still focused
@@ -1497,17 +1538,24 @@ The sentiment is neutral as it does not express strong positive or
 negative emotions.</code></pre>
 </div>
 </div>
-<div id="cell-41" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df[</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lm_sentiment"</span>,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_sentiment"</span>,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Overall, each class of models has its own strengths and weaknesses. Dictionary-based approaches are simple and interpretable, but they may not be as accurate as more sophisticated models. BERT-based models like FinBert are more accurate and can handle more complex text, but they require more computational resources than simple word-counting methods. LLMs like Llama 2 and Mixtral can provide detailed reasoning behind their predictions, but they can be slow, more costly to run, and may not always provide valid outputs.</p>
+<p>It is worth exploring various approaches to see which one works best for your specific use case. Note also that when it comes to dictionary-based approaches and BERT-based models, the dictionaries and models are usually designed for a specific type of text, so it is important to use the right one for your use case.</p>
+<div id="cell-51" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df[</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lm_sentiment"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"finbert_sentiment"</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"llama2_sentiment"</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mixtral_sentiment"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <div>
 <div>
@@ -1578,6 +1626,14 @@ negative emotions.</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/1908.10063">FinBert</a></li>
+<li><a href="https://arxiv.org/abs/1810.04805">Bert</a></li>
+<li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1331573">Loughran and McDonald</a></li>
+</ul>
 
 
 </section>
