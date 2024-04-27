@@ -24,7 +24,7 @@
   <category>Mixtral</category>
   <guid>https://vincent.codes.finance/posts/sentiment/</guid>
   <pubDate>Fri, 12 Apr 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/sentiment/sentiment.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/sentiment/sentiment.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
@@ -36,7 +36,7 @@
   <category>SEC Edgar</category>
   <guid>https://vincent.codes.finance/posts/edgartools/</guid>
   <pubDate>Sat, 06 Apr 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/edgartools/edgartools.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/edgartools/edgartools.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Summarize and query PDFs with AI using Ollama</title>
@@ -52,7 +52,7 @@
   <category>Streamlit</category>
   <guid>https://vincent.codes.finance/posts/documents-llm/</guid>
   <pubDate>Sat, 30 Mar 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/documents-llm/documents.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/documents-llm/documents.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Speed up your scientific computing workflows with MLX</title>
@@ -64,7 +64,7 @@
   <category>Numpy</category>
   <guid>https://vincent.codes.finance/posts/apple-mlx/</guid>
   <pubDate>Fri, 22 Mar 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/apple-mlx/apple-gears.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/apple-mlx/apple-gears.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Using Ollama as a ChatGPT Replacement</title>
@@ -79,7 +79,7 @@
   <category>Mistral</category>
   <guid>https://vincent.codes.finance/posts/ollama-chatgpt/</guid>
   <pubDate>Fri, 08 Mar 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</title>
@@ -93,7 +93,7 @@
   <category>CSV</category>
   <guid>https://vincent.codes.finance/posts/pandas-read-csv/</guid>
   <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Writing LaTeX Documents in VS Code</title>
@@ -105,7 +105,7 @@
   <category>Writing</category>
   <guid>https://vincent.codes.finance/posts/vscode-latex/</guid>
   <pubDate>Sun, 18 Feb 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Using GitHub for academic research</title>
@@ -118,7 +118,7 @@
   <category>Reproducibility</category>
   <guid>https://vincent.codes.finance/posts/github-for-research/</guid>
   <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Estimating standard errors in time series data with Python and statsmodels</title>
@@ -130,7 +130,7 @@
   <category>Statsmodels</category>
   <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/</guid>
   <pubDate>Wed, 31 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Estimating standard errors in panel data with Python and linearmodels</title>
@@ -142,7 +142,7 @@
   <category>Linearmodels</category>
   <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/</guid>
   <pubDate>Sun, 21 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/panel-data.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/panel-data.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Python basic tutorial</title>
@@ -154,7 +154,7 @@
   <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/python-basics-tutorial/</guid>
   <pubDate>Sun, 07 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Installing Python 3.12</title>
@@ -166,7 +166,7 @@
   <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/install-python-312/</guid>
   <pubDate>Wed, 03 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>New Year, new blog</title>
@@ -176,7 +176,7 @@
   <category>News</category>
   <guid>https://vincent.codes.finance/posts/welcome/</guid>
   <pubDate>Mon, 01 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/welcome/new-blog.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://vincent.codes.finance/posts/welcome/new-blog.webp" medium="image" type="image/webp"/>
 </item>
 </channel>
 </rss>
