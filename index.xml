@@ -12,7 +12,7 @@
 <generator>quarto-1.4.551</generator>
 <lastBuildDate>Fri, 12 Apr 2024 04:00:00 GMT</lastBuildDate>
 <item>
-  <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
+  <title>Financial news sentiment analysis in Python</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/sentiment/</link>
   <description><![CDATA[ In the dynamic world of finance, understanding market sentiment is crucial for researchers and practitioners alike. ]]></description>
