@@ -9,13 +9,13 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.4.551</generator>
+<generator>quarto-1.4.553</generator>
 <lastBuildDate>Fri, 12 Apr 2024 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Financial news sentiment analysis in Python</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/sentiment/</link>
-  <description><![CDATA[ In the dynamic world of finance, understanding market sentiment is crucial for researchers and practitioners alike. ]]></description>
+  <description><![CDATA[ Perform sentiment analysis on financial news articles using FinBert, Ollama, and Llama2 models. ]]></description>
   <category>Python</category>
   <category>Sentiment</category>
   <category>FinBert</category>
@@ -30,7 +30,7 @@
   <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/edgartools/</link>
-  <description><![CDATA[ In the ever-evolving field of finance, the application of machine learning, especially text analysis, has become increasingly popular. Researchers are constantly seeking out rich datasets to mine for insights, with company filings offering a treasure trove of information. One of the most comprehensive sources of such data is the <a href="https://www.sec.gov/edgar/search-and-access">Edgar database</a>, maintained by the Securities and Exchange Commission (SEC). This publicly available resource contains a vast array of filings from companies, making it an invaluable tool for empirical finance research. ]]></description>
+  <description><![CDATA[ Tutorial on how to scrape financial data from the SEC Edgar website using Python and the edgartools library. ]]></description>
   <category>Python</category>
   <category>Scraping</category>
   <category>SEC Edgar</category>
@@ -42,7 +42,7 @@
   <title>Summarize and query PDFs with AI using Ollama</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/documents-llm/</link>
-  <description><![CDATA[ Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy and efficiency. In this tutorial, we’ll explore how to leverage the power of LLMs to process and analyze PDF documents using Ollama, an open-source tool that manages and runs local LLMs. By combining Ollama with LangChain, we’ll build an application that can summarize and query PDFs using AI, all from the comfort and privacy of your computer. Utilizing Ollama to serve the models, along with <a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a> for its extensive library of convenience tools for accessing and interacting with large language models, we’ll construct an app that operates entirely locally on your machine. We’ll then use <a href="https://streamlit.io">Streamlit</a> to build an interactive dashboard, enhancing the usability of our application. ]]></description>
+  <description><![CDATA[ Learn how to leverage the power of large language models to process and analyze PDF documents using Ollama, LangChain, and Streamlit. ]]></description>
   <category>Ollama</category>
   <category>LLM</category>
   <category>Python</category>
@@ -58,7 +58,7 @@
   <title>Speed up your scientific computing workflows with MLX</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/apple-mlx/</link>
-  <description><![CDATA[ The rapidly evolving landscape in machine learning (ML) tools and libraries sometimes offer positive spillovers for scientific computing and empirical finance research. One such innovation that has recently caught my attention is <a href="https://ml-explore.github.io/mlx/build/html/index.html">MLX</a>, an array framework developed by Apple Machine Learning Research. Designed to leverage the power of Apple silicon (M1/M2/M3 chips), MLX is engineered to optimize machine learning workflows with remarkable efficiency. But could this library, with its suite of features tailored for ML research, also benefit workflows in empirical finance research and other scientific domains? ]]></description>
+  <description><![CDATA[ Explore the potential of MLX in scientific computing using a sample empirical finance research task. ]]></description>
   <category>Apple</category>
   <category>MLX</category>
   <category>Numpy</category>
@@ -70,7 +70,7 @@
   <title>Using Ollama as a ChatGPT Replacement</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/ollama-chatgpt/</link>
-  <description><![CDATA[ Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a ChatGPT replacement for empirical finance research, focusing on privacy, customization, and computational flexibility. ChatGPT has become a daily driver for many researchers and professionals, including myself, offering a powerful tool for generating text, code, and insights across a wide range of domains. However, the reliance on closed, cloud-based solutions for leveraging Large Language Models (LLMs) like ChatGPT comes with inherent privacy, data security, and replicability concerns, especially in fields like empirical finance research. ]]></description>
+  <description><![CDATA[ Explore the benefits of using Ollama as a ChatGPT replacement for empirical finance research, focusing on privacy, customization, and computational flexibility. ]]></description>
   <category>Ollama</category>
   <category>ChatGPT</category>
   <category>LLM</category>
@@ -85,7 +85,7 @@
   <title>Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/pandas-read-csv/</link>
-  <description><![CDATA[ CSV files are ubiquitous in empirical finance and data science more generally. They are easy to create and read and are supported by most data processing tools. The <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html"><code>pandas.read_csv()</code></a> function is flexible and easy to use, but it can be slow and memory-intensive for large files if not used properly. ]]></description>
+  <description><![CDATA[ Article on how to read and parse large CSV files in Python using Pandas and Arrow. ]]></description>
   <category>Python</category>
   <category>Pandas</category>
   <category>Arrow</category>
@@ -99,7 +99,7 @@
   <title>Writing LaTeX Documents in VS Code</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/vscode-latex/</link>
-  <description><![CDATA[ LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code editor that has gained popularity among developers and researchers. This extensibility made it possible to create a rich ecosystem of extensions that enhance the functionality of VS Code for various tasks, including writing and managing LaTeX documents. The LaTeX Workshop extension is one such tool that transforms VS Code into a feature-rich LaTeX editor, providing seamless compilation, real-time preview, and intelligent autocomplete, among other capabilities. ]]></description>
+  <description><![CDATA[ Learn how to set up Visual Studio Code for writing LaTeX documents, including installing the necessary extensions, configuring the environment, and exploring additional tools to enhance your productivity. ]]></description>
   <category>VS Code</category>
   <category>LaTeX</category>
   <category>Writing</category>
@@ -111,7 +111,7 @@
   <title>Using GitHub for academic research</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/github-for-research/</link>
-  <description><![CDATA[ <a href="https://git-scm.com/">Git</a> and <a href="https://github.com/">GitHub</a> are powerful version control tools for managing your research projects and collaborating with others while keeping a detailed record of your work. In this tutorial, we will cover the basics of Git and GitHub, and how to use them to manage your research projects. ]]></description>
+  <description><![CDATA[ Learn how to use Git and GitHub to manage your research projects and collaborate with others while keeping a detailed record of your work. ]]></description>
   <category>Collaboration</category>
   <category>Git</category>
   <category>GitHub</category>
@@ -124,7 +124,7 @@
   <title>Estimating standard errors in time series data with Python and statsmodels</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/timeseries-standard-errors/</link>
-  <description><![CDATA[ In this post, I show how to estimate standard errors in OLS regressions of time series data with Python and the <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a> library. ]]></description>
+  <description><![CDATA[ Tutorial on estimating standard errors in time series data with Python and statsmodels ]]></description>
   <category>Python</category>
   <category>Econometrics</category>
   <category>Statsmodels</category>
@@ -160,7 +160,7 @@
   <title>Installing Python 3.12</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/install-python-312/</link>
-  <description><![CDATA[ In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment. ]]></description>
+  <description><![CDATA[ Short tutorial on installing Python 3.12 and the related tools for a complete coding environment. ]]></description>
   <category>Python</category>
   <category>Tutorial</category>
   <category>Beginner</category>

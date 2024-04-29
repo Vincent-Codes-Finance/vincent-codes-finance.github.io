@@ -2,12 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vincent Grégoire, PhD, CFA">
 <meta name="dcterms.date" content="2024-03-22">
+<meta name="description" content="Explore the potential of MLX in scientific computing using a sample empirical finance research task.">
 
 <title>Vincent Codes Finance - Speed up your scientific computing workflows with MLX</title>
 <style>
@@ -166,12 +167,12 @@ window.Quarto = {
 </script>
 
 <meta property="og:title" content="Vincent Codes Finance - Speed up your scientific computing workflows with MLX">
-<meta property="og:description" content="A blog about coding for empirical research in finance">
+<meta property="og:description" content="A blog about coding (mostly) in Python for empirical research in finance">
 <meta property="og:image" content="https://vincent.codes.finance/posts/apple-mlx/apple-gears.webp">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:title" content="Vincent Codes Finance - Speed up your scientific computing workflows with MLX">
-<meta name="twitter:description" content="A blog about coding for empirical research in finance">
+<meta name="twitter:description" content="A blog about coding (mostly) in Python for empirical research in finance">
 <meta name="twitter:image" content="https://vincent.codes.finance/posts/apple-mlx/apple-gears.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://vincent.codes.finance/posts/apple-mlx/index.html" />
@@ -185,7 +186,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../vcf-logo.png" alt="" class="navbar-logo">
+    <img src="../../vcf-logo-small.webp" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
@@ -812,7 +813,7 @@ t = \frac{\bar{x} - \mu_0}{\text{SE}_{\text{White}}}
 <section id="benchmark-results" class="level2">
 <h2 class="anchored" data-anchor-id="benchmark-results">Benchmark results</h2>
 <p>To compare the performance of MLX with NumPy and NumPy optimized with Numba, I ran simulations for different numbers of time series <code>N</code> (from 1,000 to 1,000,000) and time periods <code>T</code> (250 and 500.) on my MacBook Pro M3 Max with 64 GB of RAM. I measured the execution time for each library and configuration and recorded the results in a CSV file. The results from the benchmark are visualized in the following plots:</p>
-<div id="7af7656f" class="cell" data-execution_count="1">
+<div id="31bf94cb" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -840,10 +841,24 @@ t = \frac{\bar{x} - \mu_0}{\text{SE}_{\text{White}}}
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">'Number of Simulations'</span>)</span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend(title<span class="op">=</span><span class="st">'Library'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)
+/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)
+/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)
+/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)
+/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)
+/Users/vincentgregoire/Documents/GitHub/vcf/website/.venv/lib/python3.12/site-packages/seaborn/_base.py:948: FutureWarning: When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+  data_subset = grouped_data.get_group(pd_key)</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.png" width="747" height="302" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-2-output-2.png" width="747" height="302" class="figure-img"></p>
 <figcaption>Execution Time (shorter is better)</figcaption>
 </figure>
 </div>
