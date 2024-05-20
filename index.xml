@@ -10,7 +10,21 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Fri, 12 Apr 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 20 May 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/ollama-copilot/</link>
+  <description><![CDATA[ Learn how to use Ollama, a tool to manage and run local LLMs, with Continue, a Visual Studio Code extension that provides an AI-assistant, to get the same functionality as GitHub Copilot, but without the need for an internet connection or sending your code to the cloud, all for free. ]]></description>
+  <category>Ollama</category>
+  <category>Copilot</category>
+  <category>LLM</category>
+  <category>Python</category>
+  <category>Llama</category>
+  <guid>https://vincent.codes.finance/posts/ollama-copilot/</guid>
+  <pubDate>Mon, 20 May 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/ollama-copilot/ollama-copilot.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Financial news sentiment analysis in Python</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

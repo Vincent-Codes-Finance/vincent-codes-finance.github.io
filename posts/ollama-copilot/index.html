@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vincent Grégoire, PhD, CFA">
-<meta name="dcterms.date" content="2024-03-08">
+<meta name="dcterms.date" content="2024-05-20">
 <meta name="description" content="Learn how to use Ollama, a tool to manage and run local LLMs, with Continue, a Visual Studio Code extension that provides an AI-assistant, to get the same functionality as GitHub Copilot, but without the need for an internet connection or sending your code to the cloud, all for free.">
 
-<title>Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement</title>
+<title>Vincent Codes Finance - Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,13 +137,16 @@ cookieconsent.run({
   
 
 
-<meta property="og:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta property="og:title" content="Vincent Codes Finance - Using Ollama with Continue as an AI-Powered Coding and Writing Assistant">
 <meta property="og:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta property="og:image" content="https://vincent.codes.finance/posts/ollama-copilot/ollama-copilot.webp">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:title" content="Vincent Codes Finance - Using Ollama with Continue as a GitHub Copilot Replacement">
+<meta name="twitter:title" content="Vincent Codes Finance - Using Ollama with Continue as an AI-Powered Coding and Writing Assistant">
 <meta name="twitter:description" content="A blog about coding (mostly) in Python for empirical research in finance">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/ollama-copilot/ollama-copilot.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vincent.codes.finance/posts/ollama-copilot/" />
 </head>
 
 <body class="nav-fixed">
@@ -222,7 +225,7 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Using Ollama with Continue as a GitHub Copilot Replacement</h1>
+      <h1 class="title">Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Ollama</div>
                 <div class="quarto-category">Copilot</div>
@@ -246,7 +249,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 8, 2024</p>
+        <p class="date">May 20, 2024</p>
       </div>
     </div>
     
@@ -259,6 +262,7 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div>
+
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
 <script type="text/javascript" src="https://zmp-glf.maillist-manage.com/js/optin.min.js" onload="setupSF('sf3zebf6c0313d0ddfd85656d496c903350205cbbde44a7d630868cbe868c84c5a8a','ZCFORMVIEW',false,'light',false,'0')"></script>
@@ -341,21 +345,44 @@ cookieconsent.run({
 </div>
 
 <!--Zoho Campaigns Web-Optin Form Ends Here-->
+
+<div style="padding: 15px 0px"><script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="codesfinance" data-color="#FFDD00" data-emoji="☕" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script></div>
+
 </div>
 </div></div>
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link active" data-scroll-target="#video-tutorial">Video tutorial</a></li>
-  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a></li>
+  <li><a href="#video-tutorials" id="toc-video-tutorials" class="nav-link active" data-scroll-target="#video-tutorials">Video tutorials</a></li>
+  <li><a href="#ollama" id="toc-ollama" class="nav-link" data-scroll-target="#ollama">Ollama</a>
+  <ul class="collapse">
   <li><a href="#install-ollama" id="toc-install-ollama" class="nav-link" data-scroll-target="#install-ollama">Install Ollama</a></li>
+  </ul></li>
   <li><a href="#continue" id="toc-continue" class="nav-link" data-scroll-target="#continue">Continue</a>
   <ul class="collapse">
-  <li><a href="#install-continue" id="toc-install-continue" class="nav-link" data-scroll-target="#install-continue">Install Continue</a></li>
-  <li><a href="#limitations-of-local-llms-for-code-completion" id="toc-limitations-of-local-llms-for-code-completion" class="nav-link" data-scroll-target="#limitations-of-local-llms-for-code-completion">Limitations of Local LLMs for Code Completion</a></li>
+  <li><a href="#installing-continue-in-visual-studio-code" id="toc-installing-continue-in-visual-studio-code" class="nav-link" data-scroll-target="#installing-continue-in-visual-studio-code">Installing Continue in Visual Studio Code</a></li>
   </ul></li>
+  <li><a href="#using-continue-as-a-coding-assistant" id="toc-using-continue-as-a-coding-assistant" class="nav-link" data-scroll-target="#using-continue-as-a-coding-assistant">Using Continue as a coding assistant</a>
+  <ul class="collapse">
+  <li><a href="#chat-interface" id="toc-chat-interface" class="nav-link" data-scroll-target="#chat-interface">Chat interface</a></li>
+  <li><a href="#inline-commands" id="toc-inline-commands" class="nav-link" data-scroll-target="#inline-commands">Inline commands</a></li>
+  <li><a href="#contextual-menu-options" id="toc-contextual-menu-options" class="nav-link" data-scroll-target="#contextual-menu-options">Contextual menu options</a></li>
+  <li><a href="#auto-complete" id="toc-auto-complete" class="nav-link" data-scroll-target="#auto-complete">Auto-complete</a></li>
+  <li><a href="#custom-commands" id="toc-custom-commands" class="nav-link" data-scroll-target="#custom-commands">Custom commands</a></li>
+  </ul></li>
+  <li><a href="#using-continue-as-a-writing-assistant" id="toc-using-continue-as-a-writing-assistant" class="nav-link" data-scroll-target="#using-continue-as-a-writing-assistant">Using Continue as a writing assistant</a>
+  <ul class="collapse">
+  <li><a href="#spell-checking" id="toc-spell-checking" class="nav-link" data-scroll-target="#spell-checking">Spell checking</a></li>
+  <li><a href="#improving-text" id="toc-improving-text" class="nav-link" data-scroll-target="#improving-text">Improving text</a></li>
+  <li><a href="#expanding-text" id="toc-expanding-text" class="nav-link" data-scroll-target="#expanding-text">Expanding text</a></li>
+  <li><a href="#critiquing-text" id="toc-critiquing-text" class="nav-link" data-scroll-target="#critiquing-text">Critiquing text</a></li>
+  <li><a href="#translating-text" id="toc-translating-text" class="nav-link" data-scroll-target="#translating-text">Translating text</a></li>
+  <li><a href="#creating-your-own-commands" id="toc-creating-your-own-commands" class="nav-link" data-scroll-target="#creating-your-own-commands">Creating Your own commands</a></li>
+  </ul></li>
+  <li><a href="#limitations-of-continue" id="toc-limitations-of-continue" class="nav-link" data-scroll-target="#limitations-of-continue">Limitations of Continue</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#full-continue-config-file" id="toc-full-continue-config-file" class="nav-link" data-scroll-target="#full-continue-config-file">Full Continue config file</a></li>
   </ul>
 </nav>
     </div>
@@ -366,18 +393,18 @@ cookieconsent.run({
 
 
 
-<p><a href="https://github.com/features/copilot">GitHub Copilot</a> is an amazing AI-assistant that helps developers write code faster and with fewer errors. However, it does have some limitations, such as the need for an internet connection (not ideal for airplane mode), and it sends your code to cloud servers for processing. In this post, I will show you how you can use <a href="https://ollama.com/">Ollama</a>, a tool to manage and run local LLMs, with <a href="https://continue.dev/">Continue</a>, a Visual Studio Code extension that provides an AI-assistant, to get the same functionality as GitHub Copilot, but without the need for an internet connection or sending your code to the cloud, all for free.</p>
-<section id="video-tutorial" class="level2">
-<h2 class="anchored" data-anchor-id="video-tutorial">Video tutorial</h2>
-<p>This post is also available as a video tutorial on YouTube.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Ehutnn1AqbE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p><a href="https://github.com/features/copilot">GitHub Copilot</a> is an amazing AI-assistant that helps developers write code faster and with fewer errors. However, it does have some limitations, such as the need for an internet connection–not ideal for airplane mode–and it sends your code to cloud servers for processing. In this post, I will show how you can use <a href="https://continue.dev/">Continue</a>, a Visual Studio Code extension that provides an AI-assistant, with <a href="https://ollama.com/">Ollama</a>, a tool to manage and run local LLMs, to get similar functionality as GitHub Copilot without the need for an internet connection or sending your code to the cloud. Your code stays on your machine, and best of all it is all free.</p>
+<p>This setup allows you to have a private, local AI-powered <strong>coding and writing assistant</strong> that runs on your machine and doesn’t require an internet connection. Indeed, this works not only for coding but also for writing if you use <a href="../../posts/vscode-latex/">Visual Studio Code for writing in LaTeX</a> or Markdown, for example.</p>
+<section id="video-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorials">Video tutorials</h2>
+<p>The content of this post is also available as two video tutorials on YouTube.</p>
+<p></p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Ehutnn1AqbE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/5avXm1Vp_io" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
 <section id="ollama" class="level2">
 <h2 class="anchored" data-anchor-id="ollama">Ollama</h2>
-<p>Ollama is a tool to manage and run local LLMs, such as Meta’s Llama2. I discussed how to use Ollama as a private, local ChatGPT replacement in a <a href="../../posts/ollama-chatgpt/index.html">previous post</a>. Ollama can also be used to run LLMs for code completion, such as Codellama, which is a model trained on code.</p>
-</section>
-<section id="install-ollama" class="level2">
-<h2 class="anchored" data-anchor-id="install-ollama">Install Ollama</h2>
+<p>Ollama is a tool to manage and run local LLMs, such as Meta’s Llama3. I discussed how to use Ollama as a private, local ChatGPT replacement in a <a href="../../posts/ollama-chatgpt/index.html">previous post</a>. Ollama can also be used to run LLMs for code completion, such as Codellama, which is a model trained on code.</p>
+<section id="install-ollama" class="level3">
+<h3 class="anchored" data-anchor-id="install-ollama">Install Ollama</h3>
 <p>The first step in setting up Ollama is to download and install the tool on your local machine. The installation process is straightforward and involves running a few commands in your terminal. Ollama’s <a href="https://ollama.com/download">download page</a> provides installers for macOS and Windows, as well as instructions for Linux users. Once you’ve downloaded the installer, follow the installation instructions to set up Ollama on your machine.</p>
 <p>If you’re using a Mac, you can install Ollama using Homebrew by running the following command in your terminal:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -387,51 +414,299 @@ cookieconsent.run({
 <li><a href="https://ollama.com/library/codellama">codellama</a></li>
 <li><a href="https://ollama.com/library/deepseek-coder">deepseek-coder</a></li>
 <li><a href="https://ollama.com/library/wizardcoder">wizardcoder</a></li>
-<li><a href="https://ollama.com/library/phind-codellama">phind-codellama</a></li>
-<li><a href="https://ollama.com/library/starcoder">starcoder</a></li>
 <li><a href="https://ollama.com/library/starcoder2">starcoder2</a></li>
+<li><a href="https://ollama.com/library/codegemma">codegemma</a></li>
 </ul>
 <p>After installing Ollama, you can install a model from the command line using the <code>pull</code> command:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull codellama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>While you can run the model from the command line, it is more convenient to use it with Continue, a Visual Studio Code extension that provides an AI-assistant directly in your editor.</p>
 </section>
+</section>
 <section id="continue" class="level2">
 <h2 class="anchored" data-anchor-id="continue">Continue</h2>
 <p>Continue is an open-source autopilot for developers that seamlessly integrates with popular IDEs like VS Code and JetBrains. It offers features such as task and tab autocomplete, allowing it to generate, refactor, and explain entire sections of code efficiently. With Continue, developers can easily highlight sections of code to get another perspective on their work, ask specific coding questions, instruct the tool to refactor code in natural language, or even generate new files from scratch across various programming languages and frameworks. This makes coding more intuitive and significantly reduces the need for manual lookups or switching between windows for assistance.</p>
 <p>One of the most compelling aspects of Continue is its flexibility and integration capabilities. It allows developers to choose from a wide array of large language models (LLMs) and providers, whether deploying locally or in the cloud. Continue ensures that your codebase serves as context for queries, enhancing the relevance and accuracy of its assistance. Its local-first, modular design promotes offline use and privacy, making it a great alternative to cloud-based solutions like GitHub Copilot.</p>
-<section id="install-continue" class="level3">
-<h3 class="anchored" data-anchor-id="install-continue">Install Continue</h3>
-<p>To use Continue, you need to install the Visual Studio Code extension. You can find it in the <a href="https://marketplace.visualstudio.com/items?itemName=continue.continue">Visual Studio Code Marketplace</a>. Once installed, you can configure it to use Ollama as a provider for code completion.</p>
+<section id="installing-continue-in-visual-studio-code" class="level3">
+<h3 class="anchored" data-anchor-id="installing-continue-in-visual-studio-code">Installing Continue in Visual Studio Code</h3>
+<p>To use Continue, you need to install the Visual Studio Code extension. You can find it in the <a href="https://marketplace.visualstudio.com/items?itemName=continue.continue">Visual Studio Code Marketplace</a>. Once installed, the Continue icon will appear in your left sidebar. For better accessibility, the Continue developers recommended placing it on the right-hand side. This lets you keep the assistant open while accessing other features in the left sidebar.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="extension.webp" class="img-fluid figure-img"></p>
+<figcaption>Continue Extension Installed</figcaption>
+</figure>
+</div>
+<p>Once installed, you can configure it to use Ollama as a provider for code completion in your Continue config file, which you can access by clicking on the gear icon in the Continue sidebar.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gear.webp" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption>Access Continue Settings</figcaption>
+</figure>
+</div>
 <p><code>~/.continue/config.json</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"models"</span><span class="fu">:</span> <span class="ot">[</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Llama 3"</span><span class="fu">,</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"llama2-7b"</span><span class="fu">,</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"completionOptions"</span><span class="fu">:</span> <span class="fu">{}</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"llama3"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"AUTODETECT"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="er">...</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you have multiple models installed, you can add them similarly. This allows you to switch between models for different tasks, providing flexibility in your workflow.</p>
+</section>
+</section>
+<section id="using-continue-as-a-coding-assistant" class="level2">
+<h2 class="anchored" data-anchor-id="using-continue-as-a-coding-assistant">Using Continue as a coding assistant</h2>
+<p>Continue offers several features that can help you write code more efficiently, including understanding code, refactoring code, and debugging code. There are two main ways to interact with Continue: through the chat interface and with inline commands.</p>
+<section id="chat-interface" class="level3">
+<h3 class="anchored" data-anchor-id="chat-interface">Chat interface</h3>
+<p>To interact with the chat, you can highlight a piece of code and press <code>command-L</code> on Mac or <code>control-L</code> on Windows and Linux to paste it into the chat. You can then ask questions or give instructions to the assistant, and it will provide suggestions based on the context of the code.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="select.webp" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Selecting Text</figcaption>
+</figure>
+</div>
+<p>You can then tell Continue what you want it to do with the code, such as explain it, refactoring it, or debugging it. Continue will analyze the code and provide suggestions based on the task you specified. You can accept, reject, or retry the suggestions to refine the code further.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="chat.webp" class="img-fluid figure-img" style="width:35.0%"></p>
+<figcaption>Chat Example</figcaption>
+</figure>
+</div>
+<p>In the chat interface, you can also use the <code>@</code> symbol to mention a specific context, such as your project code, the terminal, or the error panel. This helps Continue understand the context of your query and provide more relevant suggestions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="context.webp" class="img-fluid figure-img" style="width:35.0%"></p>
+<figcaption>Chat Context List</figcaption>
+</figure>
+</div>
+<p>You can also use the <code>/</code> symbol to access <em>slash commands</em> which are convenient pre-defined commands that you can use to interact with the assistant. For example, you can use <code>/comment</code> to ask Continue to write comments the code, or <code>/cmd</code> to ask it to write a shell command. We will see later how to define your own custom commands.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="slash-commands.webp" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Chat Slash Commands</figcaption>
+</figure>
+</div>
+</section>
+<section id="inline-commands" class="level3">
+<h3 class="anchored" data-anchor-id="inline-commands">Inline commands</h3>
+<p>In addition to the chat interface, Continue also supports inline commands that allow you to interact with the assistant directly in your code editor. You can use these commands to perform specific tasks, such as understanding code, refactoring code, or debugging code, without having to switch to the chat interface. To use it, just highlight the code you want to work on and press <code>command-I</code> on Mac or <code>control-I</code> on Windows and Linux. It will open a prompt where you can specify the task you want to perform, and Continue will provide suggestions based on the context of the code. You will then see the proposed changes, and you can accept, reject, or retry them as needed.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="suggestion.webp" class="img-fluid figure-img"></p>
+<figcaption>Inline Code Example</figcaption>
+</figure>
+</div>
+</section>
+<section id="contextual-menu-options" class="level3">
+<h3 class="anchored" data-anchor-id="contextual-menu-options">Contextual menu options</h3>
+<p>Continue also offers several contextual options: - <strong>Add to Context</strong>: Add code to the chat bar for further assistance. (equivalent to <code>command-L</code>) - <strong>Fix/Optimize</strong>: Automatically fix or optimize the code. - <strong>Write Docstring</strong>: Generate documentation for your functions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="contextual.webp" class="img-fluid figure-img"></p>
+<figcaption>Contextual Menu Options</figcaption>
+</figure>
+</div>
+<p>By integrating Continue with Ollama, you can significantly enhance your coding efficiency. This setup allows you to leverage powerful LLMs locally, making your development process smoother and more cost-effective.</p>
+</section>
+<section id="auto-complete" class="level3">
+<h3 class="anchored" data-anchor-id="auto-complete">Auto-complete</h3>
+<p>Continue also supports auto-complete functionality, allowing you to quickly generate code snippets and complete statements as you type. This feature is currently in beta, and I have had mixed results with it. However, it is a promising feature that will likely improve over time.</p>
+<p>This feature is particularly useful for speeding up your coding workflow and reducing the time spent on repetitive tasks. The auto-complete feature in Continue is customizable, allowing you to select a different model than for the chat features. This is especially useful because the use case is different and latency is more critical, so you will likely want to use a smaller model optimized for completion instead of a powerful chat model like Llama3.</p>
+<p>You can enable or disable auto-complete for specific languages, configure the trigger keys, and adjust the completion delay to fine-tune the behavior of the assistant.</p>
+</section>
+<section id="custom-commands" class="level3">
+<h3 class="anchored" data-anchor-id="custom-commands">Custom commands</h3>
+<p>Continue also lets you define custom <em>slash commands</em> that can be used to interact with the AI assistant. This is particularly useful for running specific queries or commands that are not covered by the default functionality. You can define custom commands in the Continue config file and then execute them directly from the editor. This feature allows you to tailor the AI assistant to your specific needs and workflow, making it even more powerful and versatile. In the next section, we’ll explore how to define custom commands in Continue and use them to use Continue as a writing assistant.</p>
+</section>
+</section>
+<section id="using-continue-as-a-writing-assistant" class="level2">
+<h2 class="anchored" data-anchor-id="using-continue-as-a-writing-assistant">Using Continue as a writing assistant</h2>
+<p>Since I use Visual Studio Code not only for coding but also for writing in LaTeX and Markdown, I wanted to explore how Continue could be used as a writing assistant. While Continue is primarily designed for coding, it can also be used for writing tasks, such as generating text, writing summaries, or providing suggestions for improving your writing. By defining custom commands in the Continue config file, you can tailor the assistant to your specific writing needs and use it to enhance your writing process. Here are the five custom commands I defined specifically to turn Continue into a powerful writing assistant. These should be added to the <code>customCommands</code> section of your config file, and they will appear in the chat menu. You can find my full Continue config file at the end of this post.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="slash-commands-custom.webp" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Custom Slash Commands</figcaption>
+</figure>
+</div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"models"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"codellama"</span><span class="fu">,</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"completionOptions"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"num_thread"</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">}</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"french"</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Translate selected text to French"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Translate selected text to French. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="spell-checking" class="level3">
+<h3 class="anchored" data-anchor-id="spell-checking">Spell checking</h3>
+<p>The first custom command I created is <em>spell</em>. This command checks the spelling and grammar of the selected text. Here’s the configuration:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"spell"</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Check spelling and grammar for the selected text"</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Check the selected text for typos and grammatical errors. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will first need to select the text you want to check, then press <code>Command + L</code> to send it to the sidebar. Next, type <code>/spell</code> and hit enter. The prompt instructs the assistant to check the selected text (which is fed input the <code>{{ input }}</code> tag) for typos and grammatical errors and return the input text free from any errors. I have tried it with Llama 3 with good results, although it might sometimes include a preamble despite the instruction, this setup generally works well.</p>
+<p>You can then use the buttons in the chat interface to copy the corrected text back into your document.</p>
 </section>
-<section id="limitations-of-local-llms-for-code-completion" class="level3">
-<h3 class="anchored" data-anchor-id="limitations-of-local-llms-for-code-completion">Limitations of Local LLMs for Code Completion</h3>
-<p>While the benefits of local LLMs are clear, it’s important to acknowledge that running these models on consumer hardware comes with its own set of limitations. The computational resources required to run LLMs are substantial, and while Ollama provides a robust solution for managing these resources, users should be mindful of the hardware and memory constraints of their local machines. For best results, it’s recommended to run Ollama on a machine with a powerful GPU and ample memory to ensure smooth and efficient operation. Apple’s M-series chips, because they share memory between the CPU and GPU, are particularly well-suited for running Ollama and LLMs. Note that because of the computational resources required, using a local coding assistant demands more power and can drain your battery faster than using a cloud-based solution like GitHub Copilot.</p>
+<section id="improving-text" class="level3">
+<h3 class="anchored" data-anchor-id="improving-text">Improving text</h3>
+<p>When writing, it’s essential to ensure that your text is clear, concise, and free from errors. The <em>improve</em> command helps in making the selected text sound smarter and more professional. Here’s the configuration, I’m using, but you should adjust the prompt to your needs:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"improve"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Improve selected text"</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Improve the selected text by making it sound smart and professional. Avoid using rare words or overselling. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="expanding-text" class="level3">
+<h3 class="anchored" data-anchor-id="expanding-text">Expanding text</h3>
+<p>When writing a first draft, I often like to get my ideas down quickly without worrying too much about the details. This is where the <em>expand</em> command comes in handy. It can turn a single paragraph into many, or take a bullet list and turn it into full sentences. It’s great for overcoming writer’s block, but you will need to edit the output to make sure it fits your style and context. Here’s the configuration I’m using:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"expand"</span><span class="fu">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Expand selected text"</span><span class="fu">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Expand selected text as full paragraphs. Make it longer by adding details. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="critiquing-text" class="level3">
+<h3 class="anchored" data-anchor-id="critiquing-text">Critiquing text</h3>
+<p>Getting feedback on your writing is essential for improving your skills. While I have good friends and colleagues who can provide feedback, it’s not always convenient to ask them for help until I have a more polished draft. This is where the <em>critique</em> command comes in handy. It provides constructive feedback on a paragraph or larger text sections. Here’s the configuration I’m using:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"critique"</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Critique selected text"</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Critique the selected text and suggest ways to improve it."</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="translating-text" class="level3">
+<h3 class="anchored" data-anchor-id="translating-text">Translating text</h3>
+<p>Since I work at a French-language university and teach both in English and French, I often need to translate text to French. I use the <em>french</em> command to translate the selected text into French. Here’s the configuration:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"french"</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Translate selected text to French"</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Translate selected text to French. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-your-own-commands" class="level3">
+<h3 class="anchored" data-anchor-id="creating-your-own-commands">Creating Your own commands</h3>
+<p>Creating custom commands in Continue is straightforward, all you need is to: 1. Choose a unique name for the command. 2. Write a clear description. 3. Craft a prompt that directs the LLM effectively.</p>
+<p>You can use my examples as a starting point and modify them to suit your specific writing needs. Experiment with different prompts to see what works best for your needs!</p>
+</section>
+</section>
+<section id="limitations-of-continue" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-continue">Limitations of Continue</h2>
+<p>While Continue is a powerful tool that can significantly enhance your coding and writing workflow, it does have some limitations. The most significant for my personal workflow is that it uses a global configuration that applies to all Visual Studio Code profiles. I like to have separate profiles based on the type of work I’m doing, such as coding in Python, in Rust, or writing, and it would be nice to have different configurations for each profile. You can somewhat overcome this limitation by having workspace-specific configurations, but it’s not as flexible as having separate profiles.</p>
+<p>Other than that, the auto-complete feature is still in beta and can be hit or miss, depending on the model you’re using and the language you’re working with. I’ve had mixed results with it, and it’s not as reliable as the chat interface or inline commands. However, it’s a promising feature that will likely improve over time as the technology matures.</p>
+<p>Lastly, Continue relies on LLMs to provide suggestions and assistance, so the quality of the suggestions you receive will depend on the model you’re using. Some models are more accurate and reliable than others, so it’s essential to experiment with different models to find the one that works best for your needs. Continue provides a wide range of models to choose from, so you can select the one that best fits your workflow and coding style.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>For my part, my daily driver for code completion is still GitHub Copilot, as it provides a more seamless and responsive experience, and I’m willing to trade off the privacy and control of a local solution for the convenience and reliability of a cloud-based one. However, I’m glad to have the option to use Ollama and other local LLMs when I need them, and I’m excited to see how this technology continues to evolve and improve in the future.</p>
+<p>For my part, while I do use Continue on occasion, my daily driver for code completion is still GitHub Copilot, as it provides a more seamless and responsive experience, and I’m willing to trade off the privacy and control of a local solution for the convenience and reliability of a cloud-based one. However, I’m glad to have the option to use Ollama and other local LLMs when I need them, and I’m excited to see how this technology continues to evolve and improve in the future.</p>
+<p>And as for writing goes, the custom commands I defined in Continue have proven to be quite useful, and I find myself using them more and more to improve my writing and generate text. I’m looking forward to exploring more ways to use Continue as a writing assistant and to see how it can help me become a better writer.</p>
+</section>
+<section id="full-continue-config-file" class="level2">
+<h2 class="anchored" data-anchor-id="full-continue-config-file">Full Continue config file</h2>
+<p>Here is my full Continue config file, which includes the models, slash commands, custom commands, context providers, and other settings I use with Ollama. You can use this as a template to configure Continue with your preferred settings and providers. I try to keep it as minimal as possible and will update it as I discover new features or providers that I want to use.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"models"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Llama 3"</span><span class="fu">,</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"llama3"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Ollama"</span><span class="fu">,</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"AUTODETECT"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"slashCommands"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"edit"</span><span class="fu">,</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Edit selected code"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"comment"</span><span class="fu">,</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Write comments for the selected code"</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"share"</span><span class="fu">,</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Download and share this session"</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"cmd"</span><span class="fu">,</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Generate a shell command"</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"customCommands"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"spell"</span><span class="fu">,</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Check spelling and grammar for the selected text"</span><span class="fu">,</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Check the selected text for typos and grammatical errors. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"improve"</span><span class="fu">,</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Improve selected text"</span><span class="fu">,</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Improve the selected text by making it sound smart and professional. Avoid using rare words or overselling. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"expand"</span><span class="fu">,</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Expand selected text"</span><span class="fu">,</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Expand selected text as full paragraphs. Make it longer by adding details. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"critique"</span><span class="fu">,</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Critique selected text"</span><span class="fu">,</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Critique the selected text and suggest ways to improve it."</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"french"</span><span class="fu">,</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Translate selected text to French"</span><span class="fu">,</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"prompt"</span><span class="fu">:</span> <span class="st">"{{{ input }}}</span><span class="ch">\n\n</span><span class="st">---</span><span class="ch">\n\n</span><span class="st"> Translate selected text to French. Return the input text free from any typo or grammatical error. Return only the text. Do not include a preamble."</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"contextProviders"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"diff"</span><span class="fu">,</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"open"</span><span class="fu">,</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"terminal"</span><span class="fu">,</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"problems"</span><span class="fu">,</span></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"codebase"</span><span class="fu">,</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"code"</span><span class="fu">,</span></span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"docs"</span><span class="fu">,</span></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"params"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"allowAnonymousTelemetry"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"tabAutocompleteModel"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"sc"</span><span class="fu">,</span></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"ollama"</span><span class="fu">,</span></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"starcoder2:3b"</span></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"embeddingsProvider"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"transformers.js"</span></span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
