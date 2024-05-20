@@ -17,15 +17,22 @@
     "objectID": "about.html#contact",
     "href": "about.html#contact",
     "title": "About VCF",
-    "section": "Contact",
-    "text": "Contact\nFor any comments and inquiries about this blog or the YouTube Channel, please contact me at:\nEMAIL: vincent@codes.finance"
+    "section": "✉️ Contact",
+    "text": "✉️ Contact\nFor any comments and inquiries about this blog or the YouTube Channel, please contact me at:\nEMAIL: vincent@codes.finance"
   },
   {
     "objectID": "about.html#about-vincent",
     "href": "about.html#about-vincent",
     "title": "About VCF",
-    "section": "About Vincent",
-    "text": "About Vincent\n\n\nHello, my name is Vincent Grégoire. I’m an Associate Professor of Finance at HEC Montréal where I have been teaching Empirical Finance at the Master’s for a couple of years. My research interests include information economics, market microstructure, big data and machine learning applications in finance, fintech, and cybersecurity in finance. I’m also a Python enthusiast and curious about anything related to coding, data science, and machine learning.\n\n\n\n\n\n\n\n\nMy academic journey led me from undergraduate and master’s degrees in Computer Engineering to a Master’s in Financial Engineering at Université Laval and a Ph.D. in Finance from the University of British Columbia.\nSee my academic page for more details."
+    "section": "👨‍🏫 About Vincent",
+    "text": "👨‍🏫 About Vincent\n\n\nHello, my name is Vincent Grégoire. I’m an Associate Professor of Finance at HEC Montréal where I have been teaching Empirical Finance at the Master’s for a couple of years. My research interests include information economics and everything at the intersection of finance and technology, such as market microstructure, big data and machine learning applications in finance, fintech, and cybersecurity in finance. I’m also a Python enthusiast and curious about anything related to coding, data science, and machine learning.\n\n\n\n\n\n\n\n\nMy academic journey led me from undergraduate and master’s degrees in Computer Engineering to a Master’s in Financial Engineering at Université Laval and a Ph.D. in Finance from the University of British Columbia.\nSee my academic page for more details."
+  },
+  {
+    "objectID": "about.html#how-to-support-me",
+    "href": "about.html#how-to-support-me",
+    "title": "About VCF",
+    "section": "❤️ How to support me",
+    "text": "❤️ How to support me\nIf you find the content on this website useful and would like to support me, there are a few ways you can do so:\n\nSpread the word about this website and the YouTube channel!\nSubscribe to the YouTube channel\nBuy me a coffee\n\nI am committed to transparency about any potential monetization of this website and the YouTube channel. I may use affiliate links related to products or services. If you click on an affiliate link and make a purchase, I may receive a commission at no extra cost to you. There will always be a disclosure when an affiliate link is used."
   },
   {
     "objectID": "about.html#license-and-reuse",
@@ -39,14 +46,14 @@
     "href": "about.html#how-is-this-blog-built",
     "title": "About VCF",
     "section": "🛠️ How is this blog built?",
-    "text": "🛠️ How is this blog built?\nThis website is built using Quarto, an open-source document system that allows you to write content in Markdown or Jupyter Notebooks and publish it in a variety of formats, including static HTML files. Quarto is on my list of topics to cover in the future, so stay tuned for more content on that topic.\nThe blog is currently hosted using GitHub Pages."
+    "text": "🛠️ How is this blog built?\nThis website is built using Quarto, an open-source document system that allows you to write content in Markdown or Jupyter Notebooks and publish it in a variety of formats, including static HTML files. Quarto is on my list of topics to cover in the future, so stay tuned for content on that topic.\nThe blog is currently hosted using GitHub Pages."
   },
   {
-    "objectID": "about.html#monetization",
-    "href": "about.html#monetization",
+    "objectID": "about.html#disclaimer",
+    "href": "about.html#disclaimer",
     "title": "About VCF",
-    "section": "🤑 Monetization",
-    "text": "🤑 Monetization\nAs we move forward, I promise to maintain transparency, especially concerning any potential monetization avenues. At the moment, I do not monetize this website or the YouTube channel. That might change in the future, but I will always be transparent about it."
+    "section": "📝 Disclaimer",
+    "text": "📝 Disclaimer\nWhile I make every effort to ensure that the content on this website is accurate and up-to-date, I cannot guarantee that it is free from errors or omissions. The content is provided for informational purposes only and should not be construed as financial, legal, or professional advice. You should always consult with a qualified professional before making any financial or investment decisions."
   },
   {
     "objectID": "about.html#use-of-ai",
