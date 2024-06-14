@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -265,6 +265,11 @@ window.Quarto = {
 </i> 
 <span class="menu-text"></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.facebook.com/profile.php?id=61559283113665"> <i class="bi bi-facebook" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -281,7 +286,6 @@ window.Quarto = {
                                 <div class="quarto-categories">
                 <div class="quarto-category">Python</div>
                 <div class="quarto-category">Econometrics</div>
-                <div class="quarto-category">Statsmodels</div>
               </div>
                   </div>
   </div>
@@ -311,7 +315,6 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<div>
 
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
@@ -342,7 +345,7 @@ window.Quarto = {
                 <div style="position:relative;">
                     <div id="Zc_SignupSuccess" style="display:none;position:absolute;margin-left:4%;width:90%;background-color: white; padding: 3px; border: 3px solid rgb(194, 225, 154);  margin-top: 10px;margin-bottom:10px;word-break:break-all">
                         
-<table data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0" class="table">
+<table class="caption-top table" data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0">
 <tbody>
 <tr class="odd">
 <td width="10%"><img src="https://zmp-glf.maillist-manage.com/images/challangeiconenable.jpg" class="successicon img-fluid" data-align="absmiddle"></td>
@@ -398,7 +401,6 @@ window.Quarto = {
 
 <div style="padding: 15px 0px"><script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="codesfinance" data-color="#FFDD00" data-emoji="☕" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script></div>
 
-</div>
 </div></div>
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
@@ -505,10 +507,9 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -701,7 +702,6 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </div>
 </div>
 </div>
-</div>
 <p>I complement the momentum strategy with the daily Fama-French 5 factors available from <a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Ken French’s data library</a>.</p>
 <div id="cell-8" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ff5_df <span class="op">=</span> pd.read_csv(</span>
@@ -716,10 +716,9 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ff5_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -847,17 +846,15 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </div>
 </div>
 </div>
-</div>
 <p>Finally, I join the two data sets to create a single data set with the following columns:</p>
 <div id="cell-10" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[[<span class="st">"portLS"</span>]].join(ff5_df[[<span class="st">"MktRF"</span>, <span class="st">"SMB"</span>, <span class="st">"HML"</span>, <span class="st">"RMW"</span>, <span class="st">"CMA"</span>]], how<span class="op">=</span><span class="st">"inner"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -985,7 +982,6 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="statsmodels" class="level2">
 <h2 class="anchored" data-anchor-id="statsmodels">statsmodels</h2>
@@ -1045,8 +1041,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 <div id="cell-18" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod.fit(use_t<span class="op">=</span><span class="va">True</span>).summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
 <tr class="odd">
@@ -1105,7 +1100,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td></td>
@@ -1172,7 +1167,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
@@ -1203,7 +1198,6 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 <br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 </div>
 </div>
-</div>
 </section>
 <section id="white-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="white-standard-errors">White standard errors</h2>
@@ -1227,8 +1221,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 <div id="cell-20" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod.fit(cov_type<span class="op">=</span><span class="st">"HC0"</span>, use_t<span class="op">=</span><span class="va">True</span>).summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
 <tr class="odd">
@@ -1287,7 +1280,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td></td>
@@ -1354,7 +1347,7 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
@@ -1383,7 +1376,6 @@ x_{T}^{(1)} &amp; x_{T}^{(2)} &amp; \cdots &amp; x_{T}^{(K-1)} &amp; x_{T}^{(K)}
 </tbody>
 </table>
 <br><br>Notes:<br>[1] Standard Errors are heteroscedasticity robust (HC0)
-</div>
 </div>
 </div>
 <p>The estimated coefficients are the same as with the OLS standard errors, but the standard errors are different. In turn, all statistical measures that depend on the standard errors, such as t-statistics and p-values, are different.</p>
@@ -1419,8 +1411,7 @@ _{t-j}\hat{e}_{t}x_{t}^{\prime}\right),
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    cov_type<span class="op">=</span><span class="st">"HAC"</span>, cov_kwds<span class="op">=</span>{<span class="st">"kernel"</span>: <span class="st">"bartlett"</span>, <span class="st">"maxlags"</span>: <span class="dv">5</span>}, use_t<span class="op">=</span><span class="va">True</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>).summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
 <tr class="odd">
@@ -1479,7 +1470,7 @@ _{t-j}\hat{e}_{t}x_{t}^{\prime}\right),
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td></td>
@@ -1546,7 +1537,7 @@ _{t-j}\hat{e}_{t}x_{t}^{\prime}\right),
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
@@ -1575,7 +1566,6 @@ _{t-j}\hat{e}_{t}x_{t}^{\prime}\right),
 </tbody>
 </table>
 <br><br>Notes:<br>[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
-</div>
 </div>
 </div>
 </section>

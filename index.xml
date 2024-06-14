@@ -9,18 +9,33 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.4.553</generator>
-<lastBuildDate>Mon, 20 May 2024 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.555</generator>
+<lastBuildDate>Fri, 14 Jun 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Use Devcontainers for safe and replicable research</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/devcontainers/</link>
+  <description><![CDATA[ Learn how to use Devcontainers in Visual Studio Code for data analysis tasks, focusing on the added safety of containerized code and the enhanced replicability of results. ]]></description>
+  <category>Visual Studio Code</category>
+  <category>Reproducibility</category>
+  <category>Tutorial</category>
+  <guid>https://vincent.codes.finance/posts/devcontainers/</guid>
+  <pubDate>Fri, 14 Jun 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/devcontainers/containers.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/ollama-copilot/</link>
   <description><![CDATA[ Learn how to use Ollama, a tool to manage and run local LLMs, with Continue, a Visual Studio Code extension that provides an AI-assistant, to get the same functionality as GitHub Copilot, but without the need for an internet connection or sending your code to the cloud, all for free. ]]></description>
-  <category>Ollama</category>
+  <category>VS Code</category>
   <category>Copilot</category>
+  <category>Local AI</category>
   <category>LLM</category>
   <category>Python</category>
-  <category>Llama</category>
+  <category>Machine Learning</category>
+  <category>AI</category>
+  <category>Writing</category>
   <guid>https://vincent.codes.finance/posts/ollama-copilot/</guid>
   <pubDate>Mon, 20 May 2024 04:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/ollama-copilot/ollama-copilot.webp" medium="image" type="image/webp"/>
@@ -32,10 +47,10 @@
   <description><![CDATA[ Perform sentiment analysis on financial news articles using FinBert, Ollama, and Llama2 models. ]]></description>
   <category>Python</category>
   <category>Sentiment</category>
-  <category>FinBert</category>
-  <category>Ollama</category>
-  <category>Llama2</category>
-  <category>Mixtral</category>
+  <category>Bert</category>
+  <category>LLM</category>
+  <category>Machine Learning</category>
+  <category>AI</category>
   <guid>https://vincent.codes.finance/posts/sentiment/</guid>
   <pubDate>Fri, 12 Apr 2024 04:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/sentiment/sentiment.webp" medium="image" type="image/webp"/>
@@ -47,7 +62,6 @@
   <description><![CDATA[ Tutorial on how to scrape financial data from the SEC Edgar website using Python and the edgartools library. ]]></description>
   <category>Python</category>
   <category>Scraping</category>
-  <category>SEC Edgar</category>
   <guid>https://vincent.codes.finance/posts/edgartools/</guid>
   <pubDate>Sat, 06 Apr 2024 04:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/edgartools/edgartools.webp" medium="image" type="image/webp"/>
@@ -57,13 +71,11 @@
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/documents-llm/</link>
   <description><![CDATA[ Learn how to leverage the power of large language models to process and analyze PDF documents using Ollama, LangChain, and Streamlit. ]]></description>
-  <category>Ollama</category>
+  <category>Local AI</category>
   <category>LLM</category>
   <category>Python</category>
-  <category>Mistral</category>
-  <category>Tutorial</category>
-  <category>LangChain</category>
-  <category>Streamlit</category>
+  <category>Machine Learning</category>
+  <category>AI</category>
   <guid>https://vincent.codes.finance/posts/documents-llm/</guid>
   <pubDate>Sat, 30 Mar 2024 04:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/documents-llm/documents.webp" medium="image" type="image/webp"/>
@@ -73,9 +85,7 @@
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/apple-mlx/</link>
   <description><![CDATA[ Explore the potential of MLX in scientific computing using a sample empirical finance research task. ]]></description>
-  <category>Apple</category>
-  <category>MLX</category>
-  <category>Numpy</category>
+  <category>Python</category>
   <guid>https://vincent.codes.finance/posts/apple-mlx/</guid>
   <pubDate>Fri, 22 Mar 2024 04:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/apple-mlx/apple-gears.webp" medium="image" type="image/webp"/>
@@ -85,12 +95,10 @@
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/ollama-chatgpt/</link>
   <description><![CDATA[ Explore the benefits of using Ollama as a ChatGPT replacement for empirical finance research, focusing on privacy, customization, and computational flexibility. ]]></description>
-  <category>Ollama</category>
-  <category>ChatGPT</category>
+  <category>Local AI</category>
   <category>LLM</category>
-  <category>Writing</category>
-  <category>Llama</category>
-  <category>Mistral</category>
+  <category>Machine Learning</category>
+  <category>AI</category>
   <guid>https://vincent.codes.finance/posts/ollama-chatgpt/</guid>
   <pubDate>Fri, 08 Mar 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.webp" medium="image" type="image/webp"/>
@@ -102,9 +110,6 @@
   <description><![CDATA[ Article on how to read and parse large CSV files in Python using Pandas and Arrow. ]]></description>
   <category>Python</category>
   <category>Pandas</category>
-  <category>Arrow</category>
-  <category>Parquet</category>
-  <category>CSV</category>
   <guid>https://vincent.codes.finance/posts/pandas-read-csv/</guid>
   <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.webp" medium="image" type="image/webp"/>
@@ -126,10 +131,9 @@
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/github-for-research/</link>
   <description><![CDATA[ Learn how to use Git and GitHub to manage your research projects and collaborate with others while keeping a detailed record of your work. ]]></description>
-  <category>Collaboration</category>
-  <category>Git</category>
-  <category>GitHub</category>
+  <category>Git/GitHub</category>
   <category>Reproducibility</category>
+  <category>Tutorial</category>
   <guid>https://vincent.codes.finance/posts/github-for-research/</guid>
   <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.webp" medium="image" type="image/webp"/>
@@ -141,7 +145,6 @@
   <description><![CDATA[ Tutorial on estimating standard errors in time series data with Python and statsmodels ]]></description>
   <category>Python</category>
   <category>Econometrics</category>
-  <category>Statsmodels</category>
   <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/</guid>
   <pubDate>Wed, 31 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.webp" medium="image" type="image/webp"/>
@@ -153,7 +156,6 @@
   <description><![CDATA[ In this post, I show how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. ]]></description>
   <category>Python</category>
   <category>Econometrics</category>
-  <category>Linearmodels</category>
   <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/</guid>
   <pubDate>Sun, 21 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/panel-data.webp" medium="image" type="image/webp"/>
@@ -165,7 +167,6 @@
   <description><![CDATA[ I posted <a href="../../intro-to-python/python-basics/">a tutorial</a> on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for beginners and is a good starting point for those who want to learn Python. It does not cover the whole syntax, only the elements that I find essential to get started with data analysis and empirical research using Python. After the tutorial, you should have enough knowledge to start learning the modules that are relevant to data analysis such as <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, etc. ]]></description>
   <category>Python</category>
   <category>Tutorial</category>
-  <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/python-basics-tutorial/</guid>
   <pubDate>Sun, 07 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/python-basics-tutorial/python-code.webp" medium="image" type="image/webp"/>
@@ -177,7 +178,6 @@
   <description><![CDATA[ Short tutorial on installing Python 3.12 and the related tools for a complete coding environment. ]]></description>
   <category>Python</category>
   <category>Tutorial</category>
-  <category>Beginner</category>
   <guid>https://vincent.codes.finance/posts/install-python-312/</guid>
   <pubDate>Wed, 03 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/install-python-312/install-py.webp" medium="image" type="image/webp"/>
@@ -187,7 +187,6 @@
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/welcome/</link>
   <description><![CDATA[ Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel dedicated to Python and coding in empirical finance research. I’m excited to share my knowledge and experience with you. ]]></description>
-  <category>News</category>
   <guid>https://vincent.codes.finance/posts/welcome/</guid>
   <pubDate>Mon, 01 Jan 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/welcome/new-blog.webp" medium="image" type="image/webp"/>

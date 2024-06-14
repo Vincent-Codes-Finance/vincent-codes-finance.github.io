@@ -6,10 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-01-23">
-<meta name="description" content="Books on finance, trading, and the stock market">
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2024-06-14">
+<meta name="description" content="Learn how to use Devcontainers in Visual Studio Code for data analysis tasks, focusing on the added safety of containerized code and the enhanced replicability of results.">
 
-<title>Vincent Codes Finance - Book recommendations: Finance</title>
+<title>Vincent Codes Finance - Use Devcontainers for safe and replicable research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,21 +137,22 @@ cookieconsent.run({
   
 
 
-<meta property="og:title" content="Vincent Codes Finance - Book recommendations: Finance">
-<meta property="og:description" content="Books on finance, trading, and the stock market">
-<meta property="og:image" content="https://vincent.codes.finance/books/finance/install-py.png">
+<meta property="og:title" content="Vincent Codes Finance - Use Devcontainers for safe and replicable research">
+<meta property="og:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta property="og:image" content="https://vincent.codes.finance/posts/devcontainers/containers.webp">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:title" content="Vincent Codes Finance - Book recommendations: Finance">
-<meta name="twitter:description" content="Books on finance, trading, and the stock market">
-<meta name="twitter:image" content="https://vincent.codes.finance/books/finance/install-py.png">
+<meta name="twitter:title" content="Vincent Codes Finance - Use Devcontainers for safe and replicable research">
+<meta name="twitter:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/devcontainers/containers.webp">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vincent.codes.finance/posts/devcontainers/" />
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -191,7 +227,40 @@ cookieconsent.run({
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Use Devcontainers for safe and replicable research</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Visual Studio Code</div>
+                <div class="quarto-category">Reproducibility</div>
+                <div class="quarto-category">Tutorial</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 14, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
@@ -286,90 +355,159 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#microstructure" id="toc-microstructure" class="nav-link active" data-scroll-target="#microstructure">Microstructure</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#video-tutorial" id="toc-video-tutorial" class="nav-link" data-scroll-target="#video-tutorial">Video Tutorial</a></li>
+  <li><a href="#setting-up-devcontainers-in-vs-code" id="toc-setting-up-devcontainers-in-vs-code" class="nav-link" data-scroll-target="#setting-up-devcontainers-in-vs-code">Setting Up Devcontainers in VS Code</a></li>
+  <li><a href="#images" id="toc-images" class="nav-link" data-scroll-target="#images">Images</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">Features</a></li>
+  <li><a href="#poetry" id="toc-poetry" class="nav-link" data-scroll-target="#poetry">Poetry</a></li>
+  <li><a href="#mounting-local-directories" id="toc-mounting-local-directories" class="nav-link" data-scroll-target="#mounting-local-directories">Mounting Local Directories</a></li>
+  <li><a href="#vs-code-extensions" id="toc-vs-code-extensions" class="nav-link" data-scroll-target="#vs-code-extensions">VS Code Extensions</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Book recommendations: Finance</h1>
-</div>
-
-<div>
-  <div class="description">
-    Books on finance, trading, and the stock market
-  </div>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">January 23, 2024</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
 
 
-</header>
 
-
-<section id="microstructure" class="level2">
-<h2 class="anchored" data-anchor-id="microstructure">Microstructure</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In empirical finance research, the tools and methodologies we employ play a crucial role in ensuring the integrity and reproducibility of our findings. One such powerful tool is containerization, which allows you to encapsulate your code and its dependencies into a standardized unit. Development containers, or <a href="https://code.visualstudio.com/docs/devcontainers/containers">devcontainers</a>, provide a convenient way to create isolated environments for your data analysis tasks, ensuring that your code runs consistently across different systems.</p>
+<p>Containers are essentially lightweight, portable environments that package up code and all its dependencies, ensuring that the software runs consistently across different computing environments. This consistency is particularly valuable in research settings where the reproducibility of results is paramount. By containerizing their code, researchers can avoid the “it works on my machine” problem, ensuring that their analyses can be replicated by others, regardless of the underlying system configurations. You might be familiar with the use of tools like <a href="https://python-poetry.org/">poetry</a> or <a href="https://github.com/pyenv/pyenv">pyenv</a> for managing Python environments to separate dependencies for different projects. Containers take this concept a step further by encapsulating the entire environment, including the operating system, runtime, libraries, and configurations. This ensures that the code runs identically on any machine, making it easier for researchers to share their work and for others to verify their findings.</p>
+<p>This encapsulation also provides an added level of safety and security that is essential in <a href="https://www.canada.ca/en/communications-security/news/2024/05/canada-joins-international-security-partners-in-release-of-advisory-guidance-on-growing-cyber-security-threat-to-civil-society.html">research settings</a>. By isolating the code and its dependencies from the host system, containers protect the environment from potential <a href="https://www.theregister.com/2021/07/28/python_pypi_security/">security vulnerabilities</a> or <a href="https://thehackernews.com/2023/02/researchers-uncover-obfuscated.html">malware disguised as python librairies</a>. This isolation ensures that the code runs in a controlled environment, reducing the risk of unintended interactions with the host system.</p>
+<p>Finally, containers facilitate collaboration among researchers. When a project is containerized, collaborators can easily set up their environment by simply running the container, eliminating the often cumbersome process of manually installing and configuring dependencies. This ease of setup promotes a more efficient workflow and reduces the likelihood of errors, making collaborative research more streamlined and productive. Even if you work solo, containers improve the resiliency of your research workflows, making it easy to recover from a broken or stolen computer by reinstalling your project on a new computer without worrying about compatibility issues. You can even run your code in the cloud with services like <a href="https://docs.github.com/en/codespaces/overview">GitHub Codespaces</a>, ensuring that your analyses are not tied to a specific machine or operating system.</p>
+<p>In this post, I provide a step-by-step guide on setting up devcontainers in VS Code, with a focus on supporting Python Poetry and mounting local directories for file storage.</p>
+<p>All the code and configurations used in this tutorial are available in the <a href="https://github.com/Vincent-Codes-Finance/devcontainers">GitHub repository</a>.</p>
+</section>
+<section id="video-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial">Video Tutorial</h2>
+<p>This post is also available as a video tutorial on YouTube.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/t4cNPZRJRds" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="setting-up-devcontainers-in-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-devcontainers-in-vs-code">Setting Up Devcontainers in VS Code</h2>
+<p>Development containers are a feature in VS Code that leverages <a href="https://www.docker.com/">Docker</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to create and manage containers specifically for development purposes. This allows developers and researchers to work within a consistent environment, which is crucial for complex data analysis tasks. Setting up devcontainers in VS Code is straightforward, but there are a few prerequisites you need to have in place: <a href="https://www.docker.com/products/docker-desktop/">Docker</a>, Visual Studio Code, and the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers</a> extension. If you’re on macOS, you can install Docker using <a href="https://brew.sh/">Homebrew</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To begin, you’ll need to create a <code>.devcontainer</code> folder in your project directory. Inside this folder, you should create a <code>devcontainer.json</code> file, which will define the configuration for your development container. This file specifies the base image for the container, any additional tools or libraries that need to be installed, and other settings related to the development environment. By configuring this file, you can tailor the container to meet the specific needs of your data analysis tasks. This can be done using the Dev Containers extension in VS Code, which provides a user-friendly interface for creating and managing devcontainers. To get started, simply invoke <code>Dev Containers: Add Development Container Configuration Files...</code> from the command palette in VS Code and follow the prompts to create your <code>devcontainer.json</code> file.</p>
+<p>This will prompt you to select a base image for your container, configure any additional tools or libraries, and set up other environment settings. As default options, I like to use the following:</p>
 <ul>
-<li><p>Dark Pools: The Rise of the Machine Traders and the Rigging of the U.S. Stock Market, Scott Patterson</p></li>
-<li><p>Flash Crash: A Trading Savant, a Global Manhunt and the Most Mysterious Market Crash in History, Liam Vaughan</p></li>
-<li><p>Trading at the speed of light, Donald MacKenzie</p></li>
-<li><p>Flash Boys: A Wall Street Revolt, Michael Lewis</p></li>
-<li><p>The Quants: How a New Breed of Math Whizzes Conquered Wall Street and Nearly Destroyed It, Scott Patterson</p></li>
-<li><p>Chaos Kings: How Wall Street Traders Make Billions in the New Age of Crisis, Scott Patterson</p></li>
-<li><p>Barbarians at the Gate, Bryan Burrough and John Helyar</p></li>
-<li><p>Liar’s Poker, Michael Lewis</p></li>
-<li><p>The Undoing Project: A Friendship That Changed Our Minds, Michael Lewis</p></li>
-<li><p>The Big Short: Inside The Doomsday Machine, Michael Lewis</p></li>
-<li><p>The Spider Network: How a Math Genius and a Gang of Scheming Bankers Pulled Off One of the Greatest Scams in History, David Enrich</p></li>
-<li><p>Efficiently Inefficient: How Smart Money Invests and Market Prices Are Determined, Lasse Heje Pedersen</p></li>
-<li><p>The Fractalist: Memoir of a Scientific Maverick, Benoit Mandelbrot (he was my PhD advisor’s PhD advisor)</p></li>
-<li><p>The Misbehavior of Markets: A Fractal View of Financial Turbulence, Benoit Mandelbrot and Richard L. Hudson</p></li>
-<li><p>Chaos Monkeys: Obscene Fortune and Random Failure in Silicon Valley, Antonio Garcia Martinez</p></li>
-<li><p>Elon Musk, Walter Isaacson</p></li>
-<li><p>The Innovators: How a Group of Inventors, Hackers, Geniuses, and Geeks Created the Digital Revolution, Walter Isaacson</p></li>
+<li>Setup location: in workspace</li>
+<li>Base image: Latest Python 3.x image from Microsoft</li>
+<li>Features: Poetry with pipx (more on this later)</li>
 </ul>
-<p>On my reading list:</p>
+<p>Once you have configured your <code>devcontainer.json</code> file, you should get a prompt to reopen the project in the container. This will build the container based on the specified configuration and open your project within the containerized environment. You can verify that the container is running by checking the status bar in VS Code, which should indicate that you are working in a containerized environment.</p>
+<p>You can always rebuild the container by invoking the <code>Dev Containers: Rebuild and Reopen in Container</code> command from the command palette. This will recreate the container based on the latest configuration settings, ensuring that your development environment is up-to-date and consistent with your project requirements.</p>
+<p>Here is what a simple <code>devcontainer.json</code> file (minus the comments) looks like:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Python 3"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"image"</span><span class="fu">:</span> <span class="st">"mcr.microsoft.com/devcontainers/python:1-3.12-bullseye"</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"features"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ghcr.io/devcontainers-contrib/features/poetry:2"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="images" class="level2">
+<h2 class="anchored" data-anchor-id="images">Images</h2>
+<p>Images are a crucial aspect of containerization, as they define the base environment for your development container. When setting up a devcontainer in VS Code, you can choose from a variety of pre-built images that provide different programming languages, tools, and libraries. These images serve as the foundation for your development environment, ensuring that the necessary dependencies are available for your data analysis tasks. By tying your devcontainer to a specific image, you can guarantee that your code runs consistently across different systems, making it easier to share and replicate your work.</p>
+<p><strong>Note</strong>: Most images are based on Linux distributions, so you may need to adjust your code or configurations if you are used to working on Windows or macOS. However, the differences are usually minimal and can be easily managed within the container.</p>
+<p><strong>Note 2</strong>: Most images specify the environment (i.e.&nbsp;Linux version, Python version, etc.), but not the architecture, which makes them compatible with most systems. For example, most PCs and older Macs use Intel or AMD CPUs with the <code>x86_64</code> architecture, while newer Macs with Apple Silicon have the <code>arm64</code> architecture. The images are usually compatible with both architectures, but that means that the environment will not be 100% identical if you run the container on different architectures. This is usually not a problem for data analysis tasks, but it’s something to keep in mind if you are having issues with your code running differently on different systems.</p>
+</section>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<p>Features are additional tools or libraries that can be installed in your development container to enhance its functionality. These features can include language-specific tools, package managers, or development environments that are tailored to your project requirements. By specifying features in your <code>devcontainer.json</code> file, you can extend the capabilities of your container and ensure that it is well-suited for your data analysis tasks. You can find a list of available features at <a href="https://containers.dev/features">containers.dev/features</a>. In the example above, we are using the <code>poetry</code> feature to install the Python dependency manager Poetry in our development container.</p>
+</section>
+<section id="poetry" class="level2">
+<h2 class="anchored" data-anchor-id="poetry">Poetry</h2>
+<p><a href="https://python-poetry.org/">Poetry</a> is a powerful tool for managing Python dependencies and project configurations. It simplifies the process of creating, managing, and sharing Python projects by providing a unified interface for dependency management, packaging, and publishing. Poetry uses a <code>pyproject.toml</code> file to define project dependencies, scripts, and configurations, making it easy to manage project settings and requirements. By integrating Poetry into your devcontainer setup, you can streamline your development workflow and ensure that your Python projects are well-organized and reproducible.</p>
+<p>For example here is a <code>pyproject.toml</code> file that defines the dependencies for a Python project:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.poetry]</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"vcf-sample"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"Sample code for Vincent Codes Finance"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span><span class="st">"Vincent Codes Finance &lt;vincent@codes.finance&gt;"</span><span class="op">]</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="dt">package-mode</span> <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.poetry.dependencies]</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="dt">python</span> <span class="op">=</span> <span class="st">"^3.12"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="dt">jupyter</span> <span class="op">=</span> <span class="st">"^1.0.0"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dt">pandas</span> <span class="op">=</span> <span class="st">"^2.2.2"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"poetry-core"</span><span class="op">]</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"poetry.core.masonry.api"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>package-mode = false</code> line tells Poetry to only install the dependencies, that the project is not a package itself.</p>
+<p>Typically, we would run <code>poetry install</code> to install the dependencies in the <code>pyproject.toml</code> file and then activate that environment with <code>poetry shell</code> (this is what I do in the video tutorial). However, since we only have one project in a devcontainer, we can simplify this by installing the dependencies directly in the base environment by setting the following poetry config:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config virtualenvs.create false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can automate this process by adding a <code>postCreateCommand</code> to our <code>devcontainer.json</code> file to ensure that all dependencies are installed when the container is created:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="er">"postCreateCommand":</span> <span class="er">"poetry</span> <span class="er">config</span> <span class="er">virtualenvs.create</span> <span class="er">false;</span> <span class="er">poetry</span> <span class="er">install"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mounting-local-directories" class="level2">
+<h2 class="anchored" data-anchor-id="mounting-local-directories">Mounting Local Directories</h2>
+<p>By default, the development container is isolated from the host system, except for the workspace directory, which is mounted into the container. This ensures that your project files are accessible within the container, allowing you to work on your code seamlessly. However, there are cases where you may need to access files or directories outside the workspace, such as large data files. To achieve this, you can mount local directories into the development container, making them available within the container environment.</p>
+<p>To mount a local directory, you can add the <code>mounts</code> property to your <code>devcontainer.json</code> file, specifying the <code>source</code> path on the host and the <code>target</code> path in the container.</p>
+<p>Here is an example configuration for mounting a local directory:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="er">"mounts":</span> <span class="ot">[</span><span class="st">"source=/path/to/local/directory,target=/workspace/data,type=bind,consistency=cached"</span><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This setup ensures that the directory <code>/path/to/local/directory</code> on your host machine is accessible within the container at <code>/workspace/data</code>. This approach provides the flexibility to work with local files while benefiting from the isolated environment of the container, except for the mounted directories.</p>
+<p><strong>Note:</strong> This mounting process limits the flexibility of the container, as the source directory must be available on the host system. If you are working on a shared project or need to access files from different locations, you may need to consider alternative approaches, such as using a networked file system or cloud storage. As far as I know, there is no way to specify the source directory using an environment variable, so each collaborator would need to update the <code>devcontainer.json</code> file with their local path.</p>
+</section>
+<section id="vs-code-extensions" class="level2">
+<h2 class="anchored" data-anchor-id="vs-code-extensions">VS Code Extensions</h2>
+<p>You can also use the devcontainer.json file to configure default VS Code seettings and install VS Code extensions in your development container. When working with devcontainers, you will notice that not all the extensions you have installed on your host system are available in the container environment. Specifically, extensions that are mostly used for the host system (think UI), such as themes or language packs, will still be available. However, extensions that require access to the container environment, such as language servers or debuggers, will need to be installed. For example, the python image will install the Python extension, but you may need to install additional extensions for specific tasks, such as the Jupyter extension for working with Jupyter notebooks or with the interactive window. It can also be useful to make sure that all collaborators use the same formatting tools, such as <a href="https://github.com/astral-sh/ruff">Ruff</a>.</p>
+<p>To address this, you can specify the extensions and settings you want to install in the <code>devcontainer.json</code> file. For example, this will install Jupyter and Ruff, and configure Ruff as the default formatter:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"customizations":</span> <span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"vscode"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"extensions"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ms-toolsai.jupyter"</span><span class="ot">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"charliermarsh.ruff"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"vscode"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                <span class="dt">"settings"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">"[python]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"charliermarsh.ruff"</span><span class="fu">,</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">"editor.codeActionsOnSave"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">"source.fixAll"</span><span class="fu">:</span> <span class="st">"explicit"</span><span class="fu">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">"source.organizeImports"</span><span class="fu">:</span> <span class="st">"explicit"</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">}</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">},</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">"python.analysis.fixAll"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"source.unusedImports"</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">}</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can find the extension IDs by looking at the extension in VS Code, then clicking on the gear icon and selecting “Copy Extension ID”.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>Devcontainers are a powerful tool for creating isolated development environments, but they do have some limitations. One of the main drawbacks is the overhead associated with running containers, which can slow down the development process, especially for large projects or resource-intensive tasks. It’s not an issue that I have found to be significant, but it’s something to keep in mind if you are working on a particularly demanding project or have limited system resources.</p>
+<p>Additionally, the isolation provided by containers can make it challenging to use some resources from the host system, such as GPUs or hardware peripherals. While it is possible to pass through devices to the container using Docker, this process can be complex and may not be suitable for all use cases. For example, on Apple Silicon Macs, even if the Linux container could access the GPU, there are no Linux drivers available for the GPU, so it would not be able to use it.</p>
+<section id="additional-resources" class="level4">
+<h4 class="anchored" data-anchor-id="additional-resources">Additional Resources</h4>
 <ul>
-<li><p>Going Infinite: The Rise and Fall of a New Tycoon</p></li>
-<li><p>When Genius Failed</p></li>
-<li><p>Dark Pools: The Rise of the Machine Traders and the Rigging of the U.S. Stock Market, Scott Patterson</p></li>
-<li><p>The Quants: How a New Breed of Math Whizzes Conquered Wall Street and Nearly Destroyed It, Scott Patterson</p></li>
-<li><p>Chaos Kings: How Wall Street Traders Make Billions in the New Age of Crisis, Scott Patterson</p></li>
-<li><p>Flash Crash: A Trading Savant, a Global Manhunt and the Most Mysterious Market Crash in History, Liam Vaughan</p></li>
-<li><p>Trading at the speed of light, Donald MacKenzie</p></li>
-<li><p>Barbarians at the Gate, Bryan Burrough and John Helyar</p></li>
-<li><p>Liar’s Poker, Michael Lewis</p></li>
-<li><p>The Undoing Project: A Friendship That Changed Our Minds, Michael Lewis</p></li>
-<li><p>The Big Short: Inside The Doomsday Machine, Michael Lewis</p></li>
-<li><p>The Spider Network: How a Math Genius and a Gang of Scheming Bankers Pulled Off One of the Greatest Scams in History, David Enrich</p></li>
-<li><p>Efficiently Inefficient: How Smart Money Invests and Market Prices Are Determined, Lasse Heje Pedersen</p></li>
-<li><p>The Fractalist: Memoir of a Scientific Maverick, Benoit Mandelbrot (he was my PhD advisor’s PhD advisor)</p></li>
-<li><p>The Misbehavior of Markets: A Fractal View of Financial Turbulence, Benoit Mandelbrot and Richard L. Hudson</p></li>
-<li><p>Chaos Monkeys: Obscene Fortune and Random Failure in Silicon Valley, Antonio Garcia Martinez</p></li>
-<li><p>Elon Musk, Walter Isaacson</p></li>
-<li><p>The Innovators: How a Group of Inventors, Hackers, Geniuses, and Geeks Created the Digital Revolution, Walter Isaacson</p></li>
+<li><a href="https://containers.dev/">Development Containers</a></li>
+<li><a href="https://code.visualstudio.com/docs/devcontainers/containers">VS Code Documentation</a></li>
 </ul>
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Other alternatives such as <a href="https://podman.io/">Podman</a> and <a href="https://github.com/abiosoft/colima">Colima</a> can be used, but the official documentation is centered around Docker. See the VS Code documentation for <a href="https://code.visualstudio.com/remote/advancedcontainers/docker-options">supported alternatives</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

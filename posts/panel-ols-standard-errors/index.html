@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -264,6 +264,11 @@ window.Quarto = {
 </i> 
 <span class="menu-text"></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.facebook.com/profile.php?id=61559283113665"> <i class="bi bi-facebook" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -280,7 +285,6 @@ window.Quarto = {
                                 <div class="quarto-categories">
                 <div class="quarto-category">Python</div>
                 <div class="quarto-category">Econometrics</div>
-                <div class="quarto-category">Linearmodels</div>
               </div>
                   </div>
   </div>
@@ -310,7 +314,6 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<div>
 
 <!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
 
@@ -341,7 +344,7 @@ window.Quarto = {
                 <div style="position:relative;">
                     <div id="Zc_SignupSuccess" style="display:none;position:absolute;margin-left:4%;width:90%;background-color: white; padding: 3px; border: 3px solid rgb(194, 225, 154);  margin-top: 10px;margin-bottom:10px;word-break:break-all">
                         
-<table data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0" class="table">
+<table class="caption-top table" data-quarto-postprocess="true" width="100%" data-cellpadding="0" data-cellspacing="0" data-border="0">
 <tbody>
 <tr class="odd">
 <td width="10%"><img src="https://zmp-glf.maillist-manage.com/images/challangeiconenable.jpg" class="successicon img-fluid" data-align="absmiddle"></td>
@@ -397,7 +400,6 @@ window.Quarto = {
 
 <div style="padding: 15px 0px"><script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="codesfinance" data-color="#FFDD00" data-emoji="☕" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script></div>
 
-</div>
 </div></div>
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
@@ -523,10 +525,9 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -621,7 +622,6 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="linearmodels" class="level2">
 <h2 class="anchored" data-anchor-id="linearmodels">linearmodels</h2>
@@ -645,10 +645,9 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -729,7 +728,6 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </div>
 </div>
 </div>
-</div>
 <p>You define models by passing the dependent variable and the exogenous variables to the model class. Alternatively, following statsmodels, linearmodels leverages the patsy formula language to provide a more intuitive way to define models. For example, the following two lines of code are equivalent:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS(data[<span class="st">"y"</span>], data[[<span class="st">"x1"</span>, <span class="st">"x2"</span>]])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> PanelOLS.from_formula(formula<span class="op">=</span><span class="st">"y ~ x1 + x2"</span>, data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -774,8 +772,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit()</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -882,7 +879,7 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -917,7 +914,6 @@ x_{I, T}^{(1)} &amp; x_{I, T}^{(2)} &amp; \cdots &amp; x_{I, T}^{(K-1)} &amp; x_
 <br><br>
 </div>
 </div>
-</div>
 <p>Note that because the intercept is usually excluded by default from panel data models because the use of fixed-effects renders it redundant, we need to add it manually to the model by adding <code>1</code> to the formula.</p>
 </section>
 <section id="white-standard-errors" class="level2">
@@ -945,8 +941,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"robust"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -1053,7 +1048,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -1088,14 +1083,13 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-</div>
 <p>The estimated coefficients are the same as with the OLS standard errors, but the standard errors are different. In turn, all statistical measures that depend on the standard errors, such as t-statistics and p-values, are different.</p>
 </section>
 <section id="clustered-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="clustered-standard-errors">Clustered standard errors</h2>
 <p>Beyond homoskedasticity, a common concern with panel models is that the errors are correlated across entities and/or time. In this case, the OLS estimator is biased and inconsistent, and the standard errors are incorrect. Clustering standard errors is a widely used adjustment for this problem.</p>
 <p>The intuition behind clustering is that often the errors are correlated within groups, but not across groups. For example, in a panel data set with firms, the errors could correlated within the observations of a firm, but not across firms. In this case, we can cluster the standard errors by firm to obtain consistent standard errors. Implicitly we assume that the errors have the following structure:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<table class="table-striped table-sm table-hover small table">
+<table class="table-striped table-sm table-hover small caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1234,7 +1228,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tbody>
 </table>
 <p>If you assume that the errors are correlated within the observations of a firm, and across firms within each time period, you can use standard errors clustered by firm and year. In this case, the errors have the following structure:</p>
-<table class="table-striped table-sm table-hover small table">
+<table class="table-striped table-sm table-hover small caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1380,8 +1374,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="37">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -1488,7 +1481,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -1523,7 +1516,6 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-</div>
 <div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
@@ -1531,8 +1523,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="38">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -1639,7 +1630,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -1674,7 +1665,6 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-</div>
 <div id="cell-19" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(</span>
@@ -1682,8 +1672,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="39">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -1790,7 +1779,7 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -1825,7 +1814,6 @@ e_{1, 1}^{2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0&amp; \cdots &amp; 0 &amp; 0 \\
 <br><br>
 </div>
 </div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1857,8 +1845,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -1965,7 +1952,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -1991,7 +1978,6 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 11.372<br>P-value: 0.0000<br>Distribution: F(499,4499)<br><br>Included effects: Entity
 </div>
 </div>
-</div>
 <div id="cell-23" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Year only</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod_yfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + TimeEffects"</span>, df)</span>
@@ -2000,8 +1986,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="41">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -2108,7 +2093,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -2134,7 +2119,6 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 0.6799<br>P-value: 0.7279<br>Distribution: F(9,4989)<br><br>Included effects: Time
 </div>
 </div>
-</div>
 <div id="cell-24" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm and year</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mod_fyfe <span class="op">=</span> PanelOLS.from_formula(<span class="st">"y ~ x + EntityEffects + TimeEffects"</span>, df)</span>
@@ -2143,8 +2127,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -2251,7 +2234,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -2277,7 +2260,6 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>F-test for Poolability: 11.203<br>P-value: 0.0000<br>Distribution: F(508,4490)<br><br>Included effects: Entity, Time
 </div>
 </div>
-</div>
 </section>
 <section id="driscoll-kraay-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="driscoll-kraay-standard-errors">Driscoll-Kraay standard errors</h2>
@@ -2292,8 +2274,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>PanelOLS Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -2400,7 +2381,7 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -2435,7 +2416,6 @@ y_{it} =  \alpha_i + \alpha_t + x_{it}\beta + \epsilon_{it},
 <br><br>
 </div>
 </div>
-</div>
 </section>
 <section id="fama-macbeth-coefficients-and-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="fama-macbeth-coefficients-and-standard-errors">Fama-MacBeth coefficients and standard errors</h2>
@@ -2459,8 +2439,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mod_fm.fit()</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="43">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>FamaMacBeth Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -2567,7 +2546,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -2601,7 +2580,6 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </table>
 </div>
 </div>
-</div>
 </section>
 <section id="newey-west-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="newey-west-standard-errors">Newey-West standard errors</h2>
@@ -2616,8 +2594,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fm_res <span class="op">=</span> fm_mod.fit(cov_type<span class="op">=</span><span class="st">"kernel"</span>, kernel<span class="op">=</span><span class="st">"bartlett"</span>, bandwidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fm_res.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="44">
-<div>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>FamaMacBeth Estimation Summary</caption>
 <tbody>
 <tr class="odd">
@@ -2724,7 +2701,7 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Parameter Estimates</caption>
 <tbody>
 <tr class="odd">
@@ -2756,7 +2733,6 @@ y_{it} =  \alpha_t + x_{it}\beta_t + \epsilon_{it},
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </section>

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/devcontainers/index.html",
       "/posts/ollama-copilot/index.html",
       "/posts/sentiment/index.html",
       "/posts/edgartools/index.html",
