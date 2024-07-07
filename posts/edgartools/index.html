@@ -135,6 +135,7 @@ cookieconsent.run({
 });
 </script> 
   
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9733047442411628" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -385,14 +386,7 @@ cookieconsent.run({
   <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final thoughts</a></li>
   </ul>
 </nav>
-    <div class="quarto-margin-footer"><div class="margin-footer-item">
-<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9733047442411628" crossorigin="anonymous"></script>
-<!-- Vertical ad bar -->
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9733047442411628" data-ad-slot="1587073827" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div></div></div>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -411,12 +405,6 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="sec-edgar-api">SEC Edgar API</h2>
 <p>While the Edgar database is freely accessible to anyone interested in browsing company filings, the manual retrieval of data can be time-consuming and inefficient. For researchers and analysts looking to conduct large-scale studies or apply complex algorithms, a more programmatic approach is necessary. This is where the <a href="https://www.sec.gov/edgar/sec-api-documentation">SEC’s APIs</a> come into play, allowing automated access to Edgar’s wealth of data.</p>
 <p>However, even with API access, the task of scraping, parsing, and processing the data remains a challenge. The raw data requires significant cleaning and manipulation before it can be effectively used in research. This is a hurdle that has long stood in the way of efficient data utilization from Edgar. This is where the <a href="https://github.com/dgunning/edgartools"><code>edgartools</code></a> Python library comes in.</p>
-<script async="" type="text/plain" cookie-consent="targeting" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-9733047442411628" data-ad-slot="7859756560"></ins> <script type="text/plain" cookie-consent="targeting">(adsbygoogle = window.adsbygoogle || []).push({});</script>
-<center><div class="adtext"></div></center>
-<script type="text/plain" cookie-consent="targeting">var elems = document.getElementsByClassName("adtext");
-for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</p>"; }
-</script>
-
 </section>
 <section id="getting-started-with-edgartools" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started-with-edgartools">Getting started with <code>edgartools</code></h2>
@@ -431,7 +419,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 <section id="basic-usage" class="level3">
 <h3 class="anchored" data-anchor-id="basic-usage">Basic usage</h3>
 <p>Once <code>edgartools</code> is installed, you can begin by importing the necessary components from the library. The first step in interacting with the Edgar API through <code>edgartools</code> is to set your identity. The SEC requires all API users to provide a name and email address. This requirement is easily met with <code>edgartools</code> as shown below:</p>
-<div id="cell-6" class="cell" data-execution_count="1">
+<div id="cell-5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> edgar <span class="im">import</span> set_identity</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>set_identity(<span class="st">"Vincent Gregoire vincent@codes.finance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -449,7 +437,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 <section id="querying-company-data" class="level3">
 <h3 class="anchored" data-anchor-id="querying-company-data">Querying Company Data</h3>
 <p>To begin working with a specific company, you need to define a <code>Company</code> object in <code>edgartools</code>. This object serves as your gateway to a wealth of information about the company, including its filings, financial summaries, and historical data. You can define a company object using either the company’s ticker symbol or its Central Index Key (CIK) code.</p>
-<div id="cell-9" class="cell" data-execution_count="2">
+<div id="cell-8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> edgar <span class="im">import</span> Company</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>apple <span class="op">=</span> Company(<span class="st">"AAPL"</span>)</span>
@@ -474,7 +462,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 </div>
 </div>
 <p>Once you have a company object, you can easily retrieve basic company information, financial summaries, former names, and other metadata. Here are some examples:</p>
-<div id="cell-11" class="cell" data-execution_count="3">
+<div id="cell-10" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>apple.financials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -592,7 +580,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 </div>
 </div>
 </div>
-<div id="cell-12" class="cell" data-execution_count="4">
+<div id="cell-11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>apple.former_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>[{'name': 'APPLE INC',
@@ -610,7 +598,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 <section id="company-filings" class="level3">
 <h3 class="anchored" data-anchor-id="company-filings">Company Filings</h3>
 <p>You can also use this <code>Company</code> object to access the company’s filings. The <code>get_filings</code> method allows you to retrieve a list of filings for the company, filtered by form type, date range, and other criteria. Here’s an example of how to retrieve the 10-Q filings (quarterly earnings) for a company:</p>
-<div id="cell-14" class="cell" data-execution_count="5">
+<div id="cell-13" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>filings <span class="op">=</span> apple.get_filings(form<span class="op">=</span><span class="st">"10-Q"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>filings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -679,7 +667,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 </div>
 </div>
 <p>After retrieving a list of filings, you might want to analyze the metadata or convert it into a format that’s easier to work with, such as a pandas DataFrame:</p>
-<div id="cell-16" class="cell" data-execution_count="6">
+<div id="cell-15" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>filings.to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -893,10 +881,10 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 <section id="accessing-filing-data" class="level3">
 <h3 class="anchored" data-anchor-id="accessing-filing-data">Accessing Filing Data</h3>
 <p>Beyond metadata, edgartools facilitates downloading and accessing the content of filings. Let’s work with the latest filing from the list we retrieved earlier.</p>
-<div id="cell-18" class="cell" data-execution_count="7">
+<div id="cell-17" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>latest_10q <span class="op">=</span> filings.latest()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="8">
+<div id="cell-18" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>latest_10q</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -921,7 +909,7 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 </div>
 </div>
 <p>To download the filing content, you can use the <code>obj()</code> method, which in this case will return a <code>TenQ</code> object. This object contains the filing’s content.</p>
-<div id="cell-21" class="cell" data-execution_count="9">
+<div id="cell-20" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tenq <span class="op">=</span> latest_10q.obj()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tenq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1056,14 +1044,14 @@ for(var i = 0; i < elems.length; i++) { elems[i].innerHTML = "<p>Advertisement</
 </div>
 </div>
 <p>The <code>TenQ</code> object provides access to the text content of the filing in a structured format, split by sections called “Items”. You can access the list of items in the filing using the <code>.item</code> attribute:</p>
-<div id="cell-23" class="cell" data-execution_count="10">
+<div id="cell-22" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tenq.items</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 1A', 'Item 5', 'Item 6']</code></pre>
 </div>
 </div>
 <p>You can then access the text content of each item using by passing the item name in square brackets:</p>
-<div id="cell-25" class="cell" data-execution_count="11">
+<div id="cell-24" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tenq[<span class="st">"Item 2"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Item 2.    Management’s Discussion and Analysis of Financial Condition and Results of Operations
@@ -1170,7 +1158,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <section id="xbrl-data" class="level3">
 <h3 class="anchored" data-anchor-id="xbrl-data">XBRL Data</h3>
 <p>XBRL (eXtensible Business Reporting Language) data offers a standardized format for financial reporting, making it easier to compare financial information across companies. SEC has required companies to submit their financial statements in XBRL format for many years, and this data is available through the Edgar database. <code>edgartools</code> provides tools to access this parsed data directly:</p>
-<div id="cell-27" class="cell" data-execution_count="12">
+<div id="cell-26" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>xbrl <span class="op">=</span> latest_10q.xbrl()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>xbrl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1222,7 +1210,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>You can also access the XBRL data as a pandas DataFrame, using the <code>.facts.data</code> attribute:</p>
-<div id="cell-29" class="cell" data-execution_count="13">
+<div id="cell-28" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>xbrl.facts.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1372,7 +1360,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>If you just wanted to access the latest XBRL data for a company, you can do so directly using the <code>get_facts()</code> method:</p>
-<div id="cell-31" class="cell" data-execution_count="14">
+<div id="cell-30" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>apple.get_facts().to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1565,7 +1553,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <section id="retrieving-8-k-filings" class="level3">
 <h3 class="anchored" data-anchor-id="retrieving-8-k-filings">Retrieving 8-K Filings</h3>
 <p>To start, you’ll need to query the Edgar database for 8-K filings for a specific company:</p>
-<div id="cell-33" class="cell" data-execution_count="15">
+<div id="cell-32" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>latest_8ks <span class="op">=</span> apple.get_filings(form<span class="op">=</span><span class="st">"8-K"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>latest_8ks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1634,24 +1622,24 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>You can then access the content of the latest 8-K filing using the <code>obj()</code> method, which returns an <code>EightK</code> object:</p>
-<div id="cell-35" class="cell" data-execution_count="16">
+<div id="cell-34" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>eightk <span class="op">=</span> [x.obj() <span class="cf">for</span> x <span class="kw">in</span> latest_8ks.latest(<span class="dv">10</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="extracting-press-releases" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-press-releases">Extracting press releases</h3>
 <p>Not all 8-K filings will include press releases. To filter out the filings that contain press releases, you will need to inspect each filing individually using the <code>has_press_release</code> attribute. Here’s a simplified approach to identify and collect filings with press releases:</p>
-<div id="cell-37" class="cell" data-execution_count="17">
+<div id="cell-36" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>eightks <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> eightk <span class="cf">if</span> x.has_press_release]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-38" class="cell" data-execution_count="18">
+<div id="cell-37" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(eightks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>7</code></pre>
 </div>
 </div>
 <p>To access the press release content, you can use the <code>press_releases</code> attribute of the <code>EightK</code> object, which is an object of type <code>PressReleases</code>:</p>
-<div id="cell-40" class="cell" data-execution_count="19">
+<div id="cell-39" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pr <span class="op">=</span> eightks[<span class="dv">0</span>].press_releases</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1668,7 +1656,7 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>This object contains a list of press releases in the <code>attachments</code> attribute. Most will only have one press release, but some may have multiple attachments:</p>
-<div id="cell-42" class="cell" data-execution_count="20">
+<div id="cell-41" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pr.attachments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -1684,15 +1672,15 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>You can open the press release in a browser to read its content using the <code>open()</code> method:</p>
-<div id="cell-44" class="cell" data-execution_count="21">
+<div id="cell-43" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pr.attachments[<span class="dv">0</span>].<span class="bu">open</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Alternatively, you can access the text content of the attachement directly using the <code>download()</code> method:</p>
-<div id="cell-46" class="cell" data-execution_count="22">
+<div id="cell-45" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> pr.attachments.get(<span class="dv">0</span>).download()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In most cases, the press release will be in HTML format embedded into a XML file. To extract the text content from the HTML, you will need to do some extra work using libraries like <a href="https://www.crummy.com/software/BeautifulSoup/"><code>BeautifulSoup</code></a>.</p>
-<div id="cell-48" class="cell" data-execution_count="23">
+<div id="cell-47" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;DOCUMENT&gt;
@@ -1717,10 +1705,10 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 <section id="using-get_filings-to-retrieve-filings" class="level3">
 <h3 class="anchored" data-anchor-id="using-get_filings-to-retrieve-filings">Using <code>get_filings()</code> to retrieve filings</h3>
 <p>Large-scale data analysis requires collecting significant amounts of data from Edgar, a task that <code>edgartools</code> facilitates through the <code>get_filings()</code> method. This method allows for broad and targeted scraping activities, enabling researchers to gather extensive datasets for their empirical analyses.Here’s a basic example of how to use it to retrieve all 10-K filings for a specific year and quarter:</p>
-<div id="cell-50" class="cell" data-execution_count="24">
+<div id="cell-49" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> edgar <span class="im">import</span> get_filings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-51" class="cell" data-execution_count="25">
+<div id="cell-50" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>filings <span class="op">=</span> get_filings(year<span class="op">=</span><span class="dv">2024</span>, quarter<span class="op">=</span><span class="dv">1</span>, form<span class="op">=</span><span class="st">"10-K"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>filings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1875,10 +1863,10 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </tbody>
 </table>
 <p>For example, another commonly analyzed form is the 13F-HR, which discloses institutional holdings of publicly traded companies. Here’s how you can retrieve the latest 13F-HR filing for a company:</p>
-<div id="cell-55" class="cell" data-execution_count="26">
+<div id="cell-54" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>filings <span class="op">=</span> get_filings(form<span class="op">=</span><span class="st">"13F-HR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-56" class="cell" data-execution_count="27">
+<div id="cell-55" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>filings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -1946,13 +1934,13 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>Again, the process is the same. You get a list of filings, then retreive the actual filing content using the <code>obj()</code> method.</p>
-<div id="cell-58" class="cell" data-execution_count="28">
+<div id="cell-57" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>filing <span class="op">=</span> filings[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-59" class="cell" data-execution_count="29">
+<div id="cell-58" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> filing.obj()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-60" class="cell" data-execution_count="30">
+<div id="cell-59" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>report</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -1980,13 +1968,13 @@ Apple Inc. | Q1 2024 Form 10-Q | 20
 </div>
 </div>
 <p>In the case of the 13F-HR, the holdings are stored in an <code>infotable</code> attribute, which is a a pandas DataFrame:</p>
-<div id="cell-62" class="cell" data-execution_count="31">
+<div id="cell-61" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>report.has_infotable()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>True</code></pre>
 </div>
 </div>
-<div id="cell-63" class="cell" data-execution_count="32">
+<div id="cell-62" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>report.infotable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <div>
