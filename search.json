@@ -165,7 +165,7 @@
     "href": "posts/edgartools/index.html",
     "title": "Scrape financial data from SEC Edgar with Python and edgartools",
     "section": "",
-    "text": "In the ever-evolving field of finance, the application of machine learning, especially text analysis, has become increasingly popular. Researchers are constantly seeking out rich datasets to mine for insights, with company filings offering a treasure trove of information. One of the most comprehensive sources of such data is the Edgar database, maintained by the Securities and Exchange Commission (SEC). This publicly available resource contains a vast array of filings from companies, making it an invaluable tool for empirical finance research.\nIn this tutorial, I will show you how to scrape financial data from the SEC Edgar database using Python and the edgartools library."
+    "text": "In the field of finance, the application of machine learning, especially text analysis, has become increasingly popular. Researchers are constantly seeking out rich datasets to mine for insights, with company filings offering a treasure trove of information. One of the most comprehensive sources of such data is the Edgar database, maintained by the Securities and Exchange Commission (SEC). This publicly available resource contains a vast array of filings from companies, making it an invaluable tool for empirical finance research.\nIn this tutorial, I will show you how to scrape financial data from the SEC Edgar database using Python and the edgartools library."
   },
   {
     "objectID": "posts/edgartools/index.html#video-tutorial",

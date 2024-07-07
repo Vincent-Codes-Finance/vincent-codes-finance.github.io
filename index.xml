@@ -9,7 +9,7 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.4.555</generator>
+<generator>quarto-1.4.556</generator>
 <lastBuildDate>Fri, 14 Jun 2024 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Use Devcontainers for safe and replicable research</title>
