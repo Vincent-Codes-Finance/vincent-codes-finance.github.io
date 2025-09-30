@@ -725,7 +725,7 @@
     "href": "posts/claude-code-data-analysis/index.html#wrapping-up",
     "title": "Claude Code for Data Analysis",
     "section": "Wrapping Up",
-    "text": "Wrapping Up\nClaude Code is more than just a coding assistant—it is a full workflow partner that can plan, execute, review, and document your analysis. With tools like MCPs, multimodal feedback, and context management, it can streamline even complex projects.\nIf you are just starting out, focus on the basics: setting up your project, making your data accessible, and working in an iterative plan-review-execute loop. As you grow more comfortable, you can explore context management and sub-agents to push your workflow further.\nI will also be publishing a companion YouTube walkthrough that shows these ideas in action with a real data analysis example, so stay tuned for that if you’d like to see Claude Code at work step by step."
+    "text": "Wrapping Up\nClaude Code is more than just a coding assistant—it is a full workflow partner that can plan, execute, review, and document your analysis. With tools like MCPs, multimodal feedback, and context management, it can streamline even complex projects.\nIf you are just starting out, focus on the basics: setting up your project, making your data accessible, and working in an iterative plan-review-execute loop. As you grow more comfortable, you can explore context management and sub-agents to push your workflow further."
   },
   {
     "objectID": "posts/documents-llm/index.html",
