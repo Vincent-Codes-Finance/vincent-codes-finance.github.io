@@ -9,8 +9,22 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.4.556</generator>
-<lastBuildDate>Fri, 14 Jun 2024 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.24</generator>
+<lastBuildDate>Tue, 30 Sep 2025 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Claude Code for Data Analysis</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/claude-code-data-analysis/</link>
+  <description><![CDATA[ A practical guide to using Claude Code for data analysis, including setup, workflow tips, and advanced features. ]]></description>
+  <category>VS Code</category>
+  <category>LLM</category>
+  <category>Python</category>
+  <category>Machine Learning</category>
+  <category>AI</category>
+  <guid>https://vincent.codes.finance/posts/claude-code-data-analysis/</guid>
+  <pubDate>Tue, 30 Sep 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/claude-code-data-analysis/robotgears.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Use Devcontainers for safe and replicable research</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

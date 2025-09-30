@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/claude-code-data-analysis/index.html",
       "/posts/devcontainers/index.html",
       "/posts/ollama-copilot/index.html",
       "/posts/sentiment/index.html",
