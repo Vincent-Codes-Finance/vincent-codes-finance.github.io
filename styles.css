@@ -1,0 +1,50 @@
+/* Typography */
+body {
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3, h4, h5, h6,
+.title {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Code blocks */
+div.sourceCode {
+  border-radius: 0.5rem;
+}
+
+pre.sourceCode {
+  border-radius: 0.5rem;
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Footer */
+.nav-footer {
+  border-top: 1px solid var(--bs-border-color);
+}
+
+/* Links */
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* TOC */
+nav[id="TOC"] {
+  font-size: 0.8rem;
+  color: var(--bs-secondary-color);
+}
+
+/* Sidebar / listing */
+.sidebar nav[id="quarto-sidebar-glass"] {
+  font-size: 0.85rem;
+}
