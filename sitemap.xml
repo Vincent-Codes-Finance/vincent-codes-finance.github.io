@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2026-02-14T20:39:16.937Z</lastmod>
+    <lastmod>2026-02-15T00:04:53.170Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/vscode-latex/</loc>
@@ -35,6 +35,10 @@
   <url>
     <loc>https://vincent.codes.finance/posts/install-python-312/</loc>
     <lastmod>2026-02-14T18:47:00.589Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vincent.codes.finance/posts/claude-code-data-analysis/</loc>
+    <lastmod>2026-02-15T00:06:34.002Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/documents-llm/</loc>
