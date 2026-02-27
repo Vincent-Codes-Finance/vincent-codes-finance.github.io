@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2026-02-26">
+<meta name="description" content="A personal account of using AI to write an academic research paper in four days.">
+
+<title>Vibe Research, or How I Wrote an Academic Paper in Four Days – Vincent Codes Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-22991ba8c67954c7b2f4b8e7e07f7d84.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-7fa2cb92f5c3e8761d66bb2bf304d883.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-22991ba8c67954c7b2f4b8e7e07f7d84.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-11a79a1ec98e6db4188120ea4b747c6e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3d4dffa97e98bb3ff2397c78b0d7221f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-11a79a1ec98e6db4188120ea4b747c6e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="3fcf770b-4532-49f4-b9c6-05a49573a2f5"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vibe Research, or How I Wrote an Academic Paper in Four Days – Vincent Codes Finance">
+<meta property="og:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta property="og:site_name" content="Vincent Codes Finance">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:title" content="Vibe Research, or How I Wrote an Academic Paper in Four Days – Vincent Codes Finance">
+<meta name="twitter:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://vincent.codes.finance/posts/vibe-research-paper/" />
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo light-content">
+    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vincent Codes Finance</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About VCF</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/CodesFinance"> <i class="bi bi-twitter-x" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/vincent-codes-finance/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Vibe Research, or How I Wrote an Academic Paper in Four Days</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Writing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 26, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#day--1-the-idea" id="toc-day--1-the-idea" class="nav-link active" data-scroll-target="#day--1-the-idea">Day -1: The Idea</a></li>
+  <li><a href="#day-0-the-outline" id="toc-day-0-the-outline" class="nav-link" data-scroll-target="#day-0-the-outline">Day 0: The Outline</a></li>
+  <li><a href="#day-1-the-first-draft" id="toc-day-1-the-first-draft" class="nav-link" data-scroll-target="#day-1-the-first-draft">Day 1: The First Draft</a></li>
+  <li><a href="#day-2-iterating" id="toc-day-2-iterating" class="nav-link" data-scroll-target="#day-2-iterating">Day 2: Iterating</a></li>
+  <li><a href="#day-3-simplifying-the-model" id="toc-day-3-simplifying-the-model" class="nav-link" data-scroll-target="#day-3-simplifying-the-model">Day 3: Simplifying the Model</a></li>
+  <li><a href="#day-4-finishing-touches" id="toc-day-4-finishing-touches" class="nav-link" data-scroll-target="#day-4-finishing-touches">Day 4: Finishing Touches</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks">Concluding Remarks</a></li>
+  <li><a href="#software-stack" id="toc-software-stack" class="nav-link" data-scroll-target="#software-stack">Software Stack</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p>I tried to write an academic paper in four weeks using AI… and finished in four days.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The paper, titled <em>Investing in Artificial General Intelligence</em>, is on <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6305300">SSRN</a> and on <a href="https://github.com/fintech-research/ai-lab-investment/releases/download/v0.1.0-alpha/ai_lab_investment.pdf">GitHub</a>.</p>
+<p>I’m not writing to brag about how fast I was able to write the paper. My motivation is simple: I was blown away by the result, so I want to share my experience and insights. To be clear, I think it is a <em>good</em> paper<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> that looks nothing like what I would categorize as “obviously written by AI”. Yes, there are em-dashes, but not more than in my pre-ChatGPT papers. I would be very proud of that paper if I had written it myself without AI. Now, I don’t know how to feel about it and I wonder how academic research will evolve in the coming year<del>s</del> as AI becomes more powerful and accessible.</p>
+<p>A second reason for writing this post is transparency. The use of AI in the research process, while very common, is still a gray area ethically. I went all in on AI for this paper, so it feels like full disclosure is in order, especially since I will be submitting this paper to conferences and (eventually) journals.</p>
+<p>The initial trigger to go all in on AI for a research paper was the call for papers for the <a href="https://humanxaifinance.org">Human × AI Finance</a> conference:</p>
+<blockquote class="blockquote">
+<p>An original research exercise: write a finance paper using as much AI assistance as possible — in just four weeks. All papers reviewed by AI agents. Top four presented and discussed at the Fink Center Conference on Financial Markets at UCLA Anderson.</p>
+</blockquote>
+<p>This was a perfect opportunity to test the limits of AI in research. To be clear, I consider myself an aggressive early adopter of AI, and I had attempted to use it to speedrun research papers in the past with limited success. However, the capabilities of AI have improved significantly since then, and I was curious to see how far I could push it (plus I just finished teaching, so it was time to have some fun).</p>
+<p>So the challenge was set. I had four weeks to write a research paper using as much AI assistance as possible, i.e.&nbsp;to “vibe research”. Here is how it went down.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Vibe Research
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I use the term loosely <em>vibe research</em> to describe the process of using AI to quickly iterate on ideas and produce a research paper. It is a (cheap) play on the term “vibe coding” coined by <a href="https://observer.com/2026/02/andrej-karpathy-new-term-ai-coding/">Andrej Karpathy</a>, which is the process of using AI to quickly iterate on code and produce a working program (in its purest form, it involves not even looking at the code, but just asking the AI to write and fix it until it works). Vibe research is the same thing, but for research papers. Just like vibe coding, vibe research is about iterating quickly on ideas and getting feedback from AI agents until you have a paper that you are happy with.</p>
+<p>This is not a new term; a quick search gave me this podcast on <a href="https://about.citiprogram.org/blog/on-tech-ethics-podcast-vibe-research-and-the-future-of-science/">Vibe Research and the Future of Science</a> and this <a href="https://www.researchgate.net/profile/Debi-Prasad-Ghosh/publication/395805837_Neurocognitive_Model_of_Vibe_Coding_DMN_Vision_LLM_Execution_and_Salience_Switching/links/68daa83ff3032e2b4be44357/Neurocognitive-Model-of-Vibe-Coding-DMN-Vision-LLM-Execution-and-Salience-Switching.pdf">online manuscript</a> that use the term in a similar context.</p>
+</div>
+</div>
+<section id="day--1-the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="day--1-the-idea">Day -1: The Idea</h2>
+<p>The idea for the paper came to me last Friday while listening to Dwarkesh Patel’s [https://www.dwarkesh.com/p/dario-amodei-2] interview with Dario Amodei, the CEO of Anthropic. There was some discussion about his views on investing in infrastructure, and why Anthropic does not invest as aggressively in infrastructure as they could. I thought that was an interesting angle to explore, especially given the recent surge in investment in AI infrastructure. However, this was just a vague idea at this point, and clearly one that falls under “theoretical corporate finance”, which is not my area of expertise. In fact, I haven’t studied corporate finance models since the PhD (I graduated in 2013). This is where I find AI most exciting: it can help you pursue ideas that you would not have explored otherwise because of the time and effort required to get up to speed on the relevant literature and tools.</p>
+</section>
+<section id="day-0-the-outline" class="level2">
+<h2 class="anchored" data-anchor-id="day-0-the-outline">Day 0: The Outline</h2>
+<p>On Saturday, I spent my afternoon at a tennis club watching my son play in a tournament. I had my phone with me, and I decided to use that time to start fleshing out the idea. I see this as the starting point of my work on the paper. Using Claude, I started with a simple prompt:</p>
+<blockquote class="blockquote">
+<p>I just listened to an interview with Anthropic’s CEO (transcript here: https://www.dwarkesh.com/p/dario-amodei-2). I found the discussion on the economics of investment in compute infrastructure very interesting and thought that it would be nice to write down a real option model of investment that would embed the idea of limited competition and default risk discussed in the interview. Can you first summarize the relevant parts of the interview related to investment in compute and how Anthropic is approaching those issues?</p>
+</blockquote>
+<p>I then turned on “research” mode in Claude, and asked it to “<em>search the academic literature for existing models that would have similar features (even if not all features are present). Focus on top finance and economics journals.</em>”. After ~30 minutes, I got a nice (but incomplete) <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/references/lit_review.md">literature review</a>, then asked it “<em>from this literature review, what approach do you suggest to build a model that incorporates all of these features?</em>”. It suggested two possible approaches: one for a paper and a simpler one appropriate for a blog post. For my final prompt of the afternoon, I asked it to write a plan to implement the paper:</p>
+<blockquote class="blockquote">
+<p>approach A is the way to go; i’m looking to write a fully fledged academic paper on this. i think it would be nice to solve a simplified version of the model anatically (ie duopoly) to illustrate the key mechanism insights, then we could solve a mire complex version numerically. we could even calibrate a version of the model using publicly stated numbers from the frontier labs and other sources. the main questions I want to tackle is how to think about optimal investment in compute for these firms. it would be great if we could also use it the model to tackle (even partially) the problem of valuing these firms and provide insights as to how external observers (ie market participants) could infer the probability of a regime switch (the lambda) from frontier labs investment decisions. In other words, will we be able to tell the agi is near (assuming AI labs will know first that it is near). For the numerical exercises, I will use python with numpy (unless something else more appropriate exists). For the anslytical solutions, I would like to try using python with simpy<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, but I might revert to solving the model « by hand ». Can you make a detailed plan of action for deriving the model, implementing the numerical solutions and writing the full paper? Assume that we are aiming for a top journal such as AER, econometrica, or the journal of finance.</p>
+</blockquote>
+<p>I had no idea if using code (sympy and numpy) to solve the model would help. From my experience doing data analysis, AI agent are great at writing and reviewing code, and great at writing tests for code, so I figured that would add another layer of confidence in the results.</p>
+<p>I got a very detailed plan of action, and my focus was back on tennis. Later that evening, I created a private <a href="https://github.com/fintech-research/ai-lab-investment">GitHub repository</a> for the project (now public, so feel free to snoop around), and set it up using a <a href="https://github.com/fintech-research/cookiecutter-py-quarto">template</a> of mine (note that the template is broken, a blank project needs some manual fixes so I wouldn’t recommend using it for now). The key components: Python with <a href="https://docs.astral.sh/uv/guides/projects/">uv</a> for the code, <a href="https://quarto.org/">Quarto</a> for the paper, <a href="../../posts/claude-code-data-analysis/index.html">Claude Code</a> (CC) for most of the work, and <a href="https://code.visualstudio.com/">VS Code</a> with a <a href="../../posts/devcontainers/index.html">Devcontainer</a> for improved security when letting CC work with <code>--allow-dangerously-skip-permissions</code> (aka YOLO mode).</p>
+<p>I added the <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/references/lit_review.md">lit review</a> and the <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/plan.md">plan of action</a> to the repository, and I was ready to start working on the paper. Or, to be exact, let CC work on the paper. I asked it to read the plan, create an issue for each phase of the plan (you can see the first issue <a href="https://github.com/fintech-research/ai-lab-investment/issues/2">here</a>), and then to work on all issues in sequence.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> I activated YOLO mode and made sure it was working hard on my paper. Then I went to bed.</p>
+</section>
+<section id="day-1-the-first-draft" class="level2">
+<h2 class="anchored" data-anchor-id="day-1-the-first-draft">Day 1: The First Draft</h2>
+<p>I woke up on Sunday morning to find that CC was done. There it was, I had a first draft of the paper, with all the sections filled in. It was complete; not in the sense that it was ready to be submitted, but in the sense that it had all the components of a research paper. I was amazed. I wanted to read the paper, but I didn’t have time: it was Sunday morning, and there was a Olympic gold-medal hockey game to watch. But that was no reason to let AI rest, so I decided to iterate on the paper while watching the game.</p>
+<p>Following an approach I used for coding projects, I launched a fresh instance of CC, an instance of <a href="https://github.com/openai/codex">Codex CLI</a>, and an instance of <a href="https://opencode.ai/">OpenCode</a> (with Gemini), and I asked each agent to review the paper, the code, and the proofs and write a report. You can have a look at <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/REVIEW_INSTRUCTIONS.md">the full instructions</a> (written by Claude, of course). When they were done, I asked a fresh instance of CC to read the reports, write a <a href="https://github.com/fintech-research/ai-lab-investment/blob/749c5412a09232f64dab0fe683b5d4f5a8f940d3/reports/consolidated_review.md">consolidated report</a> with suggested fixes, and then to implement those fixes. When it was done, I repeated the whole process again one more time.</p>
+<p>After watching a <a href="https://www.tsn.ca/olympics/article/boldy-gives-united-states-lead-over-canada-in-gold-medal-game/">very entertaining hockey game</a> (with an unfortunate overtime loss for Team Canada), I was back at the tennis club but this time with my laptop so I could work between matches (my son made the final, so I spent a good chunk of my week-end there.) Looking at the AI feedback, I noticed that one area the AI wouldn’t be able to fix by itself was getting better references on public statements by tech executives related to the topic under study. For that, more research was needed, so I tasked Claude with it:</p>
+<blockquote class="blockquote">
+<p>I want to better understand how executive of AI frontier labs make decisions regarding their investments in compute infrastructure, how they choose to allocate their computing power between training and inference, and when they believe they will achieve AGI (or a similar inflexion point in performance). Focus of news articles, interviews, podcasts, etc., from the last 12 to 18 months.</p>
+</blockquote>
+<p>That was enough to get a much better set of <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/references/media_review_frontier_ai.md">media references</a> for the introduction. I asked CC to read the document and update the introduction, and then loaded the PDF on my iPad to have a first read of the introduction. Later that evening, I gave my feedback to CC and asked it to incorporate it in the paper. At that point, I still hadn’t written a single word of the paper directly myself. All changes to the writeup were made through prompts to CC.</p>
+<p>I continued to iterate on the paper using the coding agents to review, but I also started asking feedback from the web versions of ChatGPT 5.2 (with thinking activated) and Claude.ai with Opus 4.6, combining their feedback and asking CC to implement the relevant suggestions. These were different because they didn’t have access to the code and the Quarto markdown files, only to the rendered pdf. Still, I found that having multiple agents with different capabilities and perspectives was very helpful in improving the paper.</p>
+</section>
+<section id="day-2-iterating" class="level2">
+<h2 class="anchored" data-anchor-id="day-2-iterating">Day 2: Iterating</h2>
+<p>I spent most of my work time (besides a few meetings) the next day iterating on the paper with the same loop (either the coding agents or the chat-based agents). However, at that point I also started paying more attention to the reviews and asking for more specific feedback on the model and the results. These interventions, while not time consuming for me, were significant in terms of the changes they generated in the paper. The human in the loop was not doing the heavy lifting, but it was providing the needed guidance and feedback to steer the paper in the right direction. I also started making more significant changes to the model and the writing, but I still didn’t write anything directly myself; changes were made through CC.</p>
+<p>I don’t know exactly how many rounds of iteration I did on the paper, but looking at my chat history, I had Claude.ai and ChatGPT do seven reviews each over the four days, and I had the coding agents do a similar number of “full repository” reviews.</p>
+<p>I eventually realized that my Day 0 typo of “simpy” instead of “sympy” had caused the AI to completely ignore the use of sympy. That got me worried that the derivation of the model could be a complete fabrication, so I asked CC to write the code to solve the model using sympy, which it managed to do it without issues. I also had it write a <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/notebooks/model_derivation.ipynb">Jupyter notebook</a> with the model derivation to make it easier for me to review the math.</p>
+<p>Another concern I had was the accuracy of the references. The literature review was done by Claude.ai using its research feature which is supposed to give accurate references, but I still don’t fully trust it. Verifying the references was thus a must, but I didn’t want to do it manually. Instead, I tried having CC check the references for me (CC has a <code>--chrome</code> mode which allows it to connect to an instance of <a href="https://claude.com/chrome">Claude in Chrome</a>). It didn’t quite work (probably because of the Devcontainer setup), so I reverted to using <a href="https://claude.com/product/cowork">Claude Cowork</a> instead (which can also connect to a Chrome instance).</p>
+<p>I don’t have the exact prompt I used, but it was something along the lines of: “Go over all the academic references in the bibtex file, and search them one at a time on Google Scholar. For each reference, check that the title, authors, journal, and year are correct. If you find any discrepancies, write them in a report. Also note down the references you can’t find.” It took a while, but the next day I woke up to find a nice <a href="https://github.com/fintech-research/ai-lab-investment/blob/0ba8f0543c06a9975f482a2e729709bc80103e61/paper/reference_corrections.md">report</a> waiting for me. Besides minor fixes, the main issue was that one of the references was completely fabricated, and one other one had the wrong title and journal.</p>
+</section>
+<section id="day-3-simplifying-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="day-3-simplifying-the-model">Day 3: Simplifying the Model</h2>
+<p>Day 3 was mostly a continuation of the iteration process, but I also started asking CC to make changes to the figures and tables. My AI reviews kept complaining that the data for my calibration exercise was too limited, so I had Claude.ai do another targeted search for the relevant data and used the resulting <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/references/data_compendium.md">report</a> to update the calibration section.</p>
+<p>At the end of the day, I actually read the full paper for the first time, and found the model to be very complex, maybe even too complex. I thought of a potential simplification: take out the option to invest in the post-AGI regime. This was a substantial change to the model and the code, so I asked CC to implement it and waited until the next day to see the results.</p>
+</section>
+<section id="day-4-finishing-touches" class="level2">
+<h2 class="anchored" data-anchor-id="day-4-finishing-touches">Day 4: Finishing Touches</h2>
+<p>CC implemented the simplification, but also left me a note. It turns out that the simplification made it impossible to solve the model analytically. I took the explanation to Claude.ai and had a good chat with it about the issues before concluding that the AI was right. The nice thing about using git to track your changes is that when you try things in a branch and they don’t work, you can just <a href="https://github.com/fintech-research/ai-lab-investment/tree/71-simplify-single-firm-model-set-f_hx-0-no-post-agi-entry">leave it there</a> (or delete it) and go back to where you were before, so this is what I did.</p>
+<p>I spent the rest of the day looking for more ways to trim the paper and make it more concise, to simplify the model as much as possible without losing the key insights, and to polish the figures and the introduction. I also validated the non-academic references in the introduction and added a few more (manually this time because I wanted only credible media sources, which I found to be a bit hit or miss when I asked Claude to do it).</p>
+<p>I also received an email from a colleague of mine who pointed me to <a href="https://www.refine.ink/">Refine</a>, a tool for “AI-powered peer review”. I had heard of it before, but I had never tried it. I signed up and used my free credit to review the paper. The free review is somewhat limited, but <a href="https://github.com/fintech-research/ai-lab-investment/blob/d8d107dee0ca60475a4057b24195b56196a3cfad/reports/feedback-investing-in-artificial-general-intelligence-2026-02-25.md">the report</a> was nonetheless helpful in catching some issues the other agents had missed.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> The report was detailed enough that CC was able to read it, understand the issues, and implement the relevant changes. After some more edits and polishing, I was finally happy with the paper.</p>
+<p>At 9:55 PM on Wednesday (4 days and 8 hours after starting work on the paper), I created the first “<a href="https://github.com/fintech-research/ai-lab-investment/releases/tag/v0.1.0-alpha">release</a>” of the paper on GitHub and submitted the paper to <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6305300">SSRN</a>. I was done (for now). I had a research paper that I was proud of, and that I thought was a good contribution to the literature, and it only took me four days. This is only the beginning of the story for this paper as I am now moving on to conference submissions (for those not aware, the publication process in economics and finance is quite long, with multiple rounds of revisions and resubmissions, so it will be a while until this paper is “done”).</p>
+</section>
+<section id="concluding-remarks" class="level2">
+<h2 class="anchored" data-anchor-id="concluding-remarks">Concluding Remarks</h2>
+<p>I wanted to share my experience and insights from this experiment, as I think it has implications for how we will do research in the future. If I can write a decent paper so quickly, what does that mean for the future of academic research? Will we write (and review) more papers? Will we set a higher bar for what constitutes a “good” paper? I don’t have the answers to these questions, but one thing I’m sure of is that we can’t put the genie back in the bottle.</p>
+<p>One thing that reassured me is how much the human in the loop still matters, even when AI is doing almost all of the writing and coding. The key decisions that shaped the paper — the initial idea, the simplification attempts, the choice to verify references independently, the judgment calls on which reviewer suggestions to accept and which to ignore — were mostly mine. AI made me faster, not smarter. It lowered the cost of exploring ideas, but the research taste and direction still had to come from me.</p>
+<p>I also want to be honest about the limitations. I don’t fully understand every line of the math in my own paper, and that is uncomfortable. I have verified the key results using sympy and reviewed the derivations, but I would be lying if I said I could reproduce them on a whiteboard from memory. The fabricated reference that slipped through the literature review is another reminder that trust but verify is not optional when working with AI. These are not reasons to stop using AI for research, but they are reasons to be thoughtful and transparent about how we use it.</p>
+</section>
+<section id="software-stack" class="level2">
+<h2 class="anchored" data-anchor-id="software-stack">Software Stack</h2>
+<p>Here is a list of the main platforms and software tools I used for this project:</p>
+<ul>
+<li>The workhorse was <a href="https://code.claude.com/docs/en/overview">Claude Code</a>. I’m on the Max plan (USD 100/month) but still managed to hit the 5-hour limit a few times. This also lets me use Claude.ai, Claude Cowork and Claude in Chrome, which I used for specific tasks as described above.</li>
+<li>I use <a href="https://github.com/">GitHub</a> for version control and collaboration in most of my projects. As an academic, I get a free GitHub Copilot Pro subscription, which I used to access Gemini Pro in <a href="https://opencode.ai/">OpenCode</a>.</li>
+<li><a href="https://quarto.org/">Quarto</a> for writing the paper in markdown and rendering it to PDF. Very convenient when working with AI agents as markdown is as close to a natural language as you can get while still being structured enough for the AI to understand the document structure and make specific edits.</li>
+<li><a href="https://code.visualstudio.com/">VS Code</a> with a <a href="../../posts/devcontainers/index.html">Devcontainer</a>.</li>
+<li><a href="https://developers.openai.com/codex/cli">Codex CLI</a> and ChatGPT. I’m on the Plus plan, which was plenty for the use I made of it.</li>
+<li>Python and <a href="https://docs.astral.sh/uv/guides/projects/">uv</a> for the code. I also used <a href="https://www.sympy.org/en/index.html">sympy</a> for the analytical solutions and <a href="https://numpy.org/">numpy</a> for the numerical solutions.</li>
+<li><a href="https://www.refine.ink/">Refine</a> (using a free review) for an additional round of feedback on the paper.</li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><em>Less than 5 days</em> would be more accurate, but four days makes for a better headline<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>As I explain below, the paper falls in a subfield of finance which is not my core expertise, so I can’t rule out that the paper is actually very bad and will get destroyed at conferences, if it gets accepted at all.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This was a typo on my part, I actually meant <a href="https://www.sympy.org/en/index.html">sympy</a>. I only realized on Day 2 when I inspected the code and noticed that sympy was not even installed.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>My actual prompt was a bit more complex because I wanted to make sure that each issue was worked on in a separate branch and then merged with a pull request to line up with my usual workflow.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>If you end up subscribing to Refine, you can use my <a href="https://www.refine.ink?ref=dmluY2VudC5ncmVnb2lyZUBnbWFpbC5jb20">referral code</a> which will give me (but, unfortunately, not you) free credits for future reviews<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vincent\.codes\.finance");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2026, Vincent Grégoire</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

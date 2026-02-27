@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/vibe-research-paper/index.html",
       "/posts/claude-code-data-analysis/index.html",
       "/posts/devcontainers/index.html",
       "/posts/ollama-copilot/index.html",
