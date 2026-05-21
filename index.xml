@@ -9,8 +9,21 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.8.27</generator>
-<lastBuildDate>Thu, 26 Feb 2026 05:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Thu, 21 May 2026 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>What is Parquet and Why You Should Use It</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/parquet/</link>
+  <description><![CDATA[ A short introduction to the Parquet file format, why it’s faster and lighter than CSV, and how to read and write it from Python and R. ]]></description>
+  <category>Python</category>
+  <category>R</category>
+  <category>Data</category>
+  <category>Tutorial</category>
+  <guid>https://vincent.codes.finance/posts/parquet/</guid>
+  <pubDate>Thu, 21 May 2026 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/parquet/why-parquet.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Vibe Research, or How I Wrote an Academic Paper in Four Days</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>

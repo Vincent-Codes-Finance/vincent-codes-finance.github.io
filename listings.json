@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/parquet/index.html",
       "/posts/vibe-research-paper/index.html",
       "/posts/claude-code-data-analysis/index.html",
       "/posts/devcontainers/index.html",
