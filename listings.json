@@ -2,21 +2,16 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/vibe-research-fable/index.html",
       "/posts/parquet/index.html",
       "/posts/vibe-research-paper/index.html",
       "/posts/claude-code-data-analysis/index.html",
       "/posts/devcontainers/index.html",
       "/posts/ollama-copilot/index.html",
-      "/posts/sentiment/index.html",
-      "/posts/edgartools/index.html",
       "/posts/documents-llm/index.html",
       "/posts/apple-mlx/index.html",
       "/posts/ollama-chatgpt/index.html",
-      "/posts/pandas-read-csv/index.html",
       "/posts/vscode-latex/index.html",
-      "/posts/github-for-research/index.html",
-      "/posts/timeseries-standard-errors/index.html",
-      "/posts/panel-ols-standard-errors/index.html",
       "/posts/python-basics-tutorial/index.html",
       "/posts/install-python-312/index.html",
       "/posts/welcome/index.html"

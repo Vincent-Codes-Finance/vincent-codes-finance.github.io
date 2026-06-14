@@ -10,7 +10,19 @@
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Thu, 21 May 2026 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 13 Jun 2026 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Vibe Research II: My Three Days with Fable 5</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/vibe-research-fable/</link>
+  <description><![CDATA[ A personal account of using Fable 5 for academic research. ]]></description>
+  <category>LLM</category>
+  <category>AI</category>
+  <category>Writing</category>
+  <guid>https://vincent.codes.finance/posts/vibe-research-fable/</guid>
+  <pubDate>Sat, 13 Jun 2026 04:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/vibe-research-fable/vibe-research-ii-small.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>What is Parquet and Why You Should Use It</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
@@ -79,32 +91,6 @@
   <media:content url="https://vincent.codes.finance/posts/ollama-copilot/ollama-copilot.webp" medium="image" type="image/webp"/>
 </item>
 <item>
-  <title>Financial news sentiment analysis in Python</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/sentiment/</link>
-  <description><![CDATA[ Perform sentiment analysis on financial news articles using FinBert, Ollama, and Llama2 models. ]]></description>
-  <category>Python</category>
-  <category>Sentiment</category>
-  <category>Bert</category>
-  <category>LLM</category>
-  <category>Machine Learning</category>
-  <category>AI</category>
-  <guid>https://vincent.codes.finance/posts/sentiment/</guid>
-  <pubDate>Fri, 12 Apr 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/sentiment/sentiment.webp" medium="image" type="image/webp"/>
-</item>
-<item>
-  <title>Scrape financial data from SEC Edgar with Python and edgartools</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/edgartools/</link>
-  <description><![CDATA[ Tutorial on how to scrape financial data from the SEC Edgar website using Python and the edgartools library. ]]></description>
-  <category>Python</category>
-  <category>Scraping</category>
-  <guid>https://vincent.codes.finance/posts/edgartools/</guid>
-  <pubDate>Sat, 06 Apr 2024 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/edgartools/edgartools.webp" medium="image" type="image/webp"/>
-</item>
-<item>
   <title>Summarize and query PDFs with AI using Ollama</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/documents-llm/</link>
@@ -142,17 +128,6 @@
   <media:content url="https://vincent.codes.finance/posts/ollama-chatgpt/futuristic_llama.webp" medium="image" type="image/webp"/>
 </item>
 <item>
-  <title>Efficient reading and parsing of large CSV files in Python with Pandas and Arrow</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/pandas-read-csv/</link>
-  <description><![CDATA[ Article on how to read and parse large CSV files in Python using Pandas and Arrow. ]]></description>
-  <category>Python</category>
-  <category>Pandas</category>
-  <guid>https://vincent.codes.finance/posts/pandas-read-csv/</guid>
-  <pubDate>Fri, 01 Mar 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/pandas-read-csv/pandas-arrow.webp" medium="image" type="image/webp"/>
-</item>
-<item>
   <title>Writing LaTeX Documents in VS Code</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
   <link>https://vincent.codes.finance/posts/vscode-latex/</link>
@@ -163,40 +138,6 @@
   <guid>https://vincent.codes.finance/posts/vscode-latex/</guid>
   <pubDate>Sun, 18 Feb 2024 05:00:00 GMT</pubDate>
   <media:content url="https://vincent.codes.finance/posts/vscode-latex/vscode-latex.webp" medium="image" type="image/webp"/>
-</item>
-<item>
-  <title>Using GitHub for academic research</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/github-for-research/</link>
-  <description><![CDATA[ Learn how to use Git and GitHub to manage your research projects and collaborate with others while keeping a detailed record of your work. ]]></description>
-  <category>Git/GitHub</category>
-  <category>Reproducibility</category>
-  <category>Tutorial</category>
-  <guid>https://vincent.codes.finance/posts/github-for-research/</guid>
-  <pubDate>Fri, 09 Feb 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/github-for-research/github-for-research.webp" medium="image" type="image/webp"/>
-</item>
-<item>
-  <title>Estimating standard errors in time series data with Python and statsmodels</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/timeseries-standard-errors/</link>
-  <description><![CDATA[ Tutorial on estimating standard errors in time series data with Python and statsmodels ]]></description>
-  <category>Python</category>
-  <category>Econometrics</category>
-  <guid>https://vincent.codes.finance/posts/timeseries-standard-errors/</guid>
-  <pubDate>Wed, 31 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/timeseries-standard-errors/spy_ts.webp" medium="image" type="image/webp"/>
-</item>
-<item>
-  <title>Estimating standard errors in panel data with Python and linearmodels</title>
-  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
-  <link>https://vincent.codes.finance/posts/panel-ols-standard-errors/</link>
-  <description><![CDATA[ In this post, I show how to estimate standard errors in panel data with Python and the <a href="https://bashtage.github.io/linearmodels/">linearmodels</a> library. ]]></description>
-  <category>Python</category>
-  <category>Econometrics</category>
-  <guid>https://vincent.codes.finance/posts/panel-ols-standard-errors/</guid>
-  <pubDate>Sun, 21 Jan 2024 05:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/panel-ols-standard-errors/panel-data.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Python basic tutorial</title>

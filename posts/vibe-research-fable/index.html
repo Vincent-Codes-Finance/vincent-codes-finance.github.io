@@ -6,9 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Coding (mostly) in Python for empirical research in finance">
+<meta name="author" content="Vincent Grégoire, PhD, CFA">
+<meta name="dcterms.date" content="2026-06-13">
+<meta name="description" content="A personal account of using Fable 5 for academic research.">
 
-<title>Vincent Codes Finance</title>
+<title>Vibe Research II: My Three Days with Fable 5 – Vincent Codes Finance</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,30 +29,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-210d4c55815c82fef459b4bf8352754b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-c08ad7918ebf33c2a7ac7be7eccb7045.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-210d4c55815c82fef459b4bf8352754b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c08ad7918ebf33c2a7ac7be7eccb7045.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,79 +78,23 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-subtitle','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="3fcf770b-4532-49f4-b9c6-05a49573a2f5"></script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml" data-external="1"><meta property="og:title" content="Vincent Codes Finance">
-<meta property="og:description" content="Coding (mostly) in Python for empirical research in finance">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vibe Research II: My Three Days with Fable 5 – Vincent Codes Finance">
+<meta property="og:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta property="og:image" content="https://vincent.codes.finance/posts/vibe-research-fable/vibe-research-ii-small.jpg">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:title" content="Vincent Codes Finance">
-<meta name="twitter:description" content="Coding (mostly) in Python for empirical research in finance">
-<meta name="twitter:card" content="summary">
-<link rel="canonical" href="https://vincent.codes.finance/" />
+<meta name="twitter:title" content="Vibe Research II: My Three Days with Fable 5 – Vincent Codes Finance">
+<meta name="twitter:description" content="A blog about coding (mostly) in Python for empirical research in finance">
+<meta name="twitter:image" content="https://vincent.codes.finance/posts/vibe-research-fable/vibe-research-ii-small.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vincent.codes.finance/posts/vibe-research-fable/" />
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -322,11 +266,11 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./vcf-logo-circle-small.webp" alt="" class="navbar-logo light-content">
-    <img src="./vcf-logo-circle-small.webp" alt="" class="navbar-logo dark-content">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo light-content">
+    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
     </a>
   </div>
@@ -337,7 +281,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About VCF</span></a>
   </li>  
   <li class="nav-item compact">
@@ -371,430 +315,129 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Vincent Codes Finance</h1>
-                  <div>
-        <div class="description">
-          Coding (mostly) in Python for empirical research in finance
-        </div>
-      </div>
-                </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Vibe Research II: My Three Days with Fable 5</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Writing</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vincent Grégoire, PhD, CFA </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 13, 2026</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Q29waWxvdA==">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YQ==">Data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFUZVg=">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExN">LLM <span class="quarto-category-count">(6)</span></div><div class="category" data-category="TG9jYWwlMjBBSQ==">Local AI <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVwcm9kdWNpYmlsaXR5">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ==">Visual Studio Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VlMlMjBDb2Rl">VS Code <span class="quarto-category-count">(3)</span></div><div class="category" data-category="V3JpdGluZw==">Writing <span class="quarto-category-count">(4)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-fable-5" id="toc-what-is-fable-5" class="nav-link active" data-scroll-target="#what-is-fable-5">What is Fable 5?</a></li>
+  <li><a href="#how-was-it-to-work-with-fable" id="toc-how-was-it-to-work-with-fable" class="nav-link" data-scroll-target="#how-was-it-to-work-with-fable">How was it to work with Fable</a></li>
+  <li><a href="#how-i-used-fable" id="toc-how-i-used-fable" class="nav-link" data-scroll-target="#how-i-used-fable">How I used Fable</a></li>
+  <li><a href="#agi-paper" id="toc-agi-paper" class="nav-link" data-scroll-target="#agi-paper">AGI paper</a>
+  <ul class="collapse">
+  <li><a href="#theory-work" id="toc-theory-work" class="nav-link" data-scroll-target="#theory-work">Theory work</a></li>
+  <li><a href="#videos" id="toc-videos" class="nav-link" data-scroll-target="#videos">Videos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1781323200000" data-listing-file-modified-sort="1781400171807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2309">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/vibe-research-fable/index.html" class="no-external">Vibe Research II: My Three Days with Fable 5</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/vibe-research-fable/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/vibe-research-fable/index.html" class="no-external">
-For three days, I had access to the most capable AI I have ever used. Last night, the US government took it away.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/vibe-research-fable/index.html" class="no-external">
-<div class="listing-date">
-Jun 13, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="UHl0aG9uJTJDUiUyQ0RhdGElMkNUdXRvcmlhbA==" data-listing-date-sort="1779336000000" data-listing-file-modified-sort="1781358690215" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/parquet/index.html" class="no-external">What is Parquet and Why You Should Use It</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/parquet/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YQ=='); return false;">Data</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/parquet/index.html" class="no-external">
-If you work with data, chances are you have spent a fair bit of your career reading and writing CSV files. CSV is everywhere, and for good reason: it is simple, it is…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/parquet/index.html" class="no-external">
-<div class="listing-date">
-May 21, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1772082000000" data-listing-file-modified-sort="1781382709948" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3602">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/vibe-research-paper/index.html" class="no-external">Vibe Research, or How I Wrote an Academic Paper in Four Days</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/vibe-research-paper/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/vibe-research-paper/index.html" class="no-external">
-Part II of this series is available here : Vibe Research, Part II: My Three Days with Fable 5.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/vibe-research-paper/index.html" class="no-external">
-<div class="listing-date">
-Feb 26, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="VlMlMjBDb2RlJTJDTExNJTJDUHl0aG9uJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQUk=" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1781358690201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external">Claude Code for Data Analysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/claude-code-data-analysis/index.html" class="no-external">
-Claude Code is a powerful new way to work with coding agents. In this post, I’ll walk through how to get started with Claude Code for data analysis, the workflow I…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external">
-<div class="listing-date">
-Sep 30, 2025
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZSUyQ1JlcHJvZHVjaWJpbGl0eSUyQ1R1dG9yaWFs" data-listing-date-sort="1718337600000" data-listing-file-modified-sort="1781358690202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2064">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/devcontainers/index.html" class="no-external">Use Devcontainers for safe and replicable research</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/devcontainers/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ=='); return false;">Visual Studio Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVwcm9kdWNpYmlsaXR5'); return false;">Reproducibility</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/devcontainers/index.html" class="no-external">
-In empirical finance research, the tools and methodologies we employ play a crucial role in ensuring the integrity and reproducibility of our findings. One such powerful…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/devcontainers/index.html" class="no-external">
-<div class="listing-date">
-Jun 14, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="VlMlMjBDb2RlJTJDQ29waWxvdCUyQ0xvY2FsJTIwQUklMkNMTE0lMkNQeXRob24lMkNNYWNoaW5lJTIwTGVhcm5pbmclMkNBSSUyQ1dyaXRpbmc=" data-listing-date-sort="1716177600000" data-listing-file-modified-sort="1781358690207" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3378">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ollama-copilot/index.html" class="no-external">Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ollama-copilot/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29waWxvdA=='); return false;">Copilot</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TG9jYWwlMjBBSQ=='); return false;">Local AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/ollama-copilot/index.html" class="no-external">
-GitHub Copilot is an amazing AI-assistant that helps developers write code faster and with fewer errors. However, it does have some limitations, such as the need for an…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/ollama-copilot/index.html" class="no-external">
-<div class="listing-date">
-May 20, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ1B5dGhvbiUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1781358690202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/documents-llm/index.html" class="no-external">Summarize and query PDFs with AI using Ollama</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/documents-llm/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TG9jYWwlMjBBSQ=='); return false;">Local AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/documents-llm/index.html" class="no-external">
-Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/documents-llm/index.html" class="no-external">
-<div class="listing-date">
-Mar 30, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="UHl0aG9u" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1781358690201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/apple-mlx/index.html" class="no-external">Speed up your scientific computing workflows with MLX</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/apple-mlx/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/apple-mlx/index.html" class="no-external">
-The rapidly evolving landscape in machine learning (ML) tools and libraries sometimes offer positive spillovers for scientific computing and empirical finance research. One…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/apple-mlx/index.html" class="no-external">
-<div class="listing-date">
-Mar 22, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1781358690206" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">Using Ollama as a ChatGPT Replacement</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TG9jYWwlMjBBSQ=='); return false;">Local AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/ollama-chatgpt/index.html" class="no-external">
-Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">
-<div class="listing-date">
-Mar 8, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="VlMlMjBDb2RlJTJDTGFUZVglMkNXcml0aW5n" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1781358690244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/vscode-latex/index.html" class="no-external">Writing LaTeX Documents in VS Code</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/vscode-latex/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGFUZVg='); return false;">LaTeX</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/vscode-latex/index.html" class="no-external">
-LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/vscode-latex/index.html" class="no-external">
-<div class="listing-date">
-Feb 18, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1781358690215" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">Python basic tutorial</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/python-basics-tutorial/index.html" class="no-external">
-I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for…<code></code><code></code><code></code>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">
-<div class="listing-date">
-Jan 7, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1781358690205" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/install-python-312/index.html" class="no-external">Installing Python 3.12</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/install-python-312/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/install-python-312/index.html" class="no-external">
-In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/install-python-312/index.html" class="no-external">
-<div class="listing-date">
-Jan 3, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1781358690245" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">New Year, new blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/welcome/index.html" class="no-external"></a>
-</div>
-<div class="delink listing-description"><a href="./posts/welcome/index.html" class="no-external">
-Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Jan 1, 2024
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p>For three days, I had access to the most capable AI I have ever used. Last night, the US government took it away.</p>
+<p>Earlier this week on Tuesday, Anthropic released <a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5">Claude Fable 5</a>, a new model much more powerful than Opus. There was a catch, however: it was limited-time access (at least for those without unlimited budget). We could use it as part of our Claude subscription only until June 22, after which it would only be available at API prices. It did not even last that long — but more on that below. In this post, I want to share my experience using Fable over the last three days and show you a glimpse of how it could impact academic research in ways that were not yet possible with other existing models.</p>
+<section id="what-is-fable-5" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-fable-5">What is Fable 5?</h2>
+<p>Before we dive in, let me give you a bit of background on Fable 5. On the same day Anthropic released Fable, they also released Mythos 5, the latest version of the <a href="https://en.wikipedia.org/wiki/Claude_Mythos">Mythos model</a> that Anthropic made available to cybersecurity researchers in charge of critical software a few months ago that got a lot of important people worried, <a href="https://www.bbc.com/news/articles/c2ev24yx4rmo">including at central banks</a>. Mythos 5 remained only accessible to vetted security experts. Fable 5 is Mythos 5, but with additional safeguards in place related to sensitive issues such as cybersecurity, biological research, nuclear weapons, and to prevent distillation attacks.</p>
+<p>I started using the new model as soon as it became available (after spreading the good news to the few colleagues who were in the office at the time.) I’ll get to what I used it for in a moment, but this new model quickly got people on the internet very excited (or at least those that the X and YouTube algorithms thought would keep me engaged). You can go on YouTube and see many examples of projects that were created with Fable (see, for example, <a href="https://youtu.be/GUEE9OA4keo?si=cC7sf1ezx9yuHGf4">this video</a>).</p>
+<p>Yesterday evening, Anthropic announced on X that they were closing access to Fable and Mythos <a href="https://www.bloomberg.com/news/articles/2026-06-13/anthropic-says-us-limits-foreign-access-to-fable-5-mythos-5">at the request of the US government</a>. Technically, the order was to bar access to all foreign nationals, including those on US soil and Anthropic employees. In practice, this meant that Anthropic had no other choice but to completely turn off access for everyone until they can figure out how to implement the required checks. As a Canadian living in Canada, I would be cut off either way, just as any foreign national would be, including the faculty members and graduate students at US universities.</p>
+<p>This is a very recent event, but at the time of this writing, reputable media outlets are reporting that the order was imposed after <a href="https://www.wsj.com/tech/ai/amazon-ceos-talks-with-u-s-officials-triggered-crackdown-on-anthropic-models-dcc90578">researchers at Amazon</a> were able to jailbreak Fable to bypass its safeguards (AWS is one of the providers hosting the models for inference on their platform).</p>
+<p>For the record, while I am an optimist when it comes to AI progress, I am not against ensuring proper safeguards are in place. My concern is not about protecting jobs or the status quo, but because unbridled AI progress is a credible threat to the survival of the human race.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</section>
+<section id="how-was-it-to-work-with-fable" class="level2">
+<h2 class="anchored" data-anchor-id="how-was-it-to-work-with-fable">How was it to work with Fable</h2>
+<p>My first interaction with Fable was just like any other recent interaction with Opus in Claude Code: it was helpful and capable. It’s only after using it for doing real work that the differences became obvious. Pre-existing models, especially Claude Opus 4.6–4.8 and GPT 5.5 Pro, are already very capable, so it is not easy to convey what it feels like to work with Fable. If I had to summarize it in a few words, I would say it is a clear “level up” by an order of magnitude. It just feels different, much smarter, like someone who thinks two or three steps ahead of you all the time, and who is also good at execution. To give just one concrete example before I get into the details: it found closed-form solutions to proofs in one of my papers that four other models—and I—had only managed to solve numerically. I’ll come back to that below.</p>
+<p>The effect it had on me was on par with the first time I used ChatGPT: I had trouble sleeping that first night not because of stress or anxiety, but because my brain was processing all the implications of this model going forward. It may sound crazy, but having access to a superhuman AI like this makes you feel superhuman: it makes you re-assess what you can do.</p>
+<p>On a more practical note, working with Fable also took me back a few months, at a time when I had to closely monitor my usage in order to make the most of my 5-hour and weekly quotas<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> I was at 95% of my weekly quota and about to upgrade my subscription when access was cut off yesterday.</p>
+</section>
+<section id="how-i-used-fable" class="level2">
+<h2 class="anchored" data-anchor-id="how-i-used-fable">How I used Fable</h2>
+<p>The first thing I usually do when I get a “supposedly” better model is to have it review the current state and the existing plans for my ongoing research projects. This time was no different, except that I got <em>much better</em> feedback and suggestions than what I previously got with the latest Opus and GPT models. Having AI agents review my projects on a regular basis has been part of my workflow for many months now, so I can confidently say that the comments I got from Fable were at another level; it caught subtle issues, was more thorough, and even gave me valuable suggestions on how to address two referee comments that have been blocking a revision. We had tried Opus before for that, but never got reasonable suggestions.</p>
+<p>I also used it to plan two new research projects I had in the pipeline. I had my research questions and a broad idea of how to proceed with the analysis, but Fable was able to write down a clear path for a first draft of each paper based on my ideas (not a first draft ready for SSRN, a first internal draft that each co-author can read before we discuss the next steps).</p>
+<p>Since these are all new or ongoing research projects, I can’t share more details at this time. However, there is one paper that I’m working on openly, so let me show you what Fable did for that project.</p>
+</section>
+<section id="agi-paper" class="level2">
+<h2 class="anchored" data-anchor-id="agi-paper">AGI paper</h2>
+<p>A few months ago, I wrote the first post in this <em>Vibe-Research</em> series on how I used agentic AI to write a new paper from scratch. That post went viral (by my standards at least) on LinkedIn and X, received over 16k views on my website so far, and the paper has close to 1,300 downloads on SSRN.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>The paper was initially written for submission to the <a href="https://humanxaifinance.org/">Human x Finance</a> conference that took place in April. Papers should be accelerated by AI, and were reviewed by AI. Unfortunately, my paper was ranked 10th out of 159 and thus was not among the four papers chosen for the program (but I did get a nice <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/reports/paper_066_investing-in-artificial-general-intelligence.pdf">AI-written report</a>).</p>
+<p>Now that the conference has passed, I have to decide what to do with the paper. Having made the entire research process (and extensive AI use) public may hurt me during the publication process, but I intend to see it through. It probably won’t make it into a FT50 journal, but I like the paper and feel like it deserves better than a <em>permanent working paper</em> status. For those worried about the ethics of publishing a heavily AI-assisted paper, be reassured that I will disclose this at every relevant stage. Even if I don’t think the current AI rules and disclosure requirements surrounding publication are here to last (I think AI use will become so prevalent as to render them useless), I intend to play by the rules.</p>
+<section id="theory-work" class="level3">
+<h3 class="anchored" data-anchor-id="theory-work">Theory work</h3>
+<p>But before I submit, there are two important things left for me to do (in addition to the final proofreading): make sure that the model is in the best shape it could be, and make sure that I understand and reviewed the full derivation. Fortunately for me, Fable came out just as I was getting to this.</p>
+<p>Obviously, the first thing I did was to ask for a review. When I read <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/reports/review_report_claude_fable.md">the report</a> I got, I saw that it had identified many issues that Opus, Codex, Coarse, and Refine (and me) had missed. One prompt is all it took for Fable in Claude Code to fix them all.</p>
+<p>Then it got me thinking, maybe I can still improve on the model, so I did a second review with the additional instruction to look for possible simplification of the model and to look for closed-form solutions to the results that were only numerical. That <a href="https://github.com/fintech-research/ai-lab-investment/blob/main/reports/review_report_claude_fable_r2.md">second report</a> was an eye opener. It actually managed to find closed-form solutions to a few of the proofs that all the previous models only managed to solve numerically. <em>This is not easy math</em>. Again, all it took was one prompt for Fable to <a href="https://github.com/fintech-research/ai-lab-investment/pull/97">update everything</a>. Here are the most notable changes listed in that pull request:</p>
+<ul>
+<li><strong>Prop 2(ii) fully closed-form</strong>: exact faith-based survival threshold φ̃ absorbing both channels (eq-phi-tilde, baseline 0.32); reveals that φ*(λ) &gt; φ̃(λ) only for λ ≳ 0.034 — the prior blanket claim was wrong at low λ</li>
+<li><strong>Prop 3(ii)</strong>: role invariance is an exact fixed point (s(2−s) factorization), not a computational regularity</li>
+<li><strong>Prop 3(i)</strong>: preemption uniqueness proved analytically at zero leverage (strict concavity of the gap)</li>
+<li><strong>Follower problem</strong>: exact separable reduction to a scalar FOC with effective elasticity α(2−s_F) and provably unique optimum; <code>solve_follower_scalar</code> matches Nelder–Mead to ~3e-8</li>
+<li><strong>Coupled default boundary</strong>: exact scalar reduction (Brent replaces 2-D fsolve) plus closed-form first-order bias κ ≈ 2.9% vs 3.1% exact, proving the conservative direction analytically</li>
+</ul>
+<p>I discussed this advance with a colleague who also tried Fable on a model he had been working on for a while and he also got some new closed-form solutions (which he confirmed were correct). So, above PhD-level intelligence on that.</p>
+</section>
+<section id="videos" class="level3">
+<h3 class="anchored" data-anchor-id="videos">Videos</h3>
+<p>For my part, I still need to carefully go through the derivation of the model, so I thought I would ask Fable to explain it to me. How? By creating a series of video walkthroughs that go through all the steps of the derivation, every proof.</p>
+<p><em>Side note:</em> I have a YouTube channel because I like sharing knowledge, and it allows me to reach a very large audience. But I also know how time-consuming it is to create a decent video. So every time a new model comes out, I test it on that as well (tools like <a href="https://hyperframes.heygen.com/">HyperFrames</a> and <a href="https://www.manim.community/">Manim</a> are great for generating videos from code). I got some decent results in the past, but it would require me to be actively involved in steering the model the right way throughout the process.</p>
+<p>I asked Fable to create a 10-minute explainer video of the paper and a detailed walkthrough of the model using <a href="https://www.manim.community/">Manim</a> (a Python library by Grant Sanderson, the creator behind the <a href="https://www.youtube.com/@3blue1brown/featured">3Blue1Brown</a> channel) and voice-over using the local AI library <a href="https://kokorottsai.com/">Kokoro</a> (which is not supported out of the box by Manim). You can read the <a href="https://github.com/fintech-research/ai-lab-investment/issues/98#issue-4636588317">issue</a>, which was the whole prompt. It one-shot it almost to perfection: my only follow-up prompts were to fix a voice-over timing issue, some text overflow in the explainer video, and some TeX symbols that were rendered as text in the walkthrough. Each of these required a one-sentence prompt for Fable to go and fix them on the first try. Have a look at the resulting explainer video:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/k-KJjKV449U" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>That was all Fable: the hook, the transitions, the animations, the emphasis. No intervention on my part. And it was fast; the bulk of the work was done in about one hour. The long part is actually rendering the videos and generating the voice-over.</p>
+<p>It was not cheap, however, compared to what we’re used to with frontier models (I still think I got excellent value out of it). I went through roughly 150% of a 5-hour quota on the 5x Max plan (USD 100/month). At API prices, it would have cost about USD 200 for those videos. The rate at which it was burning tokens was mind-blowing: when it started working on the walkthrough videos (each part in parallel), it used over 50% of a 5-hour quota in less than 15 minutes. The resulting product, however, is magnitudes above what I thought an AI model could produce autonomously.</p>
+<p>This is what I have been able to do over three days with Fable before it was taken away. I’ll leave it at that for now, while I reflect on what it means that a capability like this was briefly within reach and is now gated by an order from the US government—a decision I suspect will have a long-lasting impact on the ongoing reshaping of international relations. But that is a topic for another post. If you want to see the full 6-part walkthrough, see below:</p>
+<p></p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ICHPUIG7yl4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2e08FFt7oC0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2GWxoMXoQGE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/u2NzcfgE1gs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/zlJEPksGxhU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/T56Mxp6GVpg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>If you don’t know what I’m talking about, you should read <a href="https://amzn.to/4vLHRrU">If Anyone Builds It, Everyone Dies: Why Superhuman AI Would Kill Us All</a> by Eliezer Yudkowsky and Nate Soares.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I used to have a Max 20x plan until late last year, at which point the quotas became generous enough and the models good enough that I downgraded to the Max 5x plan. Until this week, I only hit the 5-hour quota a handful of times in the last 6 months. Instead of spending USD200/month on Claude, I’ve been spending 100 on Claude and 100 on ChatGPT and using each subscription for what it is best.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It became my most downloaded paper on SSRN (excluding my small participation in the <em>Nonstandard Errors</em> paper), but has since been eclipsed by my recent paper <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6443103">Who Wins and Who Loses In Prediction Markets? Evidence from Polymarket</a> which is worth checking out!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
