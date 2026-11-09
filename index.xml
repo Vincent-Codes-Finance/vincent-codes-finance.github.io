@@ -9,8 +9,31 @@
 <link>https://vincent.codes.finance/</link>
 <atom:link href="https://vincent.codes.finance/index.xml" rel="self" type="application/rss+xml"/>
 <description>Coding (mostly) in Python for empirical research in finance</description>
-<generator>quarto-1.9.37</generator>
-<lastBuildDate>Sat, 13 Jun 2026 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.11.9</generator>
+<lastBuildDate>Mon, 09 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introducing PaperX: Explainer Videos for Recent Research in Finance and AI</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/paperx-launch/</link>
+  <description><![CDATA[ PaperX is a new companion YouTube channel to Vincent Codes Finance with explainer videos of recent papers in finance, AI, and technology. The first video covers AutoTheory, a system that uses LLMs to discover economic theories. ]]></description>
+  <category>PaperX</category>
+  <category>AI</category>
+  <category>LLM</category>
+  <category>Research</category>
+  <guid>https://vincent.codes.finance/posts/paperx-launch/</guid>
+  <pubDate>Mon, 09 Nov 2026 05:00:00 GMT</pubDate>
+  <media:content url="https://vincent.codes.finance/posts/paperx-launch/paperx-thumbnail.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Reading List</title>
+  <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
+  <link>https://vincent.codes.finance/posts/reading-list/</link>
+  <description><![CDATA[ Announcing a new Reading List page on VCF: the books I have read and actually recommend. ]]></description>
+  <category>Books</category>
+  <category>Reading</category>
+  <guid>https://vincent.codes.finance/posts/reading-list/</guid>
+  <pubDate>Wed, 28 Oct 2026 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Vibe Research II: My Three Days with Fable 5</title>
   <dc:creator>Vincent Grégoire, PhD, CFA</dc:creator>
@@ -21,7 +44,7 @@
   <category>Writing</category>
   <guid>https://vincent.codes.finance/posts/vibe-research-fable/</guid>
   <pubDate>Sat, 13 Jun 2026 04:00:00 GMT</pubDate>
-  <media:content url="https://vincent.codes.finance/posts/vibe-research-fable/vibe-research-ii-small.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://vincent.codes.finance/posts/vibe-research-fable/vibe-research-ii-small.jpg" medium="image" type="image/jpeg" height="72" width="144"/>
 </item>
 <item>
   <title>What is Parquet and Why You Should Use It</title>

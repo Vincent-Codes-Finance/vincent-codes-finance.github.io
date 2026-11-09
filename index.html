@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,18 +42,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-210d4c55815c82fef459b4bf8352754b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-58d7ead8b9a88f4cdd41eae2061c38d3.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2579492e3688c20661464f954062e59e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a326b867f0e411e2f303e9152d36890b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2579492e3688c20661464f954062e59e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-c08ad7918ebf33c2a7ac7be7eccb7045.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-785ae8587c2a41da64b5f0569eed5192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-54d220d7f9e8e1a3a9ef9cac357aec30.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -100,12 +104,6 @@ ul.task-list li input[type="checkbox"] {
       window['quarto-listing-loaded']();
     }
   });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
   </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -113,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
 <script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="3fcf770b-4532-49f4-b9c6-05a49573a2f5"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -153,7 +151,7 @@ window.Quarto = {
 <link rel="canonical" href="https://vincent.codes.finance/" />
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -176,6 +174,7 @@ window.Quarto = {
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
         if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
           if (alternate) {
             toggle.classList.add("alternate");
           } else {
@@ -205,13 +204,19 @@ window.Quarto = {
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
       setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
         manageTransitions("body", false);
-        window.scrollTo(0, 1);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
         setTimeout(() => {
-          window.scrollTo(0, 0);
+          window.scrollTo(0, scrollY);
           manageTransitions("body", true);
         }, 40);
       }
@@ -305,6 +310,7 @@ window.Quarto = {
       // Read the current dark / light value
       let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
@@ -319,7 +325,7 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
@@ -330,8 +336,7 @@ window.Quarto = {
     <span class="navbar-title">Vincent Codes Finance</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -339,6 +344,10 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About VCF</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reading-list.html"> 
+<span class="menu-text">Reading List</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
@@ -363,8 +372,9 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
 </div>
+            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -395,9 +405,9 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Q29waWxvdA==">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YQ==">Data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFUZVg=">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExN">LLM <span class="quarto-category-count">(6)</span></div><div class="category" data-category="TG9jYWwlMjBBSQ==">Local AI <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVwcm9kdWNpYmlsaXR5">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ==">Visual Studio Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VlMlMjBDb2Rl">VS Code <span class="quarto-category-count">(3)</span></div><div class="category" data-category="V3JpdGluZw==">Writing <span class="quarto-category-count">(4)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(15)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Qm9va3M=">Books <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29waWxvdA==">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YQ==">Data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFUZVg=">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExN">LLM <span class="quarto-category-count">(7)</span></div><div class="category" data-category="TG9jYWwlMjBBSQ==">Local AI <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UGFwZXJY">PaperX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVhZGluZw==">Reading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVwcm9kdWNpYmlsaXR5">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVzZWFyY2g=">Research <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ==">Visual Studio Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VlMlMjBDb2Rl">VS Code <span class="quarto-category-count">(3)</span></div><div class="category" data-category="V3JpdGluZw==">Writing <span class="quarto-category-count">(4)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content" tabindex="-1">
 
 
 
@@ -410,14 +420,67 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1781323200000" data-listing-file-modified-sort="1781400171807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2309">
+<div class="quarto-post image-right" data-index="0" data-categories="UGFwZXJYJTJDQUklMkNMTE0lMkNSZXNlYXJjaA==" data-listing-date-sort="1794200400000" data-listing-file-modified-sort="1794249281678" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="694">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/vibe-research-fable/index.html" class="no-external">Vibe Research II: My Three Days with Fable 5</a>
+<a href="./posts/paperx-launch/index.html" class="no-external-icon">Introducing PaperX: Explainer Videos for Recent Research in Finance and AI</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/vibe-research-fable/index.html" class="no-external"></a>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFwZXJY'); return false;">PaperX</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVzZWFyY2g='); return false;">Research</div>
+
 </div>
+<div class="listing-description">
+<a href="./posts/paperx-launch/index.html" class="no-external-icon">
+I’m launching a new YouTube channel: PaperX, a companion to Vincent Codes Finance. It posts explainer videos of recent papers in finance, AI/ML, and anything at the…
+</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/paperx-launch/index.html" class="no-external-icon">
+<div class="listing-date">
+Nov 9, 2026
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Qm9va3MlMkNSZWFkaW5n" data-listing-date-sort="1793160000000" data-listing-file-modified-sort="1794248765162" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="210">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/reading-list/index.html" class="no-external-icon">Reading List</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Qm9va3M='); return false;">Books</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVhZGluZw=='); return false;">Reading</div>
+
+</div>
+<div class="listing-description">
+<a href="./posts/reading-list/index.html" class="no-external-icon">
+I have added a new Reading List to the site. You will find it in the navigation bar, right next to <em>About VCF</em>.
+</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/reading-list/index.html" class="no-external-icon">
+<div class="listing-date">
+Oct 28, 2026
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1781323200000" data-listing-file-modified-sort="1794248765165" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2309">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/vibe-research-fable/index.html" class="no-external-icon">Vibe Research II: My Three Days with Fable 5</a>
+</h3>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
@@ -427,26 +490,25 @@ window.Quarto = {
 <div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/vibe-research-fable/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/vibe-research-fable/index.html" class="no-external-icon">
 For three days, I had access to the most capable AI I have ever used. Last night, the US government took it away.
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/vibe-research-fable/index.html" class="no-external">
+<a href="./posts/vibe-research-fable/index.html" class="no-external-icon">
 <div class="listing-date">
 Jun 13, 2026
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="UHl0aG9uJTJDUiUyQ0RhdGElMkNUdXRvcmlhbA==" data-listing-date-sort="1779336000000" data-listing-file-modified-sort="1781358690215" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
+<div class="quarto-post image-right" data-index="3" data-categories="UHl0aG9uJTJDUiUyQ0RhdGElMkNUdXRvcmlhbA==" data-listing-date-sort="1779336000000" data-listing-file-modified-sort="1794248765169" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/parquet/index.html" class="no-external">What is Parquet and Why You Should Use It</a>
+<a href="./posts/parquet/index.html" class="no-external-icon">What is Parquet and Why You Should Use It</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/parquet/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
@@ -458,26 +520,25 @@ Jun 13, 2026
 <div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/parquet/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/parquet/index.html" class="no-external-icon">
 If you work with data, chances are you have spent a fair bit of your career reading and writing CSV files. CSV is everywhere, and for good reason: it is simple, it is…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/parquet/index.html" class="no-external">
+<a href="./posts/parquet/index.html" class="no-external-icon">
 <div class="listing-date">
 May 21, 2026
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1772082000000" data-listing-file-modified-sort="1781382709948" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3602">
+<div class="quarto-post image-right" data-index="4" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1772082000000" data-listing-file-modified-sort="1794248765179" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3602">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/vibe-research-paper/index.html" class="no-external">Vibe Research, or How I Wrote an Academic Paper in Four Days</a>
+<a href="./posts/vibe-research-paper/index.html" class="no-external-icon">Vibe Research, or How I Wrote an Academic Paper in Four Days</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/vibe-research-paper/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TExN'); return false;">LLM</div>
@@ -487,26 +548,25 @@ May 21, 2026
 <div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/vibe-research-paper/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/vibe-research-paper/index.html" class="no-external-icon">
 Part II of this series is available here : Vibe Research, Part II: My Three Days with Fable 5.
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/vibe-research-paper/index.html" class="no-external">
+<a href="./posts/vibe-research-paper/index.html" class="no-external-icon">
 <div class="listing-date">
 Feb 26, 2026
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="VlMlMjBDb2RlJTJDTExNJTJDUHl0aG9uJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQUk=" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1781358690201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
+<div class="quarto-post image-right" data-index="5" data-categories="VlMlMjBDb2RlJTJDTExNJTJDUHl0aG9uJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQUk=" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1794248765165" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external">Claude Code for Data Analysis</a>
+<a href="./posts/claude-code-data-analysis/index.html" class="no-external-icon">Claude Code for Data Analysis</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
@@ -520,26 +580,25 @@ Feb 26, 2026
 <div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/claude-code-data-analysis/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/claude-code-data-analysis/index.html" class="no-external-icon">
 Claude Code is a powerful new way to work with coding agents. In this post, I’ll walk through how to get started with Claude Code for data analysis, the workflow I…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/claude-code-data-analysis/index.html" class="no-external">
+<a href="./posts/claude-code-data-analysis/index.html" class="no-external-icon">
 <div class="listing-date">
 Sep 30, 2025
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZSUyQ1JlcHJvZHVjaWJpbGl0eSUyQ1R1dG9yaWFs" data-listing-date-sort="1718337600000" data-listing-file-modified-sort="1781358690202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2064">
+<div class="quarto-post image-right" data-index="6" data-categories="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZSUyQ1JlcHJvZHVjaWJpbGl0eSUyQ1R1dG9yaWFs" data-listing-date-sort="1718337600000" data-listing-file-modified-sort="1794248765159" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2064">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/devcontainers/index.html" class="no-external">Use Devcontainers for safe and replicable research</a>
+<a href="./posts/devcontainers/index.html" class="no-external-icon">Use Devcontainers for safe and replicable research</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/devcontainers/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ=='); return false;">Visual Studio Code</div>
@@ -549,26 +608,25 @@ Sep 30, 2025
 <div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/devcontainers/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/devcontainers/index.html" class="no-external-icon">
 In empirical finance research, the tools and methodologies we employ play a crucial role in ensuring the integrity and reproducibility of our findings. One such powerful…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/devcontainers/index.html" class="no-external">
+<a href="./posts/devcontainers/index.html" class="no-external-icon">
 <div class="listing-date">
 Jun 14, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="VlMlMjBDb2RlJTJDQ29waWxvdCUyQ0xvY2FsJTIwQUklMkNMTE0lMkNQeXRob24lMkNNYWNoaW5lJTIwTGVhcm5pbmclMkNBSSUyQ1dyaXRpbmc=" data-listing-date-sort="1716177600000" data-listing-file-modified-sort="1781358690207" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3378">
+<div class="quarto-post image-right" data-index="7" data-categories="VlMlMjBDb2RlJTJDQ29waWxvdCUyQ0xvY2FsJTIwQUklMkNMTE0lMkNQeXRob24lMkNNYWNoaW5lJTIwTGVhcm5pbmclMkNBSSUyQ1dyaXRpbmc=" data-listing-date-sort="1716177600000" data-listing-file-modified-sort="1794248765161" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3378">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/ollama-copilot/index.html" class="no-external">Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</a>
+<a href="./posts/ollama-copilot/index.html" class="no-external-icon">Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/ollama-copilot/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
@@ -588,26 +646,25 @@ Jun 14, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/ollama-copilot/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/ollama-copilot/index.html" class="no-external-icon">
 GitHub Copilot is an amazing AI-assistant that helps developers write code faster and with fewer errors. However, it does have some limitations, such as the need for an…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/ollama-copilot/index.html" class="no-external">
+<a href="./posts/ollama-copilot/index.html" class="no-external-icon">
 <div class="listing-date">
 May 20, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ1B5dGhvbiUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1781358690202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
+<div class="quarto-post image-right" data-index="8" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ1B5dGhvbiUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1794248765163" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/documents-llm/index.html" class="no-external">Summarize and query PDFs with AI using Ollama</a>
+<a href="./posts/documents-llm/index.html" class="no-external-icon">Summarize and query PDFs with AI using Ollama</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/documents-llm/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TG9jYWwlMjBBSQ=='); return false;">Local AI</div>
@@ -621,51 +678,49 @@ May 20, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/documents-llm/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/documents-llm/index.html" class="no-external-icon">
 Large language models (LLMs) have revolutionized the way we interact with text data, enabling us to generate, summarize, and query information with unprecedented accuracy…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/documents-llm/index.html" class="no-external">
+<a href="./posts/documents-llm/index.html" class="no-external-icon">
 <div class="listing-date">
 Mar 30, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="UHl0aG9u" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1781358690201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
+<div class="quarto-post image-right" data-index="9" data-categories="UHl0aG9u" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1794248765164" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/apple-mlx/index.html" class="no-external">Speed up your scientific computing workflows with MLX</a>
+<a href="./posts/apple-mlx/index.html" class="no-external-icon">Speed up your scientific computing workflows with MLX</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/apple-mlx/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/apple-mlx/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/apple-mlx/index.html" class="no-external-icon">
 The rapidly evolving landscape in machine learning (ML) tools and libraries sometimes offer positive spillovers for scientific computing and empirical finance research. One…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/apple-mlx/index.html" class="no-external">
+<a href="./posts/apple-mlx/index.html" class="no-external-icon">
 <div class="listing-date">
 Mar 22, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1781358690206" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
+<div class="quarto-post image-right" data-index="10" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1794248765164" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">Using Ollama as a ChatGPT Replacement</a>
+<a href="./posts/ollama-chatgpt/index.html" class="no-external-icon">Using Ollama as a ChatGPT Replacement</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TG9jYWwlMjBBSQ=='); return false;">Local AI</div>
@@ -677,26 +732,25 @@ Mar 22, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/ollama-chatgpt/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/ollama-chatgpt/index.html" class="no-external-icon">
 Local Large Language Models (LLMs) like Ollama offer a powerful alternative to cloud-based solutions like ChatGPT. In this post, explore the benefits of using Ollama as a…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/ollama-chatgpt/index.html" class="no-external">
+<a href="./posts/ollama-chatgpt/index.html" class="no-external-icon">
 <div class="listing-date">
 Mar 8, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="VlMlMjBDb2RlJTJDTGFUZVglMkNXcml0aW5n" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1781358690244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
+<div class="quarto-post image-right" data-index="11" data-categories="VlMlMjBDb2RlJTJDTGFUZVglMkNXcml0aW5n" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1794248765168" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/vscode-latex/index.html" class="no-external">Writing LaTeX Documents in VS Code</a>
+<a href="./posts/vscode-latex/index.html" class="no-external-icon">Writing LaTeX Documents in VS Code</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/vscode-latex/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('VlMlMjBDb2Rl'); return false;">VS Code</div>
@@ -706,26 +760,25 @@ Mar 8, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('V3JpdGluZw=='); return false;">Writing</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/vscode-latex/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/vscode-latex/index.html" class="no-external-icon">
 LaTeX is a powerful typesetting system that is widely used for producing scientific publications and academic papers. Visual Studio Code is a versatile and extensible code…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/vscode-latex/index.html" class="no-external">
+<a href="./posts/vscode-latex/index.html" class="no-external-icon">
 <div class="listing-date">
 Feb 18, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1781358690215" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
+<div class="quarto-post image-right" data-index="12" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1794248765176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">Python basic tutorial</a>
+<a href="./posts/python-basics-tutorial/index.html" class="no-external-icon">Python basic tutorial</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
@@ -733,26 +786,25 @@ Feb 18, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/python-basics-tutorial/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/python-basics-tutorial/index.html" class="no-external-icon">
 I posted a tutorial on the basics of the Python syntax. This tutorial has been updated for Python 3.12, and covers the basics of the Python syntax. It is intended for…<code></code><code></code><code></code>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/python-basics-tutorial/index.html" class="no-external">
+<a href="./posts/python-basics-tutorial/index.html" class="no-external-icon">
 <div class="listing-date">
 Jan 7, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1781358690205" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
+<div class="quarto-post image-right" data-index="13" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1794248765157" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/install-python-312/index.html" class="no-external">Installing Python 3.12</a>
+<a href="./posts/install-python-312/index.html" class="no-external-icon">Installing Python 3.12</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/install-python-312/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
@@ -760,32 +812,33 @@ Jan 7, 2024
 <div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
 
 </div>
-<div class="delink listing-description"><a href="./posts/install-python-312/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/install-python-312/index.html" class="no-external-icon">
 In this short tutorial, I cover installing Python 3.12 and the related tools for a complete coding environment.
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/install-python-312/index.html" class="no-external">
+<a href="./posts/install-python-312/index.html" class="no-external-icon">
 <div class="listing-date">
 Jan 3, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1781358690245" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
+<div class="quarto-post image-right" data-index="14" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1794248765174" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">New Year, new blog</a>
+<a href="./posts/welcome/index.html" class="no-external-icon">New Year, new blog</a>
 </h3>
-<div class="listing-subtitle">
-<a href="./posts/welcome/index.html" class="no-external"></a>
-</div>
-<div class="delink listing-description"><a href="./posts/welcome/index.html" class="no-external">
+<div class="listing-description">
+<a href="./posts/welcome/index.html" class="no-external-icon">
 Happy New Year and welcome to the first post of <em>Vincent Codes Finance</em>! As we step into a fresh year, I’m thrilled to launch this new blog and companion YouTube channel…
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
+<a href="./posts/welcome/index.html" class="no-external-icon">
 <div class="listing-date">
 Jan 1, 2024
 </div>
@@ -799,15 +852,50 @@ Jan 1, 2024
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
       const i = window.document.createElement("i");
       i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
     }
     setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
@@ -886,7 +974,8 @@ Jan 1, 2024
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -895,8 +984,69 @@ Jan 1, 2024
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -910,6 +1060,7 @@ Jan 1, 2024
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -1072,44 +1223,54 @@ Jan 1, 2024
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -1207,6 +1368,9 @@ Jan 1, 2024
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 <footer class="footer">

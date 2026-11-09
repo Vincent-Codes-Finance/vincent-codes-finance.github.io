@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paperx-launch/index.html",
+      "/posts/reading-list/index.html",
       "/posts/vibe-research-fable/index.html",
       "/posts/parquet/index.html",
       "/posts/vibe-research-paper/index.html",
