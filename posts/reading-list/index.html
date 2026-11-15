@@ -52,9 +52,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2579492e3688c20661464f954062e59e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-54d220d7f9e8e1a3a9ef9cac357aec30.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-10f0a3c19c85d0250492bfdeef916360.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-5fc338203a6bce557f004dbab185d796.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-10f0a3c19c85d0250492bfdeef916360.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,8 +84,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,500&amp;family=Saira:ital,wght@0,400;0,500;0,600;1,400&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="3fcf770b-4532-49f4-b9c6-05a49573a2f5"></script>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9733047442411628" crossorigin="anonymous"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -249,7 +250,8 @@ ul.task-list li input[type="checkbox"] {
       }
     };
     const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
@@ -263,6 +265,15 @@ ul.task-list li input[type="checkbox"] {
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
     };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      refreshSafariScrollbar();
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
     // Switch to dark mode if need be
     if (hasAlternateSentinel()) {
       toggleColorMode(true);
@@ -277,8 +288,8 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo light-content">
-    <img src="../../vcf-logo-circle-small.webp" alt="" class="navbar-logo dark-content">
+    <img src="../../vcf-logo-small.webp" alt="Vincent Codes Finance logo" class="navbar-logo light-content">
+    <img src="../../vcf-logo-small.webp" alt="Vincent Codes Finance logo" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
@@ -289,21 +300,18 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About VCF</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../reading-list.html"> 
-<span class="menu-text">Reading List</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
+    <a class="nav-link" href="https://www.youtube.com/@VincentCodesFinance"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@vcf-paperx"> <i class="bi bi-file-earmark-play" role="img" aria-label="PaperX on YouTube">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -381,6 +389,62 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script>
+// Home page: drop categories with fewer than MIN_POSTS posts from the
+// category list in the margin. The chips on each post are left alone, so a
+// rare category can still be reached from a post that carries it.
+(function () {
+  const MIN_POSTS = 3;
+  document.querySelectorAll(".quarto-listing-category .category").forEach(function (el) {
+    if (!el.dataset.category) return; // "All"
+    const count = el.querySelector(".quarto-category-count");
+    const n = count ? parseInt(count.textContent.replace(/\D/g, ""), 10) : NaN;
+    if (n < MIN_POSTS) el.remove();
+  });
+})();
+
+// Home page: clicking the lit word of the headline decodes it from random
+// glyphs, letters locking in left to right (same effect as on
+// vincentgregoire.com). Nothing plays on load or on hover, and nothing at all
+// under prefers-reduced-motion. Screen readers always get the real word.
+(function () {
+  const GLYPHS = "01<>/\\[]{}#$%&*+=?XZ";
+  const DURATION = 900;
+  document.querySelectorAll(".home .hero-neon").forEach(function (el) {
+    const text = el.textContent;
+    const real = document.createElement("span");
+    real.className = "visually-hidden";
+    real.textContent = text;
+    const shown = document.createElement("span");
+    shown.setAttribute("aria-hidden", "true");
+    shown.textContent = text;
+    el.replaceChildren(real, shown);
+
+    let frame = 0;
+    el.addEventListener("click", function () {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      cancelAnimationFrame(frame);
+      // "Finance" shares the line, so hold the word's width while the glyphs
+      // (which are not all as wide as the letters) cycle through.
+      el.style.width = "";
+      el.style.width = el.getBoundingClientRect().width + "px";
+      const begin = performance.now();
+      const step = function (now) {
+        const progress = Math.min(1, (now - begin) / DURATION);
+        const locked = Math.floor(progress * text.length);
+        let next = text.slice(0, locked);
+        for (let i = locked; i < text.length; i++) {
+          next += text[i] === " " ? " " : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        }
+        shown.textContent = next;
+        if (progress < 1) frame = requestAnimationFrame(step);
+        else el.style.width = "";
+      };
+      frame = requestAnimationFrame(step);
+    });
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

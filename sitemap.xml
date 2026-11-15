@@ -2,106 +2,102 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vincent.codes.finance/about.html</loc>
-    <lastmod>2026-11-09T18:26:05.157Z</lastmod>
+    <lastmod>2026-11-15T19:55:43.265Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/</loc>
-    <lastmod>2026-11-09T18:26:05.161Z</lastmod>
+    <lastmod>2026-11-15T18:17:20.938Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/lists/econometrics.html</loc>
-    <lastmod>2026-11-09T18:26:05.162Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.712Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/apple-mlx/</loc>
-    <lastmod>2026-11-09T18:26:05.164Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.709Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/vscode-latex/</loc>
-    <lastmod>2026-11-09T18:26:05.168Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.717Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/parquet/</loc>
-    <lastmod>2026-11-09T18:26:05.169Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.717Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/vibe-research-paper/</loc>
-    <lastmod>2026-11-09T18:26:05.179Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.729Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/pandas-read-csv/</loc>
-    <lastmod>2026-11-09T18:26:05.168Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.717Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/github-for-research/</loc>
-    <lastmod>2026-11-09T18:26:05.171Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.718Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/welcome/</loc>
-    <lastmod>2026-11-09T18:26:05.174Z</lastmod>
+    <lastmod>2026-11-15T19:55:43.266Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/ollama-chatgpt/</loc>
-    <lastmod>2026-11-09T18:26:05.164Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.713Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/documents-llm/</loc>
-    <lastmod>2026-11-09T18:26:05.163Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.708Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/claude-code-data-analysis/</loc>
-    <lastmod>2026-11-09T18:26:05.165Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.711Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/vibe-research-fable/</loc>
-    <lastmod>2026-11-09T18:26:05.165Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.712Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/install-python-312/</loc>
-    <lastmod>2026-11-09T18:26:05.157Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.721Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/devcontainers/</loc>
-    <lastmod>2026-11-09T18:26:05.159Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.716Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/timeseries-standard-errors/</loc>
-    <lastmod>2026-11-09T18:26:05.194Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.743Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/reading-list/</loc>
-    <lastmod>2026-11-09T18:26:05.162Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.708Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/panel-ols-standard-errors/</loc>
-    <lastmod>2026-11-09T18:26:05.163Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.718Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/python-basics-tutorial/</loc>
-    <lastmod>2026-11-09T18:26:05.176Z</lastmod>
+    <lastmod>2026-11-15T19:55:43.266Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/ollama-copilot/</loc>
-    <lastmod>2026-11-09T18:26:05.161Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.708Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/edgartools/</loc>
-    <lastmod>2026-11-09T18:26:05.168Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.716Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/sentiment/</loc>
-    <lastmod>2026-11-09T18:26:05.180Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.729Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/posts/paperx-launch/</loc>
-    <lastmod>2026-11-09T18:34:41.678Z</lastmod>
+    <lastmod>2026-11-15T18:05:01.710Z</lastmod>
   </url>
   <url>
     <loc>https://vincent.codes.finance/reading-list.html</loc>
-    <lastmod>2026-11-09T18:26:05.166Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vincent.codes.finance/</loc>
-    <lastmod>2026-11-09T18:26:05.161Z</lastmod>
+    <lastmod>2026-11-15T18:13:50.813Z</lastmod>
   </url>
 </urlset>

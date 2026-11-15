@@ -1,68 +1,957 @@
-/* Typography */
+/* ---------------------------------------------------------------------------
+   Vincent Codes Finance: "Night City" look, shared with vincentgregoire.com.
+
+   The palette comes from vcf_light.scss / vcf_dark.scss as CSS variables
+   (--surface-0..2, --ink, --ink-dim, --line, --line-strong, --neon-*).
+   Rules of the system:
+   - cyan is the primary marker, magenta the hot accent;
+   - yellow is only ever a solid fill with --on-yellow ink on top, never a
+     text colour, so it is identical in both modes;
+   - Chakra Petch for headings, nav and data (dates, counts, chips), Saira for
+     everything that gets read;
+   - no rounded corners: surfaces are chamfered with clip-path instead;
+   - nothing animates on its own. Motion only answers a hover or a scroll.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --font-display: "Chakra Petch", "Saira", ui-sans-serif, system-ui, sans-serif;
+  --cut: 12px;
+}
+
+html {
+  scroll-padding-top: 5.5rem;
+}
+
 body {
-  line-height: 1.7;
-  letter-spacing: -0.01em;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6,
-.title {
+::selection {
+  background: var(--neon-yellow);
+  color: var(--on-yellow);
+}
+
+:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Ambient background: a fixed dot matrix that fades out down the page and one
+   still magenta haze in the top corner. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  inset: 0;
+  background-image: radial-gradient(circle, var(--line-strong) 1px, transparent 1.5px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+}
+
+body::after {
+  top: -30vh;
+  right: -20vw;
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(closest-side, var(--neon-pink), transparent);
+  opacity: var(--haze);
+}
+
+/* ---------------------------------------------------------------------------
+   Shared pieces
+   --------------------------------------------------------------------------- */
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
 }
 
-/* Code blocks */
-div.sourceCode {
-  border-radius: 0.5rem;
+.eyebrow--lit {
+  color: var(--neon-pink);
 }
 
-pre.sourceCode {
-  border-radius: 0.5rem;
+/* Bordered label used for categories everywhere. */
+.quarto-category,
+.listing-category,
+.quarto-listing-category .category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 0 !important;
+  padding: 0.125rem 0.5rem !important;
+  font-family: var(--font-display);
+  font-size: 0.75rem !important;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-dim) !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  cursor: pointer;
+  transition: color 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out;
 }
 
-/* Navbar */
-.navbar {
-  border-bottom: 1px solid var(--bs-border-color);
-}
-
-/* Footer */
-.nav-footer {
-  border-top: 1px solid var(--bs-border-color);
-}
-
-/* Links */
-a {
+.quarto-category a {
+  color: inherit !important;
   text-decoration: none;
 }
 
-a:hover {
+.quarto-category:hover,
+.listing-category:hover,
+.quarto-listing-category .category:hover,
+.quarto-listing-category .category.active {
+  color: var(--neon-cyan) !important;
+  border-color: var(--neon-cyan) !important;
+  background: color-mix(in oklab, var(--neon-cyan) 10%, transparent) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Navbar: a translucent strip with a hairline that fills as the page scrolls.
+   --------------------------------------------------------------------------- */
+#quarto-header {
+  background: transparent;
+}
+
+.navbar {
+  background-color: color-mix(in oklab, var(--surface-0) 82%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-bottom: 1px solid var(--line);
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.navbar-brand-container {
+  gap: 0.25rem;
+}
+
+.navbar-brand.navbar-brand-logo {
+  padding: 0;
+  margin-right: 0.5rem;
+}
+
+.navbar-logo {
+  max-height: 2.5rem;
+  width: auto;
+}
+
+.navbar-brand .navbar-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.navbar .navbar-nav .nav-link {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color 150ms ease-out;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+  color: var(--neon-cyan);
+}
+
+.navbar .navbar-nav .nav-link .bi {
+  font-size: 1rem;
+}
+
+.navbar .navbar-toggler {
+  color: var(--ink-dim);
+}
+
+/* Theme toggle, as on vincentgregoire.com: a square outlined button showing
+   a moon in light mode and a sun in dark mode (the mode it switches to).
+   Quarto draws its own toggle as a background image, so the icon is swapped
+   for a mask filled with the current text colour. */
+.navbar .quarto-color-scheme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.375rem 0 0.75rem;
+  padding: 0 !important;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-dim);
+  transition: color 150ms ease-out, border-color 150ms ease-out;
+}
+
+@media (max-width: 991.98px) {
+  .navbar .quarto-color-scheme-toggle {
+    margin: 0;
+  }
+
+  /* Quarto sizes the brand for its own, narrower toggle; leave room for the
+     square button so the search icon stays on the same line. */
+  .navbar .navbar-brand-container {
+    max-width: calc(100% - 128px);
+  }
+}
+
+/* Where the full name would be cut off, show "VCF" instead. The full name
+   stays in the markup (for screen readers); only its glyphs are hidden. */
+@media (max-width: 479.98px) {
+  .navbar-brand .navbar-title {
+    font-size: 0;
+    letter-spacing: 0;
+  }
+
+  .navbar-brand .navbar-title::after {
+    content: "VCF";
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+.navbar .quarto-color-scheme-toggle:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
+.navbar .quarto-color-scheme-toggle .bi {
+  display: inline-flex;
+}
+
+.navbar .quarto-color-scheme-toggle .bi::before {
+  --icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>');
+  width: 1rem;
+  height: 1rem;
+  background-image: none !important;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+body.quarto-dark .navbar .quarto-color-scheme-toggle .bi::before {
+  --icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>');
+}
+
+.navbar-toggler {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+}
+
+@supports (animation-timeline: scroll()) {
+  #quarto-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    transform-origin: left;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+    animation: vcf-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes vcf-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Title banner (every page) and the home hero
+   --------------------------------------------------------------------------- */
+.quarto-title-banner {
+  position: relative;
+  margin-bottom: 0;
+  padding-top: 3rem;
+  padding-bottom: 2.25rem;
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/* Short lit segment at the start of the rule. */
+.quarto-title-banner .quarto-title::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 4.5rem;
+  height: 3px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 calc(var(--glow) * 12px) var(--neon-cyan);
+}
+
+.quarto-title-banner .title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--ink) !important;
+  text-wrap: balance;
+}
+
+.quarto-title-banner .description,
+.quarto-title-banner .subtitle {
+  margin-top: 0.75rem;
+  font-size: 1.0625rem;
+  color: var(--ink-dim);
+}
+
+.quarto-title-banner .quarto-categories {
+  gap: 0.375rem;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.quarto-title-meta {
+  margin-top: 1.25rem;
+}
+
+.quarto-title-meta-heading {
+  font-family: var(--font-display);
+  font-size: 0.6875rem !important;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  opacity: 1;
+}
+
+.quarto-title-meta-contents {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Home: the site name is the headline. "Vincent" and "Finance" are drawn as
+   outlines so "Codes" carries the weight. */
+.home .quarto-title-banner {
+  padding-top: 3.5rem;
+  padding-bottom: 3rem;
+}
+
+.home .quarto-title-banner .quarto-title {
+  position: relative;
+  grid-column: page-start / page-end;
+}
+
+.home .quarto-title-banner .quarto-title::after {
+  bottom: calc(-3rem - 2px);
+}
+
+.home .quarto-title-banner .title {
+  margin: 0.5rem 0 0;
+  font-size: min(10.5vw, 4.6875rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.hero-line {
+  display: block;
+}
+
+.hero-ghost {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-dim);
+}
+
+.hero-neon {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  color: var(--neon-cyan);
+  background: linear-gradient(92deg, var(--neon-cyan) 5%, var(--neon-pink) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 calc(var(--glow) * 22px) color-mix(in oklab, var(--neon-pink) 55%, transparent))
+    drop-shadow(0 0 calc(var(--glow) * 3px) color-mix(in oklab, var(--neon-cyan) 60%, transparent));
+}
+
+/* The tagline sits on a yellow tape, chamfered on one corner. */
+.home .quarto-title-banner .description {
+  display: inline-block;
+  margin-top: 1.75rem !important;
+  padding: 0.5rem 1.25rem 0.5rem 0.875rem;
+  background: var(--neon-yellow);
+  color: var(--on-yellow);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.home .quarto-title-banner .description::before {
+  content: "///";
+  margin-right: 0.75rem;
+  opacity: 0.45;
+  letter-spacing: 0;
+}
+
+.home .quarto-title-meta {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Home: post list. Each post is a row with a bar on its left edge that lights
+   up on hover.
+   --------------------------------------------------------------------------- */
+.home #quarto-content {
+  padding-top: 0.5rem;
+}
+
+.home #quarto-margin-sidebar {
+  padding-top: 0.25rem;
+}
+
+.quarto-listing-default .quarto-post {
+  position: relative;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 1.375rem 0 1.5rem 1.25rem;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.quarto-listing-default .quarto-post:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.quarto-listing-default .quarto-post::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: 0;
+  width: 2px;
+  background: var(--neon-cyan);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 200ms ease-out;
+}
+
+.quarto-listing-default .quarto-post:hover::before {
+  transform: scaleY(1);
+}
+
+.quarto-listing-default .quarto-post .metadata {
+  order: -1;
+  flex: none;
+  padding: 0;
+  max-width: none;
+  min-width: 0;
+  text-align: left;
+}
+
+.quarto-listing-default .quarto-post .metadata a {
+  text-decoration: none;
+}
+
+.quarto-listing-default .quarto-post .listing-date {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--neon-pink);
+}
+
+.quarto-listing-default .quarto-post .body {
+  flex: none;
+}
+
+.quarto-listing-default .quarto-post .listing-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.375rem;
+  font-weight: 600 !important;
+  line-height: 1.25;
+}
+
+.quarto-listing-default .quarto-post .listing-title a {
+  font-weight: inherit;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+
+.quarto-listing-default .quarto-post:hover .listing-title a {
+  color: var(--neon-cyan);
+}
+
+.quarto-listing-default .quarto-post .listing-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 0 0 0.625rem;
+  padding: 0;
+}
+
+.quarto-listing-default .quarto-post .listing-category {
+  margin: 0;
+}
+
+.quarto-listing-default .quarto-post .listing-description {
+  font-size: 1rem;
+  color: var(--ink-dim);
+}
+
+.quarto-listing-default .quarto-post .listing-description a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Home: margin column. Four link cards, then the category list.
+   --------------------------------------------------------------------------- */
+.home-links {
+  display: grid;
+  gap: 0.625rem;
+  margin-bottom: 2.25rem;
+}
+
+.home-links .eyebrow {
+  margin-bottom: 0.25rem;
+}
+
+/* Chamfered card: clip-path would slice a real border off at the cut corners,
+   so the border is the card's own background and the fill is a pseudo-element
+   inset by one pixel with the same polygon. */
+.home-link {
+  --accent: var(--neon-cyan);
+  --edge: var(--line-strong);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem 0.625rem 0.875rem;
+  background: var(--edge);
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: background-color 180ms ease-out;
+}
+
+.home-link::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: linear-gradient(90deg, var(--accent) 0 3px, var(--surface-1) 3px);
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+}
+
+.home-link:hover {
+  --edge: var(--accent);
+}
+
+.home-link > .bi:first-child {
+  flex: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.home-link-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.home-link-title {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.home-link-sub {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--ink-dim);
+}
+
+.home-link-go {
+  flex: none;
+  font-size: 0.875rem;
+  color: var(--ink-dim);
+  transition: color 150ms ease-out, transform 200ms ease-out;
+}
+
+.home-link:hover .home-link-go {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* Below the desktop breakpoint Quarto hides the margin column. On the home
+   page it holds the link cards and the categories, so it is shown above the
+   post list instead, with the cards two abreast. */
+@media (max-width: 991.98px) {
+  .home #quarto-margin-sidebar {
+    display: block !important;
+    position: static;
+    grid-column: page-start / page-end;
+    grid-row: 1;
+    height: auto;
+    max-height: none;
+    padding: 0 0 2rem;
+    overflow: visible;
+  }
+
+  .home main.content {
+    grid-column: page-start / page-end;
+    grid-row: 2;
+  }
+
+  .home-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 1.75rem;
+  }
+
+  .home-links .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+}
+
+@media (max-width: 479.98px) {
+  .home-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.quarto-listing-category-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem !important;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neon-pink);
+}
+
+.quarto-listing-category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.quarto-listing-category .category {
+  margin: 0;
+}
+
+.quarto-listing-category .quarto-category-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------------------
+   Article text
+   --------------------------------------------------------------------------- */
+main.content h2,
+main.content h3,
+main.content h4 {
+  letter-spacing: 0;
+}
+
+main.content h2 {
+  position: relative;
+  margin-top: 3rem;
+  padding-bottom: 0.625rem;
+  font-size: 1.75rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+main.content h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 3rem;
+  height: 3px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 calc(var(--glow) * 12px) var(--neon-cyan);
+}
+
+main.content h3 {
+  margin-top: 2rem;
+  font-size: 1.3125rem;
+}
+
+main.content a:not(.btn):not(.home-link):not(.about-link):not(.anchorjs-link):not(.no-external-icon) {
+  color: var(--neon-cyan);
   text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--neon-cyan) 40%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 150ms ease-out;
 }
 
-/* TOC */
-nav[id="TOC"] {
-  font-size: 0.8rem;
-  color: var(--bs-secondary-color);
+main.content a:not(.btn):not(.home-link):not(.about-link):not(.anchorjs-link):not(.no-external-icon):hover {
+  text-decoration-color: var(--neon-cyan);
 }
 
-/* Sidebar / listing */
-.sidebar nav[id="quarto-sidebar-glass"] {
-  font-size: 0.85rem;
+main.content strong {
+  font-weight: 600;
 }
 
-/* Reading list */
+main.content blockquote {
+  margin-left: 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 2px solid var(--neon-pink);
+  color: var(--ink-dim);
+}
+
+main.content hr {
+  border-color: var(--line-strong);
+  opacity: 1;
+}
+
+main.content figure > p > img,
+main.content .quarto-figure img {
+  border: 1px solid var(--line);
+}
+
+figcaption,
+.figure-caption {
+  font-size: 0.875rem;
+  color: var(--ink-dim);
+}
+
+/* Code */
+code {
+  font-size: 0.875em;
+}
+
+p code:not(.sourceCode),
+li code:not(.sourceCode),
+td code:not(.sourceCode) {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+div.sourceCode {
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--neon-cyan);
+  border-radius: 0;
+  background-color: var(--surface-1);
+}
+
+pre.sourceCode {
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+pre:not(.sourceCode) {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  background-color: var(--surface-1);
+  color: var(--ink);
+}
+
+.cell-output pre,
+.cell-output-stdout pre {
+  border-left: 2px solid var(--line-strong);
+}
+
+.code-copy-button {
+  color: var(--ink-dim);
+}
+
+/* Tables */
+main.content table {
+  font-variant-numeric: tabular-nums;
+}
+
+main.content table thead th {
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+main.content table td,
+main.content table th {
+  border-color: var(--line);
+}
+
+/* Callouts */
+.callout {
+  border-radius: 0 !important;
+  background: var(--surface-1);
+  color: var(--ink);
+}
+
+.callout.callout-style-simple,
+.callout.callout-style-default {
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.callout .callout-title-container {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.callout-warning.callout-style-simple {
+  border-left-color: var(--neon-yellow);
+}
+
+/* ---------------------------------------------------------------------------
+   Table of contents
+   --------------------------------------------------------------------------- */
+#TOC > h2,
+.sidebar nav[role="doc-toc"] > h2 {
+  margin-bottom: 0.75rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neon-pink);
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a {
+  border-left: 1px solid var(--line);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink-dim);
+  transition: color 150ms ease-out, border-color 150ms ease-out;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a:hover {
+  color: var(--ink) !important;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active {
+  border-left: 2px solid var(--neon-cyan) !important;
+  color: var(--neon-cyan) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+.nav-footer {
+  margin-top: 4rem;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---------------------------------------------------------------------------
+   About page
+   --------------------------------------------------------------------------- */
+div.quarto-about-trestles {
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+div.quarto-about-trestles .about-entity {
+  border-right: 0;
+}
+
+@media (min-width: 992px) {
+  div.quarto-about-trestles .about-entity {
+    border-right: 1px solid var(--line);
+  }
+}
+
+div.quarto-about-trestles .about-entity .about-links {
+  gap: 0.5rem;
+}
+
+div.quarto-about-trestles .about-entity .about-link {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out;
+}
+
+div.quarto-about-trestles .about-entity .about-link:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  background: color-mix(in oklab, var(--neon-cyan) 10%, transparent);
+}
+
+div.quarto-about-trestles .about-contents h2:first-child {
+  margin-top: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Reading list
+   --------------------------------------------------------------------------- */
 .book {
   display: flex;
   gap: 1.5rem;
-  margin-bottom: 2.5rem;
   align-items: flex-start;
+  margin-bottom: 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+h2 + .book {
+  border-top: 0;
+  padding-top: 0.75rem;
+}
+
+.book > a {
+  flex: 0 0 auto;
 }
 
 .book-cover {
   flex: 0 0 auto;
   width: 110px;
   height: auto;
-  border-radius: 0.25rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--line-strong) !important;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
 }
 
 .book-info {
@@ -70,20 +959,26 @@ nav[id="TOC"] {
 }
 
 .book-title {
-  font-size: 1.1rem;
+  margin-bottom: 0.15rem;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
   font-weight: 600;
   line-height: 1.3;
-  margin-bottom: 0.15rem;
 }
 
 .book-author {
-  color: var(--bs-secondary-color);
-  font-size: 0.9rem;
   margin-bottom: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--neon-pink);
 }
 
 .book-desc {
   margin-bottom: 0;
+  color: var(--ink-dim);
 }
 
 .audiobook-note {
@@ -99,5 +994,17 @@ nav[id="TOC"] {
   .book-cover {
     align-self: center;
     width: 140px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+
+  #quarto-header::after {
+    display: none;
   }
 }

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Coding (mostly) in Python for empirical research in finance">
+<meta name="description" content="AI and coding for finance research">
 
 <title>Vincent Codes Finance</title>
 <style>
@@ -52,9 +52,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2579492e3688c20661464f954062e59e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-54d220d7f9e8e1a3a9ef9cac357aec30.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-eda0dd6a19dc078cc0e4b80e7a04a5ba.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-10f0a3c19c85d0250492bfdeef916360.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-5fc338203a6bce557f004dbab185d796.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-10f0a3c19c85d0250492bfdeef916360.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,8 +107,9 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,500&amp;family=Saira:ital,wght@0,400;0,500;0,600;1,400&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="3fcf770b-4532-49f4-b9c6-05a49573a2f5"></script>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9733047442411628" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -142,16 +143,16 @@ window.Quarto = {
 
 <link rel="stylesheet" href="styles.css">
 <link rel="alternate" type="application/rss+xml" title="Vincent Codes Finance" href="index.xml" data-external="1"><meta property="og:title" content="Vincent Codes Finance">
-<meta property="og:description" content="Coding (mostly) in Python for empirical research in finance">
+<meta property="og:description" content="AI and coding for finance research">
 <meta property="og:site_name" content="Vincent Codes Finance">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:title" content="Vincent Codes Finance">
-<meta name="twitter:description" content="Coding (mostly) in Python for empirical research in finance">
+<meta name="twitter:description" content="AI and coding for finance research">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://vincent.codes.finance/" />
 </head>
 
-<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed home quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -301,7 +302,8 @@ window.Quarto = {
       }
     };
     const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
@@ -315,6 +317,15 @@ window.Quarto = {
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
     };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      refreshSafariScrollbar();
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
     // Switch to dark mode if need be
     if (hasAlternateSentinel()) {
       toggleColorMode(true);
@@ -329,8 +340,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./vcf-logo-circle-small.webp" alt="" class="navbar-logo light-content">
-    <img src="./vcf-logo-circle-small.webp" alt="" class="navbar-logo dark-content">
+    <img src="./vcf-logo-small.webp" alt="Vincent Codes Finance logo" class="navbar-logo light-content">
+    <img src="./vcf-logo-small.webp" alt="Vincent Codes Finance logo" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Vincent Codes Finance</span>
@@ -341,21 +352,18 @@ window.Quarto = {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About VCF</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./reading-list.html"> 
-<span class="menu-text">Reading List</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/Vincent-Codes-Finance"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.youtube.com/channel/UCuNrwdpvF1LBGJ2cNL5b68w"> <i class="bi bi-youtube" role="img">
+    <a class="nav-link" href="https://www.youtube.com/@VincentCodesFinance"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@vcf-paperx"> <i class="bi bi-file-earmark-play" role="img" aria-label="PaperX on YouTube">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -382,10 +390,10 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Vincent Codes Finance</h1>
+      <h1 class="title"><span class="hero-ghost hero-line">Vincent</span> <span class="hero-neon">Codes</span> <span class="hero-ghost">Finance</span></h1>
                   <div>
         <div class="description">
-          Coding (mostly) in Python for empirical research in finance
+          AI and coding for finance research
         </div>
       </div>
                 </div>
@@ -403,7 +411,32 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<nav class="home-links" aria-label="Start here">
+<p class="eyebrow eyebrow--lit">Start here</p>
+<a class="home-link" href="./about.html" style="--accent: var(--neon-cyan)">
+<i class="bi bi-person" aria-hidden="true"></i>
+<span class="home-link-text"><span class="home-link-title">About</span><span class="home-link-sub">Blog and author</span></span>
+<i class="bi bi-arrow-right home-link-go" aria-hidden="true"></i>
+</a>
+<a class="home-link" href="./reading-list.html" style="--accent: var(--neon-green)">
+<i class="bi bi-book" aria-hidden="true"></i>
+<span class="home-link-text"><span class="home-link-title">Reading list</span><span class="home-link-sub">Books I recommend</span></span>
+<i class="bi bi-arrow-right home-link-go" aria-hidden="true"></i>
+</a>
+<a class="home-link" href="https://www.youtube.com/@VincentCodesFinance" style="--accent: var(--neon-pink)">
+<i class="bi bi-youtube" aria-hidden="true"></i>
+<span class="home-link-text"><span class="home-link-title">Vincent Codes Finance</span><span class="home-link-sub">Main YouTube channel</span></span>
+<i class="bi bi-arrow-up-right home-link-go" aria-hidden="true"></i>
+</a>
+<a class="home-link" href="https://www.youtube.com/@vcf-paperx" style="--accent: var(--neon-violet)">
+<i class="bi bi-file-earmark-play" aria-hidden="true"></i>
+<span class="home-link-text"><span class="home-link-title">PaperX</span><span class="home-link-sub">Papers explained, on YouTube</span></span>
+<i class="bi bi-arrow-up-right home-link-go" aria-hidden="true"></i>
+</a>
+</nav>
+
+</div></div>
         
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(15)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Qm9va3M=">Books <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29waWxvdA==">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YQ==">Data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFUZVg=">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExN">LLM <span class="quarto-category-count">(7)</span></div><div class="category" data-category="TG9jYWwlMjBBSQ==">Local AI <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UGFwZXJY">PaperX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVhZGluZw==">Reading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVwcm9kdWNpYmlsaXR5">Reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVzZWFyY2g=">Research <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(4)</span></div><div class="category" data-category="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZQ==">Visual Studio Code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VlMlMjBDb2Rl">VS Code <span class="quarto-category-count">(3)</span></div><div class="category" data-category="V3JpdGluZw==">Writing <span class="quarto-category-count">(4)</span></div></div></div>
 <!-- main -->
@@ -420,7 +453,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="UGFwZXJYJTJDQUklMkNMTE0lMkNSZXNlYXJjaA==" data-listing-date-sort="1794200400000" data-listing-file-modified-sort="1794249281678" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="694">
+<div class="quarto-post image-right" data-index="0" data-categories="UGFwZXJYJTJDQUklMkNMTE0lMkNSZXNlYXJjaA==" data-listing-date-sort="1794200400000" data-listing-file-modified-sort="1794765901710" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="694">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/paperx-launch/index.html" class="no-external-icon">Introducing PaperX: Explainer Videos for Recent Research in Finance and AI</a>
@@ -450,7 +483,7 @@ Nov 9, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Qm9va3MlMkNSZWFkaW5n" data-listing-date-sort="1793160000000" data-listing-file-modified-sort="1794248765162" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="210">
+<div class="quarto-post image-right" data-index="1" data-categories="Qm9va3MlMkNSZWFkaW5n" data-listing-date-sort="1793160000000" data-listing-file-modified-sort="1794765901708" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="210">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/reading-list/index.html" class="no-external-icon">Reading List</a>
@@ -476,7 +509,7 @@ Oct 28, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1781323200000" data-listing-file-modified-sort="1794248765165" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2309">
+<div class="quarto-post image-right" data-index="2" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1781323200000" data-listing-file-modified-sort="1794765901712" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2309">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/vibe-research-fable/index.html" class="no-external-icon">Vibe Research II: My Three Days with Fable 5</a>
@@ -504,7 +537,7 @@ Jun 13, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="UHl0aG9uJTJDUiUyQ0RhdGElMkNUdXRvcmlhbA==" data-listing-date-sort="1779336000000" data-listing-file-modified-sort="1794248765169" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
+<div class="quarto-post image-right" data-index="3" data-categories="UHl0aG9uJTJDUiUyQ0RhdGElMkNUdXRvcmlhbA==" data-listing-date-sort="1779336000000" data-listing-file-modified-sort="1794765901717" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/parquet/index.html" class="no-external-icon">What is Parquet and Why You Should Use It</a>
@@ -534,7 +567,7 @@ May 21, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1772082000000" data-listing-file-modified-sort="1794248765179" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3602">
+<div class="quarto-post image-right" data-index="4" data-categories="TExNJTJDQUklMkNXcml0aW5n" data-listing-date-sort="1772082000000" data-listing-file-modified-sort="1794765901729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3602">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/vibe-research-paper/index.html" class="no-external-icon">Vibe Research, or How I Wrote an Academic Paper in Four Days</a>
@@ -562,7 +595,7 @@ Feb 26, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="VlMlMjBDb2RlJTJDTExNJTJDUHl0aG9uJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQUk=" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1794248765165" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
+<div class="quarto-post image-right" data-index="5" data-categories="VlMlMjBDb2RlJTJDTExNJTJDUHl0aG9uJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQUk=" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1794765901711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/claude-code-data-analysis/index.html" class="no-external-icon">Claude Code for Data Analysis</a>
@@ -594,7 +627,7 @@ Sep 30, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZSUyQ1JlcHJvZHVjaWJpbGl0eSUyQ1R1dG9yaWFs" data-listing-date-sort="1718337600000" data-listing-file-modified-sort="1794248765159" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2064">
+<div class="quarto-post image-right" data-index="6" data-categories="VmlzdWFsJTIwU3R1ZGlvJTIwQ29kZSUyQ1JlcHJvZHVjaWJpbGl0eSUyQ1R1dG9yaWFs" data-listing-date-sort="1718337600000" data-listing-file-modified-sort="1794765901716" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2064">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/devcontainers/index.html" class="no-external-icon">Use Devcontainers for safe and replicable research</a>
@@ -622,7 +655,7 @@ Jun 14, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="VlMlMjBDb2RlJTJDQ29waWxvdCUyQ0xvY2FsJTIwQUklMkNMTE0lMkNQeXRob24lMkNNYWNoaW5lJTIwTGVhcm5pbmclMkNBSSUyQ1dyaXRpbmc=" data-listing-date-sort="1716177600000" data-listing-file-modified-sort="1794248765161" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3378">
+<div class="quarto-post image-right" data-index="7" data-categories="VlMlMjBDb2RlJTJDQ29waWxvdCUyQ0xvY2FsJTIwQUklMkNMTE0lMkNQeXRob24lMkNNYWNoaW5lJTIwTGVhcm5pbmclMkNBSSUyQ1dyaXRpbmc=" data-listing-date-sort="1716177600000" data-listing-file-modified-sort="1794765901708" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3378">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/ollama-copilot/index.html" class="no-external-icon">Using Ollama with Continue as an AI-Powered Coding and Writing Assistant</a>
@@ -660,7 +693,7 @@ May 20, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ1B5dGhvbiUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1794248765163" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
+<div class="quarto-post image-right" data-index="8" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ1B5dGhvbiUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1711771200000" data-listing-file-modified-sort="1794765901708" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4766">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/documents-llm/index.html" class="no-external-icon">Summarize and query PDFs with AI using Ollama</a>
@@ -692,7 +725,7 @@ Mar 30, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="UHl0aG9u" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1794248765164" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
+<div class="quarto-post image-right" data-index="9" data-categories="UHl0aG9u" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1794765901709" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3211">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/apple-mlx/index.html" class="no-external-icon">Speed up your scientific computing workflows with MLX</a>
@@ -716,7 +749,7 @@ Mar 22, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1794248765164" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
+<div class="quarto-post image-right" data-index="10" data-categories="TG9jYWwlMjBBSSUyQ0xMTSUyQ01hY2hpbmUlMjBMZWFybmluZyUyQ0FJ" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1794765901713" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2653">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/ollama-chatgpt/index.html" class="no-external-icon">Using Ollama as a ChatGPT Replacement</a>
@@ -746,7 +779,7 @@ Mar 8, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="VlMlMjBDb2RlJTJDTGFUZVglMkNXcml0aW5n" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1794248765168" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
+<div class="quarto-post image-right" data-index="11" data-categories="VlMlMjBDb2RlJTJDTGFUZVglMkNXcml0aW5n" data-listing-date-sort="1708232400000" data-listing-file-modified-sort="1794765901717" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2979">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/vscode-latex/index.html" class="no-external-icon">Writing LaTeX Documents in VS Code</a>
@@ -774,7 +807,7 @@ Feb 18, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1794248765176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
+<div class="quarto-post image-right" data-index="12" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704603600000" data-listing-file-modified-sort="1794772543266" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/python-basics-tutorial/index.html" class="no-external-icon">Python basic tutorial</a>
@@ -800,7 +833,7 @@ Jan 7, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1794248765157" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
+<div class="quarto-post image-right" data-index="13" data-categories="UHl0aG9uJTJDVHV0b3JpYWw=" data-listing-date-sort="1704258000000" data-listing-file-modified-sort="1794765901721" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3300">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/install-python-312/index.html" class="no-external-icon">Installing Python 3.12</a>
@@ -826,7 +859,7 @@ Jan 3, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1794248765174" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
+<div class="quarto-post image-right" data-index="14" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1794772543266" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="596">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/welcome/index.html" class="no-external-icon">New Year, new blog</a>
@@ -848,6 +881,62 @@ Jan 1, 2024
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></section></div></main> <!-- /main -->
+<script>
+// Home page: drop categories with fewer than MIN_POSTS posts from the
+// category list in the margin. The chips on each post are left alone, so a
+// rare category can still be reached from a post that carries it.
+(function () {
+  const MIN_POSTS = 3;
+  document.querySelectorAll(".quarto-listing-category .category").forEach(function (el) {
+    if (!el.dataset.category) return; // "All"
+    const count = el.querySelector(".quarto-category-count");
+    const n = count ? parseInt(count.textContent.replace(/\D/g, ""), 10) : NaN;
+    if (n < MIN_POSTS) el.remove();
+  });
+})();
+
+// Home page: clicking the lit word of the headline decodes it from random
+// glyphs, letters locking in left to right (same effect as on
+// vincentgregoire.com). Nothing plays on load or on hover, and nothing at all
+// under prefers-reduced-motion. Screen readers always get the real word.
+(function () {
+  const GLYPHS = "01<>/\\[]{}#$%&*+=?XZ";
+  const DURATION = 900;
+  document.querySelectorAll(".home .hero-neon").forEach(function (el) {
+    const text = el.textContent;
+    const real = document.createElement("span");
+    real.className = "visually-hidden";
+    real.textContent = text;
+    const shown = document.createElement("span");
+    shown.setAttribute("aria-hidden", "true");
+    shown.textContent = text;
+    el.replaceChildren(real, shown);
+
+    let frame = 0;
+    el.addEventListener("click", function () {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      cancelAnimationFrame(frame);
+      // "Finance" shares the line, so hold the word's width while the glyphs
+      // (which are not all as wide as the letters) cycle through.
+      el.style.width = "";
+      el.style.width = el.getBoundingClientRect().width + "px";
+      const begin = performance.now();
+      const step = function (now) {
+        const progress = Math.min(1, (now - begin) / DURATION);
+        const locked = Math.floor(progress * text.length);
+        let next = text.slice(0, locked);
+        for (let i = locked; i < text.length; i++) {
+          next += text[i] === " " ? " " : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        }
+        shown.textContent = next;
+        if (progress < 1) frame = requestAnimationFrame(step);
+        else el.style.width = "";
+      };
+      frame = requestAnimationFrame(step);
+    });
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
